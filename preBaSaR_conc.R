@@ -56,7 +56,7 @@ Terbutryn_2_hydroxy <- rbind(makeSubstanceTable(dbNames = c('basar_bbr', 'basar_
                              makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
                                                 substance = 'Terbutryn-2-hydroxy'))
 
-# keep low-concentration facades from basar (closer to real situation with old facades)
+
 # benzothiazol spur, mecroprop basar
 
 
@@ -72,6 +72,8 @@ plotSubstance(Terbutryn_2_hydroxy)
 # 'Terbutryn',  'Terbumeton', 
 #'Benzothiazol', 'OIT'
                                  
+
+
                                  
 # functions ---------------------------------------------------------------------------------
 getMonitoringTable <- function(rawdir, dbName, dbTable, 
