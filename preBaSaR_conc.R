@@ -2,7 +2,6 @@
 
 # grab data from both projects
 basar_bbr <- getMonitoringTable(
-  rawdir = 'Y:/SUW_Department/Projects/SpuR/Data-Work_packages/AP1_Modellierung/dataBaSaR/',
   dbName = 'BBRf_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
@@ -13,7 +12,6 @@ basar_bbr <- getMonitoringTable(
   tz = 'Etc/GMT-1')
 
 basar_bbw <- getMonitoringTable(
-  rawdir = 'Y:/SUW_Department/Projects/SpuR/Data-Work_packages/AP1_Modellierung/dataBaSaR/',
   dbName = 'BBWf_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
@@ -24,7 +22,6 @@ basar_bbw <- getMonitoringTable(
   tz = 'Etc/GMT-1')
 
 spur_pkw <- getMonitoringTable(
-  rawdir = 'Y:/SUW_Department/Projects/SpuR/Data-Work_packages/AP2_Regenfilter/Monitoring/_Daten/',
   dbName = 'Felddatenbank_SpuR_Pankow.xlsx',
   dbTable = 'Felddatenbank',
   format = 'xls',
@@ -71,19 +68,15 @@ plotSubstance(Terbutryn_2_hydroxy)
 #'Zn', 'Cu', 'Diuron', 'Isoproturon', 
 # 'Terbutryn',  'Terbumeton', 
 #'Benzothiazol', 'OIT'
-                                 
-
 
                                  
 # functions ---------------------------------------------------------------------------------
-getMonitoringTable <- function(rawdir, dbName, dbTable, 
+getMonitoringTable <- function(dbName, dbTable, 
                                format, project, site, 
                                detLimOperator, dateTimeFormat, 
                                tz){
 
   library(dplyr)
-  
-  setwd(rawdir)
   
   if(format == 'txt'){
     

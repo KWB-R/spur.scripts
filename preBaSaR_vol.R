@@ -3,7 +3,6 @@
 
 # get data
 basar_bbr <- getFacadeRunoffBaSaR(
-  rawdir = 'c:/Users/rtatmuv/Documents/spur/modellierung/dataBaSaR/',
   dbName = 'Genommene_Proben_Fassaden_BaSaR.xlsx',
   dbTable = 'BBR',
   dateTimeFormat = '%d.%m.%Y %H:%M',
@@ -11,7 +10,6 @@ basar_bbr <- getFacadeRunoffBaSaR(
   facadeOrientations = c(O = 94, S = 175, W = 268, N = 357))
 
 basar_bbw <- getFacadeRunoffBaSaR(
-  rawdir = 'c:/Users/rtatmuv/Documents/spur/modellierung/dataBaSaR/',
   dbName = 'Genommene_Proben_Fassaden_BaSaR.xlsx',
   dbTable = 'BBW',
   dateTimeFormat = '%d.%m.%Y %H:%M',
@@ -23,17 +21,16 @@ colnames(basar_bbr) <- colnames(basar_bbw)
 basar <- rbind(basar_bbr, basar_bbw)
 
 # fit model
-basarNoZeroNoNA <- basar[basar$specRunoff > 0 & 
-                           !is.na(basar$specRunoff), ]
+basarNoNA <- basar[!is.na(basar$specRunoff), ]
 
 trainSamples <- caret::createDataPartition(
-  y = basarNoZeroNoNA$specRunoff, 
+  y = basarNoNA$specRunoff, 
   p = 0.7, 
   times = 1, 
   list = FALSE)[, 1]
 
-basar_train <- basarNoZeroNoNA[trainSamples, ]
-basar_test <- basarNoZeroNoNA[-trainSamples, ]
+basar_train <- basarNoNA[trainSamples, ]
+basar_test <- basarNoNA[-trainSamples, ]
 
 mod <- lm(
   data = basar_train, 
@@ -56,14 +53,14 @@ ypred <- predict(
 
 par(mfcol = c(1, 2), mar=c(3, 3, 1, 1))
 plot(fitted(mod), resid(mod))
-plot(basar_test$specRunoff, 10^ypred)
+plot(basar_test$specRunoff, ypred^2)
 abline(a = 0, b = 1, col = 'red')
 
 
 
 
 # functions ---------------------------------------------------------------------------------
-getFacadeRunoffBaSaR <- function(rawdir, dbName, dbTable,
+getFacadeRunoffBaSaR <- function(dbName, dbTable,
                                  dateTimeFormat, tz,
                                  facadeOrientations){
   
@@ -173,6 +170,63 @@ getFacadeRunoffBaSaR <- function(rawdir, dbName, dbTable,
                            db$winddir)
   
   return(db)
+}
+
+windfile <- 'produkt_ff_stunde_19740101_20191231_00433.txt'
+rainfile <- 'produkt_rr_stunde_19950901_20191231_00433.txt'
+
+
+makeRunoffPredictors <- functoin(windfile,
+                                 rainfile){
+  
+  dat <- lapply(X = c(windfile, rainfile),
+                FUN = read.table,
+                header = TRUE,
+                sep = ';',
+                colClasses = 'character',
+                na.strings = '-999')
+
+  trimData <- function(dat, keepcols, mynames){
+    trimmeddat <- dat[, keepcols]   
+    colnames(trimmeddat) <- mynames
+    return(trimmeddat)
+  }
+
+  dat[[1]] <- trimData(dat = dat[[1]], 
+                   keepcols = c(2, 4, 5), 
+                   mynames = c('dateTime', 'windvel', 'winddir'))
+  dat[[2]] <- trimData(dat = dat[[2]],
+                   keepcols = c(2, 4),
+                   mynames = c('dateTime', 'rain'))
+  
+  wind <- tidyr::pivot_longer(dat[[1]], 
+                              cols = c('windvel', 'winddir'),
+                              names_to = 'variable',
+                              values_to = 'values')
+  rain <- tidyr::pivot_longer(data = dat[[2]],
+                              cols = c('rain'),
+                              names_to = 'variable',
+                              values_to = 'values')
+
+  dat <- rbind(wind, rain)    
+  
+  dat$dateTime <- as.POSIXct(dat$dateTime,
+                             format = '%Y%m%d%H',
+                             tz = 'Europe/Berlin')
+
+  dat$values <- as.numeric(dat$values)
+    
+  winddir <- dat[dat$variable == 'winddir', ]
+  windvel <- dat[dat$variable == 'windvel', ]
+  rain <- dat[dat$variable == 'rain', ]
+  
+  # get storms
+  rain.events <- kwb.event::getEvents(rainData = rain,
+                                      seriesName = 'values')
+  
+  # build predictors
+  
+  
 }
 
 
