@@ -20,63 +20,34 @@ colnames(basar_bbr) <- colnames(basar_bbw)
 basar <- rbind(basar_bbr, basar_bbw)
 
 # fit model
-basarNoNA <- basar[!is.na(basar$specRunoff), ]
-
-trainSamples <- caret::createDataPartition(
-  y = basarNoNA$specRunoff, 
-  p = 0.7, 
-  times = 1, 
-  list = FALSE)[, 1]
-
-basar_train <- basarNoNA[trainSamples, ]
-basar_test <- basarNoNA[-trainSamples, ]
-
-mod <- lm(
-  data = basar_train, 
-  formula = specRunoff^(1/2) ~ rainfall  + angleAttack + windvel +
-    rainfall:angleAttack:windvel, 
-  weights = 1/winddirsd)
-
-
-summary(lm(
-  data = basar_train, 
-  formula = specRunoff^(1/2) ~ rainfall*angleAttack*windvel
-  weights = 1/winddirsd))
-
+mod <- fitlm(data = basar, trainperc = 0.7, yexp = 0.5)
 
 # assess model
-summary(mod)
+summary(mod) # general summary
+car::vif(mod) # check for multicollinearity
 
-car::vif(mod)
+# plot residuals and leverage
+plotResLev(model = mod)
 
-p <- length(mod$coefficients) - 1 # no. predictors
-n <- nrow(basar_train) # no. obs.
-
-par(mfcol = c(1, 2), mar = c(4, 4, 1.5, 2))
-plot(predict(mod), residuals(mod), 
-     main = 'fitted vs. res.',
-     xlab = 'fitted vals.', 
-     ylab = 'residuals')
-plot(hatvalues(mod)/((p+1)/n), rstudent(mod), 
-     main = 'leverage vs. stud. res.',
-     xlab = 'lev./mean(lev.)',
-     ylab = 'studentized residuals')
-
-# test predictions
-ypred <- predict(object = mod, 
+# test predictions (the model predicts y^yexp, so we have to transform
+# y back)
+ypredraw <- predict(object = mod, 
                  newdata = data.frame(
                    basar_test[, c('rainfall',
                                   'angleAttack', 
                                   'windvel')]))
+ypred <- ypredraw^(1/0.5)
 
+# compute residual standard error
+computeRSE(yobs = test$specRunoff, 
+           ypred = ypred,
+           model = mod)
 
-par(mfcol = c(1, 2), mar=c(3, 3, 1, 1))
-plot(fitted(mod), resid(mod))
-plot(basar_test$specRunoff, ypred^2)
+# plot 
+par(mfcol = c(1, 1), mar=c(4, 4, 1, 1))
+plot(basar_test$specRunoff, ypred, asp=1, 
+     xlab = 'observed', ylab = 'predicted')
 abline(a = 0, b = 1, col = 'red')
-
-
-
 
 # functions ---------------------------------------------------------------------------------
 getFacadeRunoffBaSaR <- function(dbName, dbTable,
@@ -191,61 +162,105 @@ getFacadeRunoffBaSaR <- function(dbName, dbTable,
   return(db)
 }
 
-windfile <- 'produkt_ff_stunde_19740101_20191231_00433.txt'
-rainfile <- 'produkt_rr_stunde_19950901_20191231_00433.txt'
+fitlm <- function(data, trainperc, yexp){
+  dataNoNA <- data[!is.na(data$specRunoff), ]
+  
+  trainSamples <- caret::createDataPartition(
+    y = basarNoNA$specRunoff, 
+    p = trainperc, 
+    times = 1, 
+    list = FALSE)[, 1]
+  
+  train <<- dataNoNA[trainSamples, ]
+  test <<- dataNoNA[-trainSamples, ]
+  
+  mod <- lm(
+    data = train, 
+    formula = specRunoff^yexp ~ rainfall  + angleAttack + windvel +
+      rainfall:angleAttack:windvel, 
+    weights = 1/winddirsd)
+  
+  return(mod)
+}
 
+plotResLev <- function(model){
+  par(mfcol = c(1, 2), mar = c(4, 4, 1.5, 2))
+  plot(predict(mod), residuals(mod), 
+       main = 'fitted vs. res.',
+       xlab = 'fitted vals.', 
+       ylab = 'residuals')
+  plot(hatvalues(mod), rstudent(mod), 
+       main = 'leverage vs. stud. res.',
+       xlab = 'leverage',
+       ylab = 'studentized residuals')
+}
 
-makeRunoffPredictors <- functoin(windfile,
-                                 rainfile){
-  
-  dat <- lapply(X = c(windfile, rainfile),
-                FUN = read.table,
-                header = TRUE,
-                sep = ';',
-                colClasses = 'character',
-                na.strings = '-999')
-
-  trimData <- function(dat, keepcols, mynames){
-    trimmeddat <- dat[, keepcols]   
-    colnames(trimmeddat) <- mynames
-    return(trimmeddat)
-  }
-
-  dat[[1]] <- trimData(dat = dat[[1]], 
-                   keepcols = c(2, 4, 5), 
-                   mynames = c('dateTime', 'windvel', 'winddir'))
-  dat[[2]] <- trimData(dat = dat[[2]],
-                   keepcols = c(2, 4),
-                   mynames = c('dateTime', 'rain'))
-  
-  wind <- tidyr::pivot_longer(dat[[1]], 
-                              cols = c('windvel', 'winddir'),
-                              names_to = 'variable',
-                              values_to = 'values')
-  rain <- tidyr::pivot_longer(data = dat[[2]],
-                              cols = c('rain'),
-                              names_to = 'variable',
-                              values_to = 'values')
-
-  dat <- rbind(wind, rain)    
-  
-  dat$dateTime <- as.POSIXct(dat$dateTime,
-                             format = '%Y%m%d%H',
-                             tz = 'Europe/Berlin')
-
-  dat$values <- as.numeric(dat$values)
-    
-  winddir <- dat[dat$variable == 'winddir', ]
-  windvel <- dat[dat$variable == 'windvel', ]
-  rain <- dat[dat$variable == 'rain', ]
-  
-  # get storms
-  rain.events <- kwb.event::getEvents(rainData = rain,
-                                      seriesName = 'values')
-  
-  # build predictors
-  
-  
+computeRSE <- function(yobs, ypred, model){
+  p <- length(model$coefficients) - 1 # no. predictors
+  n <- length(yobs) # no. obs.
+  rse <- sqrt(sum((yobs - ypred)^2)/(n-p-1))
+  return(rse)
 }
 
 
+predictAnnualSpecRunoff <- function(){
+  
+  windfile <- 'produkt_ff_stunde_19740101_20191231_00433.txt'
+  rainfile <- 'produkt_rr_stunde_19950901_20191231_00433.txt'
+  
+  
+  makeRunoffPredictors <- functoin(windfile,
+                                   rainfile){
+    
+    dat <- lapply(X = c(windfile, rainfile),
+                  FUN = read.table,
+                  header = TRUE,
+                  sep = ';',
+                  colClasses = 'character',
+                  na.strings = '-999')
+    
+    trimData <- function(dat, keepcols, mynames){
+      trimmeddat <- dat[, keepcols]   
+      colnames(trimmeddat) <- mynames
+      return(trimmeddat)
+    }
+    
+    dat[[1]] <- trimData(dat = dat[[1]], 
+                         keepcols = c(2, 4, 5), 
+                         mynames = c('dateTime', 'windvel', 'winddir'))
+    dat[[2]] <- trimData(dat = dat[[2]],
+                         keepcols = c(2, 4),
+                         mynames = c('dateTime', 'rain'))
+    
+    wind <- tidyr::pivot_longer(dat[[1]], 
+                                cols = c('windvel', 'winddir'),
+                                names_to = 'variable',
+                                values_to = 'values')
+    rain <- tidyr::pivot_longer(data = dat[[2]],
+                                cols = c('rain'),
+                                names_to = 'variable',
+                                values_to = 'values')
+    
+    dat <- rbind(wind, rain)    
+    
+    dat$dateTime <- as.POSIXct(dat$dateTime,
+                               format = '%Y%m%d%H',
+                               tz = 'Europe/Berlin')
+    
+    dat$values <- as.numeric(dat$values)
+    
+    winddir <- dat[dat$variable == 'winddir', ]
+    windvel <- dat[dat$variable == 'windvel', ]
+    rain <- dat[dat$variable == 'rain', ]
+    
+    # get storms
+    rain.events <- kwb.event::getEvents(rainData = rain,
+                                        seriesName = 'values')
+    
+    # build predictors
+    
+    
+  }
+  
+  
+}

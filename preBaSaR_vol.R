@@ -20,61 +20,34 @@ colnames(basar_bbr) <- colnames(basar_bbw)
 basar <- rbind(basar_bbr, basar_bbw)
 
 # fit model
-basarNoNA <- basar[!is.na(basar$specRunoff), ]
-
-trainSamples <- caret::createDataPartition(
-  y = basarNoNA$specRunoff, 
-  p = 0.7, 
-  times = 1, 
-  list = FALSE)[, 1]
-
-basar_train <- basarNoNA[trainSamples, ]
-basar_test <- basarNoNA[-trainSamples, ]
-
-mod <- lm(
-  data = basar_train, 
-  formula = specRunoff^(1/2) ~ rainfall  + angleAttack + windvel +
-    rainfall:angleAttack:windvel, 
-  weights = 1/winddirsd)
-
-
-summary(lm(
-  data = basar_train, 
-  formula = specRunoff^(1/2) ~ rainfall*angleAttack*windvel
-  weights = 1/winddirsd))
-
+mod <- fitlm(data = basar, trainperc = 0.7, yexp = 0.5)
 
 # assess model
-summary(mod)
+summary(mod) # general summary
+car::vif(mod) # check for multicollinearity
 
-car::vif(mod)
+# plot residuals and leverage
+plotResLev(model = mod)
 
-p <- length(mod$coefficients) - 1 # no. predictors
-n <- nrow(basar_train) # no. obs.
-
-par(mfcol = c(1, 2), mar = c(4, 4, 1.5, 2))
-plot(predict(mod), residuals(mod), 
-     main = 'fitted vs. res.',
-     xlab = 'fitted vals.', 
-     ylab = 'residuals')
-plot(hatvalues(mod)/((p+1)/n), rstudent(mod), 
-     main = 'leverage vs. stud. res.',
-     xlab = 'lev./mean(lev.)',
-     ylab = 'studentized residuals')
-
-# test predictions
-ypred <- predict(object = mod, 
+# test predictions (the model predicts y^yexp, so we have to transform
+# y back)
+ypredraw <- predict(object = mod, 
                  newdata = data.frame(
                    basar_test[, c('rainfall',
                                   'angleAttack', 
                                   'windvel')]))
+ypred <- ypredraw^(1/0.5)
 
+# compute residual standard error
+computeRSE(yobs = test$specRunoff, 
+           ypred = ypred,
+           model = mod)
 
-par(mfcol = c(1, 2), mar=c(3, 3, 1, 1))
-plot(fitted(mod), resid(mod))
-plot(basar_test$specRunoff, ypred^2)
+# plot 
+par(mfcol = c(1, 1), mar=c(4, 4, 1, 1))
+plot(basar_test$specRunoff, ypred, asp=1, 
+     xlab = 'observed', ylab = 'predicted')
 abline(a = 0, b = 1, col = 'red')
-
 
 
 
@@ -249,3 +222,42 @@ makeRunoffPredictors <- functoin(windfile,
 }
 
 
+fitlm <- function(data, trainperc, yexp){
+  dataNoNA <- data[!is.na(data$specRunoff), ]
+  
+  trainSamples <- caret::createDataPartition(
+    y = basarNoNA$specRunoff, 
+    p = trainperc, 
+    times = 1, 
+    list = FALSE)[, 1]
+  
+  train <<- dataNoNA[trainSamples, ]
+  test <<- dataNoNA[-trainSamples, ]
+  
+  mod <- lm(
+    data = train, 
+    formula = specRunoff^yexp ~ rainfall  + angleAttack + windvel +
+      rainfall:angleAttack:windvel, 
+    weights = 1/winddirsd)
+  
+  return(mod)
+}
+
+plotResLev <- function(model){
+  par(mfcol = c(1, 2), mar = c(4, 4, 1.5, 2))
+  plot(predict(mod), residuals(mod), 
+       main = 'fitted vs. res.',
+       xlab = 'fitted vals.', 
+       ylab = 'residuals')
+  plot(hatvalues(mod), rstudent(mod), 
+       main = 'leverage vs. stud. res.',
+       xlab = 'leverage',
+       ylab = 'studentized residuals')
+}
+
+computeRSE <- function(yobs, ypred, model){
+  p <- length(model$coefficients) - 1 # no. predictors
+  n <- length(yobs) # no. obs.
+  rse <- sqrt(sum((yobs - ypred)^2)/(n-p-1))
+  return(rse)
+}
