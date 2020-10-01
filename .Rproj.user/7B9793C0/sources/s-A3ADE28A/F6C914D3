@@ -1,0 +1,25 @@
+{
+    "id": "F6C914D3",
+    "path": "~/github-repos/spur/preBaSaR_vol.R",
+    "project_path": "preBaSaR_vol.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1601475756138.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "cursorPosition": "43,25",
+        "scrollLine": "25",
+        "source_window_id": ""
+    },
+    "folds": "83|53|191|0|\n",
+    "lastKnownWriteTime": 1601548490,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1601548490902,
+    "read_only": false,
+    "read_only_alternatives": []
+}
