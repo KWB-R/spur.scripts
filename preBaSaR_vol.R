@@ -323,9 +323,26 @@ makePredictors <- function(windfile,
   rain.events$year <- as.numeric(format(rain.events$tBeg,
                              format = '%Y'))
   
-  # find years with no data gaps
-  year = 1995
-  x <- rain.events[rain.events$year == year, ]
+  # find years with data gaps in rainfall, temperature or wind
+  findYearsNA <- function(data, variable){
+    return(unique(data[is.na(data[[variable]]), 'year']))
+  }
+  
+  yearsNArain <- findYearsNA(data = rain.events, variable = 'rain')
+  yearsNAairtemp <- findYearsNA(data = rain.events, variable = 'airtempmean')
+  yearsNAwindvel <- findYearsNA(data = rain.events, variable = 'windvelmean')
+  yearsNAwinddir <- findYearsNA(data = rain.events, variable = 'winddirmean')
+  
+  yearsNA <- unique(c(yearsNArain, yearsNAairtemp, 
+                      yearsNAwindvel, yearsNAwinddir))
+  
+  years <- unique(rain.events$year)
+  
+  yearsNoNA <- years[!(years %in% yearsNA)]
+  
+  # keep only years with no gaps
+  rain.events <- rain.events[rain.events$year %in% yearsNoNA, ]
+  
   
   
   # remove storms with mean T < 0 (probably snow)
