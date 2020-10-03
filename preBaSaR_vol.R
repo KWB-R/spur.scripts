@@ -20,7 +20,8 @@ colnames(basar_bbr) <- colnames(basar_bbw)
 basar <- rbind(basar_bbr, basar_bbw)
 
 # fit model
-mod <- fitlm(data = basar, trainperc = 0.7, yexp = 0.5)
+yexp <- 0.5
+mod <- fitlm(data = basar, trainperc = 0.7, yexp = yexp)
 
 # assess model
 summary(mod) # general summary
@@ -33,10 +34,10 @@ plotResLev(model = mod)
 # y back)
 ypredraw <- predict(object = mod, 
                     newdata = data.frame(
-                      basar_test[, c('rainfall',
-                                     'angleAttack', 
-                                     'windvel')]))
-ypred <- ypredraw^(1/0.5)
+                      test[, c('rainfall',
+                               'angleAttack', 
+                               'windvel')]))
+ypred <- ypredraw^(1/yexp)
 
 # compute residual standard error
 computeRSE(yobs = test$specRunoff, 
@@ -45,11 +46,49 @@ computeRSE(yobs = test$specRunoff,
 
 # plot 
 par(mfcol = c(1, 1), mar=c(4, 4, 1, 1))
-plot(basar_test$specRunoff, ypred, asp=1, 
+plot(test$specRunoff, ypred, asp=1, 
      xlab = 'observed', ylab = 'predicted')
 abline(a = 0, b = 1, col = 'red')
 
+
+# make predictors, weather data from station Tempelhof
+
+# does rainfall dwd include snowfall?************
+
+Xpred <- makePredictors(
+  windfile = 'produkt_ff_stunde_19740101_20191231_00433.txt',
+  rainfile = 'produkt_rr_stunde_19950901_20191231_00433.txt',
+  airtempfile = 'produkt_tu_stunde_19510101_20191231_00433.txt')
+
+ypredraw <- predict(object = mod, 
+                    newdata = Xpred[, c('rainfall',
+                                        'angleAttack', 
+                                        'windvel')]))
+
+
+
+
 # functions ---------------------------------------------------------------------------------
+# compute angle of attack of wind
+angleAttack <- function(facadeOrientation, windDir){
+  
+  dalpha <- abs(windDir - facadeOrientation)
+  
+  # two cases = dalpha < 180 of dalpha > 180
+  if(dalpha < 180){
+    
+    aa <- ifelse(dalpha>=90, 0, abs(90-dalpha))
+    
+  } else {
+    
+    # for dalpha > 180, subtract 360 to bring alpha to first quadrant of cartesian plane
+    dalpha2 <- abs(dalpha - 360)
+    aa <- ifelse(dalpha2 >= 90, 0, abs(90-dalpha2))
+  }
+  
+  return(aa)
+}
+
 getFacadeRunoffBaSaR <- function(dbName, dbTable,
                                  dateTimeFormat, tz,
                                  facadeOrientations){
@@ -130,30 +169,11 @@ getFacadeRunoffBaSaR <- function(dbName, dbTable,
     db$runoff[i] / db[[i, c]] / 1000
   }, 1:nrow(db), col))
   
-  # compute angle of attack of wind
-  angleAttack <- function(facadeOrientation, windDir){
-    
-    dalpha <- abs(windDir - facadeOrientation)
-    
-    # two cases = dalpha < 180 of dalpha > 180
-    if(dalpha < 180){
-      
-      aa <- ifelse(dalpha>=90, 0, abs(90-dalpha))
-      
-    } else {
-      
-      # for dalpha > 180, subtract 360 to bring alpha to first quadrant of cartesian plane
-      dalpha2 <- abs(dalpha - 360)
-      aa <- ifelse(dalpha2 >= 90, 0, abs(90-dalpha2))
-    }
-    
-    return(aa)
-  }
-  
-  db$facadeOrientation <- sapply(X = db$side, 
-                                 FUN = function(x){
-                                   facadeOrientations[names(facadeOrientations) == x]
-                                 })
+  db$facadeOrientation <- sapply(
+    X = db$side, 
+    FUN = function(x){
+      facadeOrientations[names(facadeOrientations) == x]
+    })
   
   db$angleAttack <- mapply(FUN = angleAttack, 
                            db$facadeOrientation,
@@ -166,7 +186,7 @@ fitlm <- function(data, trainperc, yexp){
   dataNoNA <- data[!is.na(data$specRunoff), ]
   
   trainSamples <- caret::createDataPartition(
-    y = basarNoNA$specRunoff, 
+    y = dataNoNA$specRunoff, 
     p = trainperc, 
     times = 1, 
     list = FALSE)[, 1]
@@ -202,15 +222,9 @@ computeRSE <- function(yobs, ypred, model){
   return(rse)
 }
 
-
-# data from station Tempelhof
-windfile <- 'produkt_ff_stunde_19740101_20191231_00433.txt'
-rainfile <- 'produkt_rr_stunde_19950901_20191231_00433.txt'
-airtempfile <- 'produkt_tu_stunde_19510101_20191231_00433.txt'
-
 makePredictors <- function(windfile,
-                                 rainfile,
-                                 airtempfile){
+                           rainfile,
+                           airtempfile){
   
   # load data
   dat <- lapply(X = c(windfile, rainfile, airtempfile),
@@ -231,7 +245,7 @@ makePredictors <- function(windfile,
                        mynames = c('dateTime', 'windvel', 'winddir'))
   dat[[2]] <- trimData(dat = dat[[2]],
                        keepcols = c(2, 4),
-                       mynames = c('dateTime', 'rain'))
+                       mynames = c('dateTime', 'rainfall'))
   dat[[3]] <- trimData(dat = dat[[3]],
                        keepcols = c(2, 4),
                        mynames = c('dateTime', 'airtemp'))
@@ -242,7 +256,7 @@ makePredictors <- function(windfile,
                               names_to = 'variable',
                               values_to = 'values')
   rain <- tidyr::pivot_longer(data = dat[[2]],
-                              cols = c('rain'),
+                              cols = 'rainfall',
                               names_to = 'variable',
                               values_to = 'values')
   airtemp <- tidyr::pivot_longer(data = dat[[3]],
@@ -264,7 +278,7 @@ makePredictors <- function(windfile,
   dat <- as.data.frame(dat)
   winddir <- dat[dat$variable == 'winddir', ]
   windvel <- dat[dat$variable == 'windvel', ]
-  rain <- dat[dat$variable == 'rain', ]
+  rain <- dat[dat$variable == 'rainfall', ]
   airtemp <- dat[dat$variable == 'airtemp', ]
   
   # get storms
@@ -273,42 +287,45 @@ makePredictors <- function(windfile,
                                       signalWidth = 3600)
   
   # compute each storm's rainfall depth, wind and temperature info
+  # (the warnings issued here come from short storms lasting < 1h,
+  # for which there is only one data point and no stand.dev. can be
+  # computed)
   x <- lapply(X = 1:nrow(rain.events),
-         FUN = function(i){
-           
-           tBeg <- rain.events$tBeg[i]
-           tEnd <- rain.events$tEnd[i]
-           
-           filterstorm <- function(data, tBeg, tEnd){
-             return(data[data$dateTime >= tBeg &
-                           data$dateTime <= tEnd, ])
-           }
-           
-           rainsel <- filterstorm(rain, tBeg, tEnd)
-           airtempsel <- filterstorm(airtemp, tBeg, tEnd)
-           winddirsel <- filterstorm(winddir, tBeg, tEnd)
-           windvelsel <- filterstorm(windvel, tBeg, tEnd)
-
-           stormrain <- sum(rainsel$values, na.rm = TRUE)
-           stormairtempmean <- mean(airtempsel$values, na.rm = TRUE)
-           stormairtempmax <- max(airtempsel$values, na.rm = TRUE)
-           stormwindvelmean <- mean(windvelsel$values, na.rm = TRUE)
-           stormwindvelsd <- sd(windvelsel$values, na.rm = TRUE)
-           stormwinddirmean <- mean(winddirsel$values, na.rm = TRUE)
-           stormwinddirsd <- sd(winddirsel$values, na.rm = TRUE)
-           
-           return(c(stormrain,
-                    stormairtempmean,
-                    stormairtempmax,
-                    stormwindvelmean,
-                    stormwindvelsd,
-                    stormwinddirmean,
-                    stormwinddirsd))
-         })
+              FUN = function(i){
+                
+                tBeg <- rain.events$tBeg[i]
+                tEnd <- rain.events$tEnd[i]
+                
+                filterstorm <- function(data, tBeg, tEnd){
+                  return(data[data$dateTime >= tBeg &
+                                data$dateTime <= tEnd, ])
+                }
+                
+                rainsel <- filterstorm(rain, tBeg, tEnd)
+                airtempsel <- filterstorm(airtemp, tBeg, tEnd)
+                winddirsel <- filterstorm(winddir, tBeg, tEnd)
+                windvelsel <- filterstorm(windvel, tBeg, tEnd)
+                
+                stormrain <- sum(rainsel$values, na.rm = TRUE)
+                stormairtempmean <- mean(airtempsel$values, na.rm = TRUE)
+                stormairtempmax <- max(airtempsel$values, na.rm = TRUE)
+                stormwindvelmean <- mean(windvelsel$values, na.rm = TRUE)
+                stormwindvelsd <- sd(windvelsel$values, na.rm = TRUE)
+                stormwinddirmean <- mean(winddirsel$values, na.rm = TRUE)
+                stormwinddirsd <- sd(winddirsel$values, na.rm = TRUE)
+                
+                return(c(stormrain,
+                         stormairtempmean,
+                         stormairtempmax,
+                         stormwindvelmean,
+                         stormwindvelsd,
+                         stormwinddirmean,
+                         stormwinddirsd))
+              })
   
   x <- data.frame(do.call(rbind, x))
   
-  colnames(x) <- c('rain',
+  colnames(x) <- c('rainfall',
                    'airtempmean',
                    'airtempmax',
                    'windvelmean',
@@ -321,34 +338,43 @@ makePredictors <- function(windfile,
   
   # add year column
   rain.events$year <- as.numeric(format(rain.events$tBeg,
-                             format = '%Y'))
+                                        format = '%Y'))
   
   # find years with data gaps in rainfall, temperature or wind
-  findYearsNA <- function(data, variable){
+  findYearsNA <- function(variable, data){
     return(unique(data[is.na(data[[variable]]), 'year']))
   }
   
-  yearsNArain <- findYearsNA(data = rain.events, variable = 'rain')
-  yearsNAairtemp <- findYearsNA(data = rain.events, variable = 'airtempmean')
-  yearsNAwindvel <- findYearsNA(data = rain.events, variable = 'windvelmean')
-  yearsNAwinddir <- findYearsNA(data = rain.events, variable = 'winddirmean')
-  
-  yearsNA <- unique(c(yearsNArain, yearsNAairtemp, 
-                      yearsNAwindvel, yearsNAwinddir))
-  
-  years <- unique(rain.events$year)
-  
-  yearsNoNA <- years[!(years %in% yearsNA)]
+  yearsNA <- unique(unlist(lapply(X = c('rainfall', 
+                                        'airtempmean', 
+                                        'windvelmean', 
+                                        'winddirmean'), 
+                                  FUN = findYearsNA,
+                                  data = rain.events)))
+
+  # find years with no gaps
+  yearsAll <- unique(rain.events$year)
+  yearsNoNA <- yearsAll[!(yearsAll %in% yearsNA)]
   
   # keep only years with no gaps
   rain.events <- rain.events[rain.events$year %in% yearsNoNA, ]
   
+  # remove storms with mean and max T < 0 (probably snow)
+  rain.events <- rain.events[rain.events$airtempmean > 0 &
+                               rain.events$airtempmax > 0, ]
   
   
-  # remove storms with mean T < 0 (probably snow)
-  rain.events <- rain.events[rain.events$airtempmean > 0, ]
-    
+  # make angle of attack*********************************
+  db$facadeOrientation <- sapply(X = db$side, 
+                                 FUN = function(x){
+                                   facadeOrientations[names(facadeOrientations) == x]
+                                 })
   
+  db$angleAttack <- mapply(FUN = angleAttack, 
+                           db$facadeOrientation,
+                           db$winddir)
   
+
+  return(rain.events)
 }
 
