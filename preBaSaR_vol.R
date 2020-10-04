@@ -55,21 +55,33 @@ abline(a = 0, b = 1, col = 'red')
 
 # does rainfall dwd include snowfall?************
 
-Xpred <- makePredictors(
+rain.events <- makePredictors(
   windfile = 'produkt_ff_stunde_19740101_20191231_00433.txt',
   rainfile = 'produkt_rr_stunde_19950901_20191231_00433.txt',
   airtempfile = 'produkt_tu_stunde_19510101_20191231_00433.txt')
 
-ypredraw <- predict(object = mod, 
-                    newdata = Xpred[, c('rainfall',
-                                        'angleAttack', 
-                                        'windvel')]))
+# predict facade runoff for hypothetical (perfectly aligned) facades of
+# all four cardinal directions (S, O, W, N)
+rain.events <- cbind(rain.events, 
+                     as.data.frame(
+                       lapply(X = c('S', 'O', 'N', 'W'),
+                              FUN = makePredSide,
+                              data = rain.events,
+                              yexp = 0.5),
+                       col.names = c('runoffS', 'runoffO', 
+                                     'runoffN', 'runoffW')))
 
+# lengthen data and make boxplot
+x <- tidyr::pivot_longer(rain.events, 
+                    cols = c('runoffO', 'runoffN', 'runoffS', 'runoffW'),
+                    names_to = 'side',
+                    values_to = 'runoff')
+
+boxplot(runoff ~ side, data = x, log = 'y')
 
 
 
 # functions ---------------------------------------------------------------------------------
-# compute angle of attack of wind
 angleAttack <- function(facadeOrientation, windDir){
   
   dalpha <- abs(windDir - facadeOrientation)
@@ -196,7 +208,7 @@ fitlm <- function(data, trainperc, yexp){
   
   mod <- lm(
     data = train, 
-    formula = specRunoff^yexp ~ rainfall  + angleAttack + windvel +
+    formula = I(specRunoff^yexp) ~ rainfall  + angleAttack + windvel +
       rainfall:angleAttack:windvel, 
     weights = 1/winddirsd)
   
@@ -290,7 +302,7 @@ makePredictors <- function(windfile,
   # (the warnings issued here come from short storms lasting < 1h,
   # for which there is only one data point and no stand.dev. can be
   # computed)
-  x <- lapply(X = 1:nrow(rain.events),
+  x <- lapply(X = seq_along(rain.events$iBeg),
               FUN = function(i){
                 
                 tBeg <- rain.events$tBeg[i]
@@ -364,17 +376,38 @@ makePredictors <- function(windfile,
                                rain.events$airtempmax > 0, ]
   
   
-  # make angle of attack*********************************
-  db$facadeOrientation <- sapply(X = db$side, 
-                                 FUN = function(x){
-                                   facadeOrientations[names(facadeOrientations) == x]
-                                 })
+  # make angle of attack for hypothetical facades (perfectly aligned with
+  # cardinal directions)
+  x <- sapply(X = c(N = 0, O = 90, S = 180, W = 270),
+         FUN = function(i){
+           sapply(
+             X = seq_along(rain.events$winddirmean),
+             FUN = function(j){
+               angleAttack(facadeOrientation = i,
+                           windDir = rain.events$winddirmean[j])
+             })}, USE.NAMES = TRUE)
   
-  db$angleAttack <- mapply(FUN = angleAttack, 
-                           db$facadeOrientation,
-                           db$winddir)
+  colnames(x) <- c('angleAttackN', 'angleAttackO', 
+                   'angleAttackS', 'angleAttackW') 
+         
+  rain.events <- cbind(rain.events, x)
   
 
   return(rain.events)
+}
+
+makePredSide <- function(side, data, yexp){
+  
+  XpredSide <- data.frame(
+    rainfall = data$rainfall,
+    angleAttack = data[, paste0('angleAttack', side)],
+    windvel = data$windvelmean)
+  
+  ypredraw <- predict(object = mod, 
+                      newdata = XpredSide)
+  
+  ypred <- ypredraw^(1/yexp)
+  
+  return(ypred)
 }
 
