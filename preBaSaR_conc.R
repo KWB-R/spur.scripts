@@ -31,7 +31,7 @@ spur_pkw <- getMonitoringTable(
   dateTimeFormat = '%d.%m.%Y %H:%M', 
   tz = 'Etc/GMT-1')
 
-# make tables for target substances based on these data
+# make tables for target substances
 Zn <- rbind(makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
                                substance = 'Zn_total'),
             makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
@@ -42,32 +42,46 @@ Cu <- rbind(makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw')
                                substance = 'Cu')) 
 Diuron <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
                              substance = 'Diuron')
-Diuron <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
-                             substance = 'Diuron')
 Terbutryn <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
                                 substance = 'Terbutryn')
 Terbutryn_desethyl <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
                                 substance = 'Terbutryn_desethyl')
-Terbutryn_2_hydroxy <- rbind(makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
-                                                substance = 'Terbutryn.2.hydroxy'),
-                             makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
-                                                substance = 'Terbutryn-2-hydroxy'))
+Terbutryn_2_hydroxy <- rbind(makeSubstanceTable(
+  dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+  substance = 'Terbutryn.2.hydroxy'),
+  makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+                     substance = 'Terbutryn-2-hydroxy'))
 
 
-# benzothiazol spur, mecroprop basar
+Benzothiazol <- makeSubstanceTable(dbNames = 'spur_pkw', 
+                                   substance = 'Benzothiazol')
+
+Mecoprop <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw'), 
+                               substance = 'Mecoprop')
 
 
-# plot
+# statistics
+Zn
+Cu
+Diuron
+Terbutryn
+Terbutryn_desethyl
+Terbutryn_2_hydroxy
+Benzothiazol
+Mecoprop
+
+
+
+# plots
 plotSubstance(Zn)
 plotSubstance(Cu)
 plotSubstance(Diuron)
 plotSubstance(Terbutryn)
 plotSubstance(Terbutryn_desethyl) 
 plotSubstance(Terbutryn_2_hydroxy)
+plotSubstance(Benzothiazol)
+plotSubstance(Mecoprop)
 
-#'Zn', 'Cu', 'Diuron', 'Isoproturon', 
-# 'Terbutryn',  'Terbumeton', 
-#'Benzothiazol', 'OIT'
 
                                  
 # functions ---------------------------------------------------------------------------------

@@ -430,3 +430,47 @@ makePredSide <- function(side, data, yexp){
   return(ypred)
 }
 
+
+
+
+
+
+# plot annual totals
+annrain <- aggregate(x = rain$values,
+                     by = list(lubridate::year(rain$dateTime)),
+                     FUN = sum,
+                     na.rm = TRUE)
+xy <- annualFacadeRunoff$Group.1
+annrain <- annrain[annrain$Group.1 %in% xy, ]
+
+barplot(annrain$x, names.arg = x$Group.1, las=2, main = 'annual rainfall [mm/year]')
+
+# annual totals per side
+annrainside <- as.data.frame(
+  lapply(X = c('runoffS', 'runoffO', 'runoffW', 'runoffN'),
+         FUN = function(x){
+           aggregate(
+             x = rain.events[[x]], 
+             by = list(rain.events$year), 
+             FUN = sum)
+         }))[, c(1, 2, 4, 6, 8)]
+colnames(annrainside) <- c('year', 'runoffS', 'runoffO','runoffW', 'runoffN')
+
+
+par(mar=c(3, 3, 2, 1))
+barplot(t(as.matrix(annrainside[, 2:ncol(annrainside)])), 
+        names.arg = annrainside$year, 
+        las = 2,
+        main = 'Total facade runoff [l/m2/year]',
+        col = c('red', 'blue', 'forestgreen', 'white'))
+legend(x = 0, y = 40, 
+       legend = c('runoffS', 'runoffO','runoffW', 'runoffN'),
+       fill = c('red', 'blue', 'forestgreen', 'white'),
+       cex = 0.8)
+
+
+barplot(t(as.matrix(annrainside[, 2:ncol(annrainside)])), 
+        names.arg = annrainside$year, 
+        las = 2,
+        main = 'Total facade runoff [l/m2/year]',
+        legend.text = T)
