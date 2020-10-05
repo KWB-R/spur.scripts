@@ -19,7 +19,7 @@ colnames(basar_bbr) <- colnames(basar_bbw)
 
 basar <- rbind(basar_bbr, basar_bbw)
 
-# fit model
+# fit model on training set (uses caret)
 yexp <- 0.5
 mod <- fitlm(data = basar, trainperc = 0.7, yexp = yexp)
 
@@ -30,7 +30,7 @@ car::vif(mod) # check for multicollinearity
 # plot residuals and leverage
 plotResLev(model = mod)
 
-# test predictions (the model predicts y^yexp, so we have to transform
+# test predictions on test set (the model predicts y^yexp, so we have to transform
 # y back)
 ypredraw <- predict(object = mod, 
                     newdata = data.frame(
@@ -51,10 +51,7 @@ plot(test$specRunoff, ypred, asp=1,
 abline(a = 0, b = 1, col = 'red')
 
 
-# make predictors, weather data from station Tempelhof
-
-# does rainfall dwd include snowfall?************
-
+# make predictors; weather data from station Tempelhof
 rain.events <- makePredictors(
   windfile = 'produkt_ff_stunde_19740101_20191231_00433.txt',
   rainfile = 'produkt_rr_stunde_19950901_20191231_00433.txt',
@@ -71,14 +68,33 @@ rain.events <- cbind(rain.events,
                        col.names = c('runoffS', 'runoffO', 
                                      'runoffN', 'runoffW')))
 
-# lengthen data and make boxplot
-x <- tidyr::pivot_longer(rain.events, 
-                    cols = c('runoffO', 'runoffN', 'runoffS', 'runoffW'),
-                    names_to = 'side',
-                    values_to = 'runoff')
+# sum runoff from all sides
+rain.events$totalFacadeRunoff <- apply(
+  X = rain.events[, c('runoffS', 'runoffO', 'runoffN', 'runoffW')],
+  MARGIN = 1 ,
+  FUN = sum)
 
-boxplot(runoff ~ side, data = x, log = 'y')
 
+# annual totals
+annualFacadeRunoff <- aggregate(
+  x = rain.events$totalFacadeRunoff, 
+  by = list(rain.events$year), 
+  FUN = sum)
+
+# write outputs: 
+# rain.events: individual storms with their facade runoff on all 4 sides and their sum
+# annualFacadeRunoff: annual totals (total runoff of four facade sides for each year)
+write.table(x = rain.events, 
+            file = 'output_rain.events.txt', 
+            quote = FALSE, 
+            sep = ';', 
+            row.names = FALSE)
+
+write.table(x = annualFacadeRunoff, 
+            file = 'output_annualFacadeRunoff.txt', 
+            quote = FALSE, 
+            sep = ';', 
+            row.names = FALSE)
 
 
 # functions ---------------------------------------------------------------------------------
@@ -371,7 +387,10 @@ makePredictors <- function(windfile,
   # keep only years with no gaps
   rain.events <- rain.events[rain.events$year %in% yearsNoNA, ]
   
-  # remove storms with mean and max T < 0 (probably snow)
+  # keep only storms with Tmean and Tmax > 0 to avoid non-liquid precipitation.
+  # dwd has a rain type indicator in the data (column 'WRTR') but 79% of values
+  # are NA, so it's not usable. see here:
+  # ftp://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/precipitation/historical/DESCRIPTION_obsgermany_climate_hourly_precipitation_historical_en.pdf
   rain.events <- rain.events[rain.events$airtempmean > 0 &
                                rain.events$airtempmax > 0, ]
   
