@@ -74,12 +74,17 @@ rain.events$totalFacadeRunoff <- apply(
   MARGIN = 1 ,
   FUN = sum)
 
+# annual totals per side
+annrunoffside <- as.data.frame(
+  lapply(X = c('runoffS', 'runoffO', 'runoffW', 'runoffN'),
+         FUN = function(x){
+           aggregate(
+             x = rain.events[[x]], 
+             by = list(rain.events$year), 
+             FUN = sum)
+         }))[, c(1, 2, 4, 6, 8)]
+colnames(annrunoffside) <- c('year', 'runoffS', 'runoffO','runoffW', 'runoffN')
 
-# annual totals
-annualFacadeRunoff <- aggregate(
-  x = rain.events$totalFacadeRunoff, 
-  by = list(rain.events$year), 
-  FUN = sum)
 
 # write outputs: 
 # rain.events: individual storms with their facade runoff on all 4 sides and their sum
@@ -90,7 +95,7 @@ write.table(x = rain.events,
             sep = ';', 
             row.names = FALSE)
 
-write.table(x = annualFacadeRunoff, 
+write.table(x = annrunoffside, 
             file = 'output_annualFacadeRunoff.txt', 
             quote = FALSE, 
             sep = ';', 
@@ -444,17 +449,6 @@ xy <- annualFacadeRunoff$Group.1
 annrain <- annrain[annrain$Group.1 %in% xy, ]
 
 barplot(annrain$x, names.arg = x$Group.1, las=2, main = 'annual rainfall [mm/year]')
-
-# annual totals per side
-annrainside <- as.data.frame(
-  lapply(X = c('runoffS', 'runoffO', 'runoffW', 'runoffN'),
-         FUN = function(x){
-           aggregate(
-             x = rain.events[[x]], 
-             by = list(rain.events$year), 
-             FUN = sum)
-         }))[, c(1, 2, 4, 6, 8)]
-colnames(annrainside) <- c('year', 'runoffS', 'runoffO','runoffW', 'runoffN')
 
 
 par(mar=c(3, 3, 2, 1))
