@@ -20,6 +20,11 @@ colnames(basar_bbr) <- colnames(basar_bbw)
 basar <- rbind(basar_bbr, basar_bbw)
 
 # fit model on training set (uses caret)
+
+
+
+
+
 yexp <- 0.5
 mod <- fitlm(data = basar, trainperc = 0.7, yexp = yexp)
 
@@ -214,6 +219,10 @@ getFacadeRunoffBaSaR <- function(dbName, dbTable,
   
   return(db)
 }
+
+
+
+
 
 fitlm <- function(data, trainperc, yexp){
   dataNoNA <- data[!is.na(data$specRunoff), ]
@@ -439,16 +448,26 @@ makePredSide <- function(side, data, yexp){
 
 
 
+x2007 <- rain.events[rain.events$year == 2007, ]
+x2017 <- rain.events[rain.events$year == 2017, ]
 
-# plot annual totals
+max(x2007$rainfall)
+sum(x2007$rainfall)
+
+max(x2017$rainfall)
+sum(x2017$rainfall)
+
+
+
 annrain <- aggregate(x = rain$values,
                      by = list(lubridate::year(rain$dateTime)),
                      FUN = sum,
                      na.rm = TRUE)
-xy <- annualFacadeRunoff$Group.1
+xy <- annrunoffside$Group.1
 annrain <- annrain[annrain$Group.1 %in% xy, ]
 
-barplot(annrain$x, names.arg = x$Group.1, las=2, main = 'annual rainfall [mm/year]')
+barplot(annrain$x, names.arg = annrain$Group.1, las=2, 
+        main = 'annual rainfall [mm/year]')
 
 
 par(mar=c(3, 3, 2, 1))
