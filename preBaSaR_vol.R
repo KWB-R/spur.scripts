@@ -58,14 +58,20 @@ rain.events <- makePredictors(
   rainfile = 'produkt_rr_stunde_19950901_20191231_00433.txt',
   airtempfile = 'produkt_tu_stunde_19510101_20191231_00433.txt')
 
-# predict facade runoff for hypothetical (perfectly aligned) facades of
-# all four cardinal directions (S, O, W, N)
+# for all events, predict sum of facade runoff from all sides
+rain.events$predRunoffAllSides <- makePredSideSum(
+  data = rain.events,
+  yexp = yexp, 
+  model = mod)
+
+# for all events, predict facade runoff from all sides
 rain.events <- cbind(rain.events, 
                      as.data.frame(
                        lapply(X = c('S', 'O', 'N', 'W'),
                               FUN = makePredSide,
                               data = rain.events,
-                              yexp = 0.5),
+                              yexp = 0.5,
+                              model = mod),
                        col.names = c('runoffS', 'runoffO', 
                                      'runoffN', 'runoffW')))
 
@@ -87,6 +93,12 @@ annrunoffside <- as.data.frame(
 colnames(annrunoffside) <- c('year', 'runoffS', 'runoffO','runoffW', 'runoffN')
 
 
+# annual totals for sum of all sides
+annrunofftot <- aggregate(
+  x = rain.events$predRunoffAllSides,
+  by = list(rain.events$year),
+  FUN = sum)
+
 # write outputs: 
 # rain.events: individual storms with their facade runoff on all 4 sides and their sum
 # annualFacadeRunoff: annual totals (total runoff of four facade sides for each year)
@@ -96,8 +108,8 @@ write.table(x = rain.events,
             sep = ';', 
             row.names = FALSE)
 
-write.table(x = annrunoffside, 
-            file = 'output_annualFacadeRunoff.txt', 
+write.table(x = annrunofftot, 
+            file = 'output_annualFacadeRunoffAllSides.txt', 
             quote = FALSE, 
             sep = ';', 
             row.names = FALSE)
@@ -447,14 +459,14 @@ makePredictors <- function(windfile,
   return(rain.events)
 }
 
-makePredSide <- function(side, data, yexp){
+makePredSide <- function(side, data, yexp, model){
   
   XpredSide <- data.frame(
     rainfall = data$rainfall,
     angleAttack = data[, paste0('angleAttack', side)],
     windvel = data$windvelmean)
   
-  ypredraw <- predict(object = mod, 
+  ypredraw <- predict(object = model, 
                       newdata = XpredSide)
   
   ypred <- ypredraw^(1/yexp)
@@ -462,7 +474,18 @@ makePredSide <- function(side, data, yexp){
   return(ypred)
 }
 
-
+makePredSideSum <- function(data, yexp, model){
+  
+  Xpred <- data.frame(rainfall = data$rainfall, 
+                      windvel = data$windvelmean)
+  
+  ypredraw <- predict(object = model,
+                      newdata = Xpred)
+  
+  ypred <- ypredraw^(1/yexp)
+  
+  return(ypred)
+}
 
 
 
@@ -474,8 +497,6 @@ sum(x2007$rainfall)
 
 max(x2017$rainfall)
 sum(x2017$rainfall)
-
-
 
 annrain <- aggregate(x = rain$values,
                      by = list(lubridate::year(rain$dateTime)),
