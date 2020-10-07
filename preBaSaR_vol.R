@@ -19,12 +19,9 @@ colnames(basar_bbr) <- colnames(basar_bbw)
 
 basar <- rbind(basar_bbr, basar_bbw)
 
+basar <- aggregateSides(basar)
+
 # fit model on training set (uses caret)
-
-
-
-
-
 yexp <- 0.5
 mod <- fitlm(data = basar, trainperc = 0.7, yexp = yexp)
 
@@ -35,23 +32,22 @@ car::vif(mod) # check for multicollinearity
 # plot residuals and leverage
 plotResLev(model = mod)
 
-# test predictions on test set (the model predicts y^yexp, so we have to transform
-# y back)
+# test predictions on test set (the model predicts y^yexp, so we have to
+#  transform y back)
 ypredraw <- predict(object = mod, 
                     newdata = data.frame(
                       test[, c('rainfall',
-                               'angleAttack', 
                                'windvel')]))
 ypred <- ypredraw^(1/yexp)
 
 # compute residual standard error
-computeRSE(yobs = test$specRunoff, 
+computeRSE(yobs = test$specRunoffTot, 
            ypred = ypred,
            model = mod)
 
 # plot 
 par(mfcol = c(1, 1), mar=c(4, 4, 1, 1))
-plot(test$specRunoff, ypred, asp=1, 
+plot(test$specRunoffTot, ypred, asp=1, 
      xlab = 'observed', ylab = 'predicted')
 abline(a = 0, b = 1, col = 'red')
 
@@ -180,7 +176,7 @@ getFacadeRunoffBaSaR <- function(dbName, dbTable,
                   winddir = Windrichtung_mean_Grad,
                   winddirsd = Windrichtung_sd)
   
-  # remove rows where bottles overflowed
+  # set volumes where bottles overflowed to NA
   index <- which(sapply(strsplit(x = db$runoff, 
                                  split = '>'), 
                         length) > 1)
@@ -220,27 +216,49 @@ getFacadeRunoffBaSaR <- function(dbName, dbTable,
   return(db)
 }
 
-
-
+aggregateSides <- function(data){
+  
+  data_wide <- tidyr::pivot_wider(
+    data = data,
+    id_cols = c('tBegRain', 'tEndRain', 'site',
+                'rainfall', 'windvel', 'windvelsd', 
+                'winddir', 'winddirsd'),
+    names_from = side,
+    values_from = specRunoff,
+    names_prefix = 'specRunoff')
+  
+  data_wide$specRunoffTot <- apply(
+    X = data_wide[, c('specRunoffW', 'specRunoffO', 
+                       'specRunoffS', 'specRunoffN')],
+    MARGIN = 1,
+    FUN = sum)
+  
+  data_wide <- data_wide[complete.cases(data_wide), ]
+  
+  return(data_wide)
+}
 
 
 fitlm <- function(data, trainperc, yexp){
-  dataNoNA <- data[!is.na(data$specRunoff), ]
   
   trainSamples <- caret::createDataPartition(
-    y = dataNoNA$specRunoff, 
+    y = data$specRunoffTot, 
     p = trainperc, 
     times = 1, 
     list = FALSE)[, 1]
   
-  train <<- dataNoNA[trainSamples, ]
-  test <<- dataNoNA[-trainSamples, ]
+  train <<- data[trainSamples, ]
+  test <<- data[-trainSamples, ]
   
   mod <- lm(
-    data = train, 
-    formula = I(specRunoff^yexp) ~ rainfall  + angleAttack + windvel +
-      rainfall:angleAttack:windvel, 
-    weights = 1/winddirsd)
+    data = data,
+    formula = I(specRunoffTot^yexp) ~ rainfall + windvel)
+  
+  # mod <- lm(
+  #   data = train, 
+  #   formula = I(specRunoff^yexp) ~ rainfall  + angleAttack + windvel +
+  #     rainfall:angleAttack:windvel, 
+  #   weights = 1/winddirsd)
   
   return(mod)
 }
