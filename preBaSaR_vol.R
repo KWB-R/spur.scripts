@@ -19,7 +19,7 @@ colnames(basar_bbr) <- colnames(basar_bbw)
 
 basar <- rbind(basar_bbr, basar_bbw)
 
-basar <- aggregateSides(basar)
+#basar <- aggregateSides(basar)
 
 # fit model on training set (uses caret)
 yexp <- 0.5
@@ -36,18 +36,17 @@ plotResLev(model = mod)
 #  transform y back)
 ypredraw <- predict(object = mod, 
                     newdata = data.frame(
-                      test[, c('rainfall',
-                               'windvel')]))
+                      test[, c('rainfall', 'windvel', 'angleAttack')]))
 ypred <- ypredraw^(1/yexp)
 
 # compute residual standard error
-computeRSE(yobs = test$specRunoffTot, 
+computeRSE(yobs = test$specRunoff, 
            ypred = ypred,
            model = mod)
 
-# plot 
+# plot
 par(mfcol = c(1, 1), mar=c(4, 4, 1, 1))
-plot(test$specRunoffTot, ypred, asp=1, 
+plot(test$specRunoff, ypred, asp=1, 
      xlab = 'observed', ylab = 'predicted')
 abline(a = 0, b = 1, col = 'red')
 
@@ -58,11 +57,6 @@ rain.events <- makePredictors(
   rainfile = 'produkt_rr_stunde_19950901_20191231_00433.txt',
   airtempfile = 'produkt_tu_stunde_19510101_20191231_00433.txt')
 
-# for all events, predict sum of facade runoff from all sides
-rain.events$predRunoffAllSides <- makePredSideSum(
-  data = rain.events,
-  yexp = yexp, 
-  model = mod)
 
 # for all events, predict facade runoff from all sides
 rain.events <- cbind(rain.events, 
@@ -92,24 +86,17 @@ annrunoffside <- as.data.frame(
          }))[, c(1, 2, 4, 6, 8)]
 colnames(annrunoffside) <- c('year', 'runoffS', 'runoffO','runoffW', 'runoffN')
 
-
-# annual totals for sum of all sides
-annrunofftot <- aggregate(
-  x = rain.events$predRunoffAllSides,
-  by = list(rain.events$year),
-  FUN = sum)
-
 # write outputs: 
-# rain.events: individual storms with their facade runoff on all 4 sides and their sum
-# annualFacadeRunoff: annual totals (total runoff of four facade sides for each year)
+# output_rain.events.txt: individual storms with their facade runoff on all 4 sides and their sum
+# output_annualrunoffside.txt: annual totals (total runoff of four facade sides for each year)
 write.table(x = rain.events, 
             file = 'output_rain.events.txt', 
             quote = FALSE, 
             sep = ';', 
             row.names = FALSE)
 
-write.table(x = annrunofftot, 
-            file = 'output_annualFacadeRunoffAllSides.txt', 
+write.table(x = annrunoffside, 
+            file = 'output_annualrunoffside.txt', 
             quote = FALSE, 
             sep = ';', 
             row.names = FALSE)
@@ -250,11 +237,12 @@ aggregateSides <- function(data){
   return(data_wide)
 }
 
-
 fitlm <- function(data, trainperc, yexp){
   
+  data <- data[!is.na(data$specRunoff), ]
+  
   trainSamples <- caret::createDataPartition(
-    y = data$specRunoffTot, 
+    y = data$specRunoff, 
     p = trainperc, 
     times = 1, 
     list = FALSE)[, 1]
@@ -263,14 +251,10 @@ fitlm <- function(data, trainperc, yexp){
   test <<- data[-trainSamples, ]
   
   mod <- lm(
-    data = data,
-    formula = I(specRunoffTot^yexp) ~ rainfall + windvel)
-  
-  # mod <- lm(
-  #   data = train, 
-  #   formula = I(specRunoff^yexp) ~ rainfall  + angleAttack + windvel +
-  #     rainfall:angleAttack:windvel, 
-  #   weights = 1/winddirsd)
+   data = train, 
+   formula = I(specRunoff^yexp) ~ rainfall  + angleAttack + windvel +
+     rainfall:angleAttack:windvel, 
+   weights = 1/winddirsd)
   
   return(mod)
 }
@@ -510,8 +494,8 @@ barplot(annrain$x, names.arg = annrain$Group.1, las=2,
 
 
 par(mar=c(3, 3, 2, 1))
-barplot(t(as.matrix(annrainside[, 2:ncol(annrainside)])), 
-        names.arg = annrainside$year, 
+barplot(t(as.matrix(annrunoffside[, 2:ncol(annrunoffside)])), 
+        names.arg = annrunoffside$year, 
         las = 2,
         main = 'Total facade runoff [l/m2/year]',
         col = c('red', 'blue', 'forestgreen', 'white'))
@@ -521,8 +505,3 @@ legend(x = 0, y = 40,
        cex = 0.8)
 
 
-barplot(t(as.matrix(annrainside[, 2:ncol(annrainside)])), 
-        names.arg = annrainside$year, 
-        las = 2,
-        main = 'Total facade runoff [l/m2/year]',
-        legend.text = T)
