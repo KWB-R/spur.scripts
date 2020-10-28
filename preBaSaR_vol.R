@@ -2,6 +2,7 @@
 
 # get data
 basar_bbr <- getFacadeRunoffBaSaR(
+  subfolder = 'data_facade_vol_c_annual',
   dbName = 'Genommene_Proben_Fassaden_BaSaR.xlsx',
   dbTable = 'BBR',
   dateTimeFormat = '%d.%m.%Y %H:%M',
@@ -9,6 +10,7 @@ basar_bbr <- getFacadeRunoffBaSaR(
   facadeOrientations = c(O = 94, S = 175, W = 268, N = 357))
 
 basar_bbw <- getFacadeRunoffBaSaR(
+  subfolder = 'data_facade_vol_c_annual',
   dbName = 'Genommene_Proben_Fassaden_BaSaR.xlsx',
   dbTable = 'BBW',
   dateTimeFormat = '%d.%m.%Y %H:%M',
@@ -53,6 +55,7 @@ abline(a = 0, b = 1, col = 'red')
 
 # make predictors; weather data from station Tempelhof
 rain.events <- makePredictors(
+  subfolder = 'data_facade_vol_c_annual',
   windfile = 'produkt_ff_stunde_19740101_20191231_00433.txt',
   rainfile = 'produkt_rr_stunde_19950901_20191231_00433.txt',
   airtempfile = 'produkt_tu_stunde_19510101_20191231_00433.txt')
@@ -122,7 +125,8 @@ angleAttack <- function(facadeOrientation, windDir){
   return(aa)
 }
 
-getFacadeRunoffBaSaR <- function(dbName, dbTable,
+getFacadeRunoffBaSaR <- function(subfolder,
+                                 dbName, dbTable,
                                  dateTimeFormat, tz,
                                  facadeOrientations){
   
@@ -130,7 +134,7 @@ getFacadeRunoffBaSaR <- function(dbName, dbTable,
   library(dplyr)
   
   # read BaSaR facade runoff table
-  db <- readxl::read_excel(path = dbName,
+  db <- readxl::read_excel(path = file.path(subfolder, dbName),
                            sheet = dbTable,
                            col_types = "text", 
                            skip = 2, 
@@ -278,12 +282,13 @@ computeRSE <- function(yobs, ypred, model){
   return(rse)
 }
 
-makePredictors <- function(windfile,
+makePredictors <- function(subfolder, 
+                           windfile,
                            rainfile,
                            airtempfile){
   
   # load data
-  dat <- lapply(X = c(windfile, rainfile, airtempfile),
+  dat <- lapply(X = file.path(subfolder, c(windfile, rainfile, airtempfile)),
                 FUN = read.table,
                 header = TRUE,
                 sep = ';',
@@ -472,6 +477,7 @@ makePredSideSum <- function(data, yexp, model){
 }
 
 
+# raw code -----------------------------------------------------------------------------------
 
 x2007 <- rain.events[rain.events$year == 2007, ]
 x2017 <- rain.events[rain.events$year == 2017, ]

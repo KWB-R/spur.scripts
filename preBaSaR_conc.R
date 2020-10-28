@@ -1,76 +1,120 @@
 # explore mean emitted concentrations from BaSaR and SpuR facades
 
 # grab data from both projects
-basar_bbr <- getMonitoringTable(
+basar_bbr_facade <- getMonitoringTable(
+  subfolder = 'data_facade_vol_c_annual',
   dbName = 'BBRf_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
   project = 'basar',
   detLimOperator = 0.5,
   site = 'bbr',
+  source = 'facade',
   dateTimeFormat = '%Y-%m-%d %H:%M:%S', 
   tz = 'Etc/GMT-1')
 
-basar_bbw <- getMonitoringTable(
+basar_bbw_facade <- getMonitoringTable(
+  subfolder = 'data_facade_vol_c_annual',
   dbName = 'BBWf_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
   project = 'basar',
   detLimOperator = 0.5,
   site = 'bbw',
+  source = 'facade',
+  dateTimeFormat = '%Y-%m-%d %H:%M:%S', 
+  tz = 'Etc/GMT-1')
+
+basar_bbr_roof <- getMonitoringTable(
+  subfolder = 'data_facade_vol_c_annual',
+  dbName = 'BBRr_20200518_conc.txt',
+  dbTable = NA,
+  format = 'txt',
+  project = 'basar',
+  detLimOperator = 0.5,
+  site = 'bbr',
+  source = 'roof',
+  dateTimeFormat = '%Y-%m-%d %H:%M:%S', 
+  tz = 'Etc/GMT-1')
+
+basar_bbw_roof <- getMonitoringTable(
+  subfolder = 'data_facade_vol_c_annual',
+  dbName = 'BBWr_20200518_conc.txt',
+  dbTable = NA,
+  format = 'txt',
+  project = 'basar',
+  detLimOperator = 0.5,
+  site = 'bbw',
+  source = 'roof',
   dateTimeFormat = '%Y-%m-%d %H:%M:%S', 
   tz = 'Etc/GMT-1')
 
 spur_pkw <- getMonitoringTable(
+  subfolder = 'data_facade_vol_c_annual',
   dbName = 'Felddatenbank_SpuR_Pankow.xlsx',
   dbTable = 'Felddatenbank',
   format = 'xls',
   project = 'spur',
   detLimOperator = 0.5,
   site = 'pkw',
+  source = 'facade+roof',
   dateTimeFormat = '%d.%m.%Y %H:%M', 
   tz = 'Etc/GMT-1')
 
 # make tables for target substances
-Zn <- rbind(makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+Zn <- rbind(makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                           'basar_bbr_roof', 'basar_bbw_roof',
+                                           'spur_pkw'),
                                substance = 'Zn_total'),
-            makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
-                               substance = 'Zn')) 
-Cu <- rbind(makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+            makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                           'basar_bbr_roof', 'basar_bbw_roof',
+                                           'spur_pkw'),
+                               substance = 'Zn'))
+
+Cu <- rbind(makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                 'basar_bbr_roof', 'basar_bbw_roof',
+                                 'spur_pkw'),
                                substance = 'Cu_total'),
-            makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
-                               substance = 'Cu')) 
-Diuron <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+            makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                           'basar_bbr_roof', 'basar_bbw_roof',
+                                           'spur_pkw'),
+                               substance = 'Cu'))
+
+Diuron <- makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                         'basar_bbr_roof', 'basar_bbw_roof',
+                                         'spur_pkw'),
                              substance = 'Diuron')
-Terbutryn <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+
+Terbutryn <- makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                            'basar_bbr_roof', 'basar_bbw_roof',
+                                            'spur_pkw'),
                                 substance = 'Terbutryn')
-Terbutryn_desethyl <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+
+Terbutryn_desethyl <- makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                                     'basar_bbr_roof', 'basar_bbw_roof',
+                                                     'spur_pkw'),
                                 substance = 'Terbutryn_desethyl')
+
 Terbutryn_2_hydroxy <- rbind(makeSubstanceTable(
-  dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+  dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+              'basar_bbr_roof', 'basar_bbw_roof',
+              'spur_pkw'),
   substance = 'Terbutryn.2.hydroxy'),
-  makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw', 'spur_pkw'),
+  makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                 'basar_bbr_roof', 'basar_bbw_roof',
+                                 'spur_pkw'),
                      substance = 'Terbutryn-2-hydroxy'))
 
-
-Benzothiazol <- makeSubstanceTable(dbNames = 'spur_pkw', 
-                                   substance = 'Benzothiazol')
-
-Mecoprop <- makeSubstanceTable(dbNames = c('basar_bbr', 'basar_bbw'), 
+Mecoprop <- makeSubstanceTable(dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
+                                           'basar_bbr_roof', 'basar_bbw_roof',
+                                           'spur_pkw'), 
                                substance = 'Mecoprop')
 
 
 # statistics
-Zn
-Cu
-Diuron
-Terbutryn
-Terbutryn_desethyl
-Terbutryn_2_hydroxy
-Benzothiazol
-Mecoprop
-
-
+summary(Terbutryn$concentration)
+summary(Diuron$concentration)
+summary(Mecoprop$concentration)
 
 # plots
 plotSubstance(Zn)
@@ -79,14 +123,13 @@ plotSubstance(Diuron)
 plotSubstance(Terbutryn)
 plotSubstance(Terbutryn_desethyl) 
 plotSubstance(Terbutryn_2_hydroxy)
-plotSubstance(Benzothiazol)
 plotSubstance(Mecoprop)
 
 
-                                 
 # functions ---------------------------------------------------------------------------------
-getMonitoringTable <- function(dbName, dbTable, 
-                               format, project, site, 
+getMonitoringTable <- function(subfolder,
+                               dbName, dbTable, 
+                               format, project, site, source,
                                detLimOperator, dateTimeFormat, 
                                tz){
 
@@ -94,10 +137,13 @@ getMonitoringTable <- function(dbName, dbTable,
   
   if(format == 'txt'){
     
-    db <- read.table(dbName, header = TRUE, sep = ";", colClasses = 'character')
+    db <- read.table(file.path(subfolder, dbName), 
+                     header = TRUE, 
+                     sep = ";", 
+                     colClasses = 'character')
     
   } else if (format == 'xls'){
-    db <- as.data.frame(readxl::read_excel(dbName, 
+    db <- as.data.frame(readxl::read_excel(file.path(subfolder, dbName), 
                                            sheet = dbTable, 
                                            col_types = "text", 
                                            skip = 3, 
@@ -109,6 +155,7 @@ getMonitoringTable <- function(dbName, dbTable,
   
   db$site <- site
   db$project <- project
+  db$source <- source
   
   # grab targeted substances and accompanying event data
   index <- grepl(pattern = paste('tBegRain', 'tEndRain','Regenhöhe_mm',
@@ -116,7 +163,8 @@ getMonitoringTable <- function(dbName, dbTable,
                                  'Lufttemperatur', 'Wind',
                                  'Zn', 'Cu', 'Diuron', 'Isoproturon', 
                                  'Mecoprop', 'Terbutryn',  'Terbumeton', 
-                                 'Benzothiazol', 'OIT', 'site', 'project' ,
+                                 'Benzothiazol', 'OIT', 'site', 'project',
+                                 'source',
                                  sep = '|',
                                  collapse = ''),
                  x = colnames(db))
@@ -172,14 +220,13 @@ makeSubstanceTable <- function(dbNames, substance){
   output <- data.frame()
   
   colnam <- c("tBegRain", "tEndRain", "Regenhöhe_mm", "Anzahl_Ereignisse",
-              "Wind_v_mean_m_s", "Wind_v_sd_m_s", "Windricht_grad_mean", 
-              "Windricht_grad_se", "site", "project", "substance", "concentration")
+              "site", "project", "source", "substance", "concentration")
   
   for(dbi in dbNames){
     dat <- get(dbi)
     dat <- dat[dat$substance == substance,
                grepl(pattern = paste('tBegRain', 'tEndRain', 'Regenhöhe',
-                                     'Anzahl_Ereig', 'Wind', 'site', 'project',
+                                     'Anzahl_Ereig', 'site', 'project', 'source',
                                      'substance', 'concentration',
                                      sep = '|', collapse = ''), 
                      x = colnames(dat))]
