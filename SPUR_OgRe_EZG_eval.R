@@ -287,10 +287,10 @@ for (OgRe_Type in c(OgRe_Types, "AND")) {
   
   ##reduce yard and street runoff by added facade runoff
   
-  x_berlin_runoff$runoff_street[index_berlin] <- x_berlin_runoff$ROW_street[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] -
-                                                 x_berlin_runoff$runoff_putz[index_berlin] / 2     
-  x_berlin_runoff$runoff_yard[index_berlin] <- x_berlin_runoff$ROW_yards[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] - 
-                                               x_berlin_runoff$runoff_putz[index_berlin] / 2                                              
+  x_berlin_runoff$runoff_street[index_berlin] <- max(0, x_berlin_runoff$ROW_street[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] -
+                                                 x_berlin_runoff$runoff_putz[index_berlin] / 2)     
+  x_berlin_runoff$runoff_yard[index_berlin] <- max(0, x_berlin_runoff$ROW_yards[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] - 
+                                               x_berlin_runoff$runoff_putz[index_berlin] / 2)                                              
   
   
 }
