@@ -89,7 +89,7 @@ x_comb_SPUR$OgRe_Type <- OgRe_Types$OgRe_Typ_klar[index_typ]
 OgRe_conc <- read.table(file = file.path(data.dir, "annual_mean_conc.csv"), 
                         header = TRUE, sep = ";", dec = ".", as.is = TRUE)
 
-SPUR_subs <- kwb.ogre::OGRE_VARIABLES()[c(26,48,55,57,65,66,67),]
+SPUR_subs <- kwb.ogre::OGRE_VARIABLES()[c(18,26,48,55,57,65,66,67),]
 
 index <- match(SPUR_subs$VariableName, OgRe_conc$VariableName)
 
