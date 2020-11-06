@@ -1,0 +1,24 @@
+{
+    "id": "40727374",
+    "path": "C:/kwb/SpuR/spur/preBaSaR_conc.R",
+    "project_path": "preBaSaR_conc.R",
+    "type": "r_source",
+    "hash": "2849307129",
+    "contents": "",
+    "dirty": false,
+    "created": 1604574159608.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "cursorPosition": "64,15",
+        "scrollLine": "42"
+    },
+    "folds": "155|35|237|0|\n239|51|263|0|\n265|37|282|0|\n",
+    "lastKnownWriteTime": 1604659733,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1604659733803,
+    "read_only": false,
+    "read_only_alternatives": []
+}
