@@ -181,10 +181,16 @@ plotSubstance(Mecoprop)
 
 ALT <- read.table('data/Konz_ALT.csv', header = TRUE, sep = ';')
 NEU <- read.table('data/Konz_NEU.csv', header = TRUE, sep = ';')
-EFH <- read.table('data/Konz_NEU.csv', header = TRUE, sep = ';')
-GEW <- read.table('data/Konz_NEU.csv', header = TRUE, sep = ';')
+EFH <- read.table('data/Konz_EFH.csv', header = TRUE, sep = ';')
+GEW <- read.table('data/Konz_GEW.csv', header = TRUE, sep = ';')
 
 
+
+# organize OgRe lines -> take only one source (select one row)
+# switch off outliers
+# project names on x axis
+# diuron -> remove values for site bbr
+# y axis unit should read ug/l (microgram)
 
 boxplot(concentration ~ source, data= Diuron, main = 'Diuron', xlab = NA , ylab = 'concentration [mg/L]')
 abline(h = (1000*c(ALT$Konz_Diuron, NEU$Konz_Diuron, EFH$Konz_Diuron, GEW$Konz_Diuron)), col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
