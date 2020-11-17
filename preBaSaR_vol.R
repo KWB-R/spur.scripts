@@ -287,14 +287,14 @@ makePredictors <- function(subfolder,
                            rainfile,
                            airtempfile){
   
-  # load data
+  # load raw weather data
   dat <- lapply(X = file.path(subfolder, c(windfile, rainfile, airtempfile)),
                 FUN = read.table,
                 header = TRUE,
                 sep = ';',
                 colClasses = 'character')
   
-  # select cols and adjust colnames
+  # select columns and adjust column names
   trimData <- function(dat, keepcols, mynames){
     trimmeddat <- dat[, keepcols]   
     colnames(trimmeddat) <- mynames
@@ -475,39 +475,4 @@ makePredSideSum <- function(data, yexp, model){
   
   return(ypred)
 }
-
-
-# raw code -----------------------------------------------------------------------------------
-
-x2007 <- rain.events[rain.events$year == 2007, ]
-x2017 <- rain.events[rain.events$year == 2017, ]
-
-max(x2007$rainfall)
-sum(x2007$rainfall)
-
-max(x2017$rainfall)
-sum(x2017$rainfall)
-
-annrain <- aggregate(x = rain$values,
-                     by = list(lubridate::year(rain$dateTime)),
-                     FUN = sum,
-                     na.rm = TRUE)
-xy <- annrunoffside$Group.1
-annrain <- annrain[annrain$Group.1 %in% xy, ]
-
-barplot(annrain$x, names.arg = annrain$Group.1, las=2, 
-        main = 'annual rainfall [mm/year]')
-
-
-par(mar=c(3, 3, 2, 1))
-barplot(t(as.matrix(annrunoffside[, 2:ncol(annrunoffside)])), 
-        names.arg = annrunoffside$year, 
-        las = 2,
-        main = 'Total facade runoff [l/m2/year]',
-        col = c('red', 'blue', 'forestgreen', 'white'))
-legend(x = 0, y = 40, 
-       legend = c('runoffS', 'runoffO','runoffW', 'runoffN'),
-       fill = c('red', 'blue', 'forestgreen', 'white'),
-       cex = 0.8)
-
 
