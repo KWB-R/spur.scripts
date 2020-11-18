@@ -2,7 +2,7 @@
 
 # get data
 basar_bbr <- getFacadeRunoffBaSaR(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbName = 'Genommene_Proben_Fassaden_BaSaR.xlsx',
   dbTable = 'BBR',
   dateTimeFormat = '%d.%m.%Y %H:%M',
@@ -10,7 +10,7 @@ basar_bbr <- getFacadeRunoffBaSaR(
   facadeOrientations = c(O = 94, S = 175, W = 268, N = 357))
 
 basar_bbw <- getFacadeRunoffBaSaR(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbName = 'Genommene_Proben_Fassaden_BaSaR.xlsx',
   dbTable = 'BBW',
   dateTimeFormat = '%d.%m.%Y %H:%M',
@@ -20,8 +20,6 @@ basar_bbw <- getFacadeRunoffBaSaR(
 colnames(basar_bbr) <- colnames(basar_bbw)
 
 basar <- rbind(basar_bbr, basar_bbw)
-
-#basar <- aggregateSides(basar)
 
 # fit model on training set (uses caret)
 yexp <- 0.5
@@ -35,7 +33,7 @@ car::vif(mod) # check for multicollinearity
 plotResLev(model = mod)
 
 # test predictions on test set (the model predicts y^yexp, so we have to
-#  transform y back)
+# transform y back)
 ypredraw <- predict(object = mod, 
                     newdata = data.frame(
                       test[, c('rainfall', 'windvel', 'angleAttack')]))
@@ -53,9 +51,9 @@ plot(test$specRunoff, ypred, asp=1,
 abline(a = 0, b = 1, col = 'red')
 
 
-# make predictors; weather data from station Tempelhof
+# make predictors; weather data from station Berlin Tempelhof (00433)
 rain.events <- makePredictors(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   windfile = 'produkt_ff_stunde_19740101_20191231_00433.txt',
   rainfile = 'produkt_rr_stunde_19950901_20191231_00433.txt',
   airtempfile = 'produkt_tu_stunde_19510101_20191231_00433.txt')

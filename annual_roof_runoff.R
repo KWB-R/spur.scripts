@@ -1,6 +1,7 @@
 # upscale measured roof runoff in BaSaR to annual total through an event-based
 # linear regression
 
+'Y:/AUFTRAEGE/_Auftraege_laufend/UFOPLAN-BaSaR/Data-Work packages/AP3 - Monitoring/_Daten/RAW/_Regen'
 rain <- readRain(rawdir = 'c:/kwb/BaSaR/_Daten/RAW/_Regen',
                  dbName = 'rainDB.txt')
 
