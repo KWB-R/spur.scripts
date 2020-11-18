@@ -23,7 +23,7 @@ basar <- rbind(basar_bbr, basar_bbw)
 
 # fit model on training set (uses caret)
 yexp <- 0.5
-mod <- fitlm(data = basar, trainperc = 0.7, yexp = yexp)
+mod <- fitlmfacade(data = basar, trainperc = 0.7, yexp = yexp)
 
 # assess model
 summary(mod) # general summary
@@ -46,9 +46,9 @@ computeRSE(yobs = test$specRunoff,
 
 # plot
 par(mfcol = c(1, 1), mar=c(4, 4, 1, 1))
-plot(test$specRunoff, ypred, asp=1, 
-     xlab = 'observed', ylab = 'predicted')
-abline(a = 0, b = 1, col = 'red')
+plot(test$specRunoff, ypred, xlim = c(0, 1), ylim = c(0, 1),
+     xlab = 'Observed facade runoff [l/m2]', ylab = 'Predicted facade runoff [l/m2]')
+abline(a = 0, b = 1)
 
 
 # make predictors; weather data from station Berlin Tempelhof (00433)
@@ -63,7 +63,7 @@ rain.events <- makePredictors(
 rain.events <- cbind(rain.events, 
                      as.data.frame(
                        lapply(X = c('S', 'O', 'N', 'W'),
-                              FUN = makePredSide,
+                              FUN = predictFacadeRunoffSide,
                               data = rain.events,
                               yexp = 0.5,
                               model = mod),
@@ -239,7 +239,7 @@ aggregateSides <- function(data){
   return(data_wide)
 }
 
-fitlm <- function(data, trainperc, yexp){
+fitlmfacade <- function(data, trainperc, yexp){
   
   data <- data[!is.na(data$specRunoff), ]
   
@@ -446,7 +446,7 @@ makePredictors <- function(subfolder,
   return(rain.events)
 }
 
-makePredSide <- function(side, data, yexp, model){
+predictFacadeRunoffSide <- function(side, data, yexp, model){
   
   XpredSide <- data.frame(
     rainfall = data$rainfall,
@@ -460,17 +460,3 @@ makePredSide <- function(side, data, yexp, model){
   
   return(ypred)
 }
-
-makePredSideSum <- function(data, yexp, model){
-  
-  Xpred <- data.frame(rainfall = data$rainfall, 
-                      windvel = data$windvelmean)
-  
-  ypredraw <- predict(object = model,
-                      newdata = Xpred)
-  
-  ypred <- ypredraw^(1/yexp)
-  
-  return(ypred)
-}
-
