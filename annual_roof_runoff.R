@@ -1,11 +1,13 @@
 # upscale measured roof runoff in BaSaR to annual total through an event-based
 # linear regression
 
-'Y:/AUFTRAEGE/_Auftraege_laufend/UFOPLAN-BaSaR/Data-Work packages/AP3 - Monitoring/_Daten/RAW/_Regen'
-rain <- readRain(rawdir = 'c:/kwb/BaSaR/_Daten/RAW/_Regen',
+#'Y:/AUFTRAEGE/_Auftraege_laufend/UFOPLAN-BaSaR/Data-Work packages/AP3 - Monitoring/_Daten/RAW/_Regen'
+#'c:/kwb/BaSaR/_Daten/RAW/_Regen'
+
+rain <- readRain(rawdir = 'Y:/AUFTRAEGE/_Auftraege_laufend/UFOPLAN-BaSaR/Data-Work packages/AP3 - Monitoring/_Daten/RAW/_Regen',
                  dbName = 'rainDB.txt')
 
-temperature <- readTemp(rawdir = 'c:/kwb/BaSaR/_Daten/RAW/_KlimaDWD/Temperature',
+temperature <- readTemp(rawdir = 'Y:/AUFTRAEGE/_Auftraege_laufend/UFOPLAN-BaSaR/Data-Work packages/AP3 - Monitoring/_Daten/RAW/_KlimaDWD/Temperature',
                         dbName = 'tempData.txt')
 
 roofrunoff_bbw <- readRoofDB(subfolder = 'data_prelim_sources',
@@ -16,13 +18,13 @@ roofrunoff_bbr <- readRoofDB(subfolder = 'data_prelim_sources',
                              dbName = 'Genommene_Proben_Dach_BaSaR.xlsx',
                              site = 'BBR')
 
-roofmod_bbw <- fitlm(roofrunoffdata = roofrunoff_bbw,
-                     raindata = rain,
-                     temperaturedata = temperature)
+roofmod_bbw <- fitlmroof(roofrunoffdata = roofrunoff_bbw,
+                         raindata = rain,
+                         temperaturedata = temperature)
 
-roofmod_bbr <- fitlm(roofrunoffdata = roofrunoff_bbr,
-                     raindata = rain,
-                     temperaturedata = temperature)
+roofmod_bbr <- fitlmroof(roofrunoffdata = roofrunoff_bbr,
+                         raindata = rain,
+                         temperaturedata = temperature)
 
 summary(roofmod_bbw$model)
 summary(roofmod_bbr$model)
@@ -62,7 +64,7 @@ rain.events$roofrunoff_green <- predict(
                        TmaxBefore = rain.events$airtempmax))
 
 facaderunoff <- read.table(
-  'data_prelim_sources/output_annualFacadeRunoff.txt',
+  'data_prelim_sources/output_annualrunoffside.txt',
   sep = ';',
   header = TRUE)
 
@@ -85,22 +87,19 @@ annual2 <- cbind(annual2, apply(X = facaderunoff[, 2:ncol(facaderunoff)],
                                 FUN = sum))
 
 colnames(annual2) <- c('year', 'rain', 'roofrunoff_bitumen', 
-                      'roofrunoff_green', 'facaderunoff_all_sides')
+                       'roofrunoff_green', 'facaderunoff_all_sides')
 
-windows(width = 5.3, height = 8)
-par(mfcol = c(4, 1), mar = c(3.5, 3, 2, 1))
-barplot(annual2$rain, names.arg = annual2$year, ylim = c(0, 850), yaxt = 'n',
-        main = 'Rainfall [mm/year]', las = 2, cex.names = 1.25)
-axis(2, at = seq(0, 900, by = 100), las = 2, cex.axis = 1.1)
-barplot(annual2$roofrunoff_bitumen, names.arg = annual2$year, ylim = c(0, 850), 
-        yaxt = 'n', main = 'Runoff - bitumen roof [mm/year]', las = 2, cex.names = 1.25)
-axis(2, at = seq(0, 850, by = 100), las = 2, cex.axis = 1.1)
-barplot(annual2$roofrunoff_green, names.arg = annual2$year, ylim = c(0, 850), 
-        yaxt = 'n', main = 'Runoff - green roof [mm/year]', las = 2, cex.names = 1.25)
-axis(2, at = seq(0, 850, by = 100), las = 2, cex.axis = 1.1)
-barplot(annual2$facaderunoff_all_sides, names.arg = annual2$year, ylim = c(0, 50), 
-        yaxt = 'n', main = 'Runoff - facade (sum all sides) [mm/year]', las = 2, cex.names = 1.25)
-axis(2, at = seq(0, 50, by = 5), las = 2, cex.axis = 1.1)
+
+
+barplot(t(as.matrix(annual2[, 2:ncol(annual2)])), 
+        names.arg = annual2$year,
+        beside = TRUE, 
+        legend.text = c('rain', 'runoff_bitumen', 'runoff_green', 'runoff_facade_all'),
+        args.legend = list(x = 42, y = 900, ncol = 2, cex = 0.8),
+        col = c('blue', 'grey', 'forestgreen', 'darkorange'),
+        main = 'Annual runoff [l/m²]',
+        las = 2)
+
 
 
 
@@ -169,7 +168,7 @@ readRoofDB <- function(subfolder, dbName, site){
 }
 
 # fit linear regression
-fitlm <- function(roofrunoffdata, raindata, temperaturedata){
+fitlmroof <- function(roofrunoffdata, raindata, temperaturedata){
   
   # for site BBW, adjust rainfall depth for event on 07.01.2019 07:05, since it was sampled before 
   # it ended and was entered as such in Genommene_Proben_Dach. For the regression, it's better to
@@ -224,7 +223,7 @@ fitlm <- function(roofrunoffdata, raindata, temperaturedata){
     object = mod,
     newdata = data.frame(Regenhöhe_mm = roofrunoffdata$Regenhöhe_mm,
                          TmaxBefore = roofrunoffdata$TmaxBefore))
-
+  
   # return output
   return(list(model=mod, 
               obsTable=roofrunoffdata))
