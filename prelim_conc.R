@@ -2,7 +2,7 @@
 
 # grab data from both projects
 basar_bbr_facade <- getMonitoringTable(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbName = 'BBRf_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
@@ -14,7 +14,7 @@ basar_bbr_facade <- getMonitoringTable(
   tz = 'Etc/GMT-1')
 
 basar_bbw_facade <- getMonitoringTable(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbName = 'BBWf_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
@@ -26,7 +26,7 @@ basar_bbw_facade <- getMonitoringTable(
   tz = 'Etc/GMT-1')
 
 basar_bbr_roof <- getMonitoringTable(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbName = 'BBRr_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
@@ -38,7 +38,7 @@ basar_bbr_roof <- getMonitoringTable(
   tz = 'Etc/GMT-1')
 
 basar_bbw_roof <- getMonitoringTable(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbName = 'BBWr_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
@@ -50,7 +50,7 @@ basar_bbw_roof <- getMonitoringTable(
   tz = 'Etc/GMT-1')
 
 spur_pkw <- getMonitoringTable(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbName = 'Felddatenbank_SpuR_Pankow.xlsx',
   dbTable = 'Felddatenbank',
   format = 'xls',
@@ -63,7 +63,7 @@ spur_pkw <- getMonitoringTable(
 
 
 basar_bbr_kanal <- getMonitoringTable(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbTable = NA,
   dbName = 'BBRs_20200518_conc.txt',
   format = 'txt',
@@ -76,7 +76,7 @@ basar_bbr_kanal <- getMonitoringTable(
 
 
 basar_bbw_kanal <- getMonitoringTable(
-  subfolder = 'data_facade_vol_c_annual',
+  subfolder = 'data_prelim_sources',
   dbTable = NA,
   dbName = 'BBWs_20200518_conc.txt',
   format = 'txt',
@@ -158,6 +158,9 @@ Mecoprop <- makeSubstanceTable(
               'spur_pkw'), 
   substance = 'Mecoprop')
 
+Mecoprop_ohne_Gruendach <- Mecoprop[Mecoprop$site != 'bbr', ] # remove green roof
+# remove facade
+
 Benzothiazol <- makeSubstanceTable(
   dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
               'basar_bbr_roof', 'basar_bbw_roof',
@@ -193,9 +196,30 @@ GEW <- read.table('data/Konz_EFH.csv', header = TRUE, sep = ';')
 
 
 #Mecoprop from Bitumendach [1]
-Mecoprop$source <- factor(Mecoprop$source , levels=c("facade", "roof", "sewer", "facade & roof"))
-boxplot(concentration ~ source, data = Mecoprop, main = 'Mecoprop', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE)
-abline(h = (1000*c(ALT$Konz_Mecoprop[1], NEU$Konz_Mecoprop[1], EFH$Konz_Mecoprop[1], GEW$Konz_Mecoprop[1])), col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+# Mecoprop_ohne_Gruendach$source <- factor(
+#   Mecoprop_ohne_Gruendach$source , 
+#   levels=c("facade", "roof", "sewer", "facade & roof"))
+
+Mecoprop_ohne_Gruendach$plotOrder <- plyr::mapvalues(Mecoprop_ohne_Gruendach$source,
+                                                     from = c('facade', 'roof', 'facade+roof', 'storm_sewer'), 
+                                                     to = c(1, 2, 4, 3))
+
+boxplot(concentration ~ plotOrder, 
+        data = Mecoprop_ohne_Gruendach, 
+        main = 'Mecoprop', 
+        xlab = NA , ylab = 'concentration [mg/L]', 
+        outline= FALSE,
+        xaxt = 'n')
+axis(1, at = 1:4, labels = c('facade', 
+                             'roof\n1 year old', 
+                             'storm sewer', 
+                             'facade+roof\nnew'),
+     padj = 0.25)
+abline(h = (1000*c(ALT$Konz_Mecoprop[1], 
+                   NEU$Konz_Mecoprop[1], 
+                   EFH$Konz_Mecoprop[1], 
+                   GEW$Konz_Mecoprop[1])), 
+       col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
 legend(x= 0.5 , y = 440, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty = 2)
 
 #Diuron is only found in Putzfassade [6]
