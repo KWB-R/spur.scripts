@@ -116,11 +116,12 @@ Cu <- rbind(makeSubstanceTable(
     substance = 'Cu'))
 
 Diuron <- makeSubstanceTable(
-  dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-              'basar_bbr_roof', 'basar_bbw_roof',
-              'basar_bbr_kanal','basar_bbw_kanal',
+  dbNames = c('basar_bbw_facade', 
+              'basar_bbw_roof',
+              'basar_bbw_kanal',
               'spur_pkw'),
   substance = 'Diuron')
+
 
 Terbutryn <- makeSubstanceTable(
   dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
@@ -181,40 +182,51 @@ plotSubstance(Mecoprop)
 
 ALT <- read.table('data/Konz_ALT.csv', header = TRUE, sep = ';')
 NEU <- read.table('data/Konz_NEU.csv', header = TRUE, sep = ';')
-EFH <- read.table('data/Konz_EFH.csv', header = TRUE, sep = ';')
-GEW <- read.table('data/Konz_GEW.csv', header = TRUE, sep = ';')
+EFH <- read.table('data/Konz_GEW.csv', header = TRUE, sep = ';')
+GEW <- read.table('data/Konz_EFH.csv', header = TRUE, sep = ';')
+
+# bring plots in the right order
+#substances<- c(Mecoprop$source, Diuron$source, Terbutryn$source, Benzothiazol$source, Zn$source, Cu$source)
+#for (i in 1:6){
+#substances[i]<- factor(substances[i], levels = c("facade", "roof", "sewer", "facade & roof"))  
+#}
 
 
+#Mecoprop from Bitumendach [1]
+Mecoprop$source <- factor(Mecoprop$source , levels=c("facade", "roof", "sewer", "facade & roof"))
+boxplot(concentration ~ source, data = Mecoprop, main = 'Mecoprop', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE)
+abline(h = (1000*c(ALT$Konz_Mecoprop[1], NEU$Konz_Mecoprop[1], EFH$Konz_Mecoprop[1], GEW$Konz_Mecoprop[1])), col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+legend(x= 0.5 , y = 440, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty = 2)
 
-# organize OgRe lines -> take only one source (select one row)
-# switch off outliers
-# project names on x axis
-# diuron -> remove values for site bbr
-# y axis unit should read ug/l (microgram)
+#Diuron is only found in Putzfassade [6]
+Diuron$source <- factor(Diuron$source , levels=c("facade", "roof", "sewer", "facade & roof"))
+boxplot(concentration ~ source, data = Diuron, main = 'Diuron', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE)
+abline(h = (1000*c(ALT$Konz_Diuron[6], NEU$Konz_Diuron[6], EFH$Konz_Diuron[6], GEW$Konz_Diuron[6])), col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+legend(x= 3.5 , y = 1710, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty = 2)
 
-boxplot(concentration ~ source, data= Diuron, main = 'Diuron', xlab = NA , ylab = 'concentration [mg/L]')
-abline(h = (1000*c(ALT$Konz_Diuron, NEU$Konz_Diuron, EFH$Konz_Diuron, GEW$Konz_Diuron)), col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x= 3.4 , y=2900, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
+#Terbutryn from Putzfassade [6]
+Terbutryn$source <- factor(Terbutryn$source , levels=c("facade", "roof", "sewer", "facade & roof"))
+boxplot(concentration ~ source, data= Terbutryn, main = 'Terbutryn', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE, ylim = c(0, 120))
+abline(h = (1000*c(ALT$Konz_Terbutryn[6], NEU$Konz_Terbutryn[6], EFH$Konz_Terbutry[6], GEW$Konz_Terbutryn[6])), col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+legend(x = 3.5 , y = 121.25, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty = 2)
 
-boxplot(concentration ~ source, data= Mecoprop, main = 'Mecoprop', xlab = NA , ylab = 'concentration [mg/L]')
-abline(h = (1000*c(ALT$Konz_Mecoprop, NEU$Konz_Mecoprop, EFH$Konz_Mecoprop, GEW$Konz_Mecoprop)), col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x= 3.4 , y= 440, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
+#Benzothiazol mostly from Streets and & yards but in our case it must be from Bitumendach [1] aswell. Anyways, we only have data from SpuR (not realy comprehensiv).
+Benzothiazol$source <- factor(Benzothiazol$source , levels=c("facade", "roof", "sewer", "facade & roof"))
+boxplot(concentration ~ source, data = Benzothiazol, main = 'Benzothiazol', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE, ylim = c(0, 25))
+abline(h = (1000*c(ALT$Konz_Benzothiazol[1], NEU$Konz_Benzothiazol[1], EFH$Konz_Benzothiazol[1], GEW$Konz_Benzothiazol[1])), col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+legend(x = 0.5 , y = 25.22, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
 
-boxplot(concentration ~ source, data= Terbutryn, main = 'Terbutryn', xlab = NA , ylab = 'concentration [mg/L]')
-abline(h = (1000*c(ALT$Konz_Terbutryn, NEU$Konz_Terbutryn, EFH$Konz_Terbutryn, GEW$Konz_Terbutryn)), col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x= 3.4 , y=83, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
+#Zn mostly from Straße and Roof, therefore we take Bitumendach [1] as comparison value 
+Zn$source <- factor(Zn$source , levels=c("facade", "roof", "sewer", "facade & roof"))
+boxplot(concentration ~ source, data = Zn, main = 'Zn', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE)
+abline(h = (1000*c(ALT$Konz_Zn[1], NEU$Konz_Zn[1], EFH$Konz_Zn[1], GEW$Konz_Zn[1])), col= c('red', 'green','blue','orange' ),lwd = 1, lty = 2)
+legend(x= 3.5 , y=12958, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
 
-boxplot(concentration ~ source, data = Benzothiazol, main = 'Benzothiazol', xlab = NA , ylab = 'concentration [mg/L]')
-abline(h = (1000*c(ALT$Konz_Benzothiazol, NEU$Konz_Benzothiazol, EFH$Konz_Benzothiazol, GEW$Konz_Benzothiazol)), col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x= 1.22 , y=22, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
-
-boxplot(concentration ~ source, data = Zn, main = 'Zn', xlab = NA , ylab = 'concentration [mg/L]')
-abline(h = (1000*c(ALT$Konz_Zn, NEU$Konz_Zn, EFH$Konz_Zn, GEW$Konz_Zn)), col= c('red', 'green','blue','orange' ),lwd = 1, lty = 2)
-legend(x= 3.4 , y=13000, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
-
-boxplot(concentration ~ source, data = Cu, main = 'Cu', xlab = NA , ylab = 'concentration [mg/L]')
-abline(h = (1000*c(ALT$Konz_Cu, NEU$Konz_Cu, EFH$Konz_Cu, GEW$Konz_Cu)), col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x= 3.4 , y=790, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
+#Cu mostly from Streets and Roofs, therefore we take Bitumendach [1] as comparison value  
+Cu$source <- factor(Cu$source , levels=c("facade", "roof", "sewer", "facade & roof"))
+boxplot(concentration ~ source, data = Cu, main = 'Cu', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE)
+abline(h = (1000*c(ALT$Konz_Cu[1], NEU$Konz_Cu[1], EFH$Konz_Cu[1], GEW$Konz_Cu[1])), col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+legend(x= 0.5 , y=776, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
 
 
 
