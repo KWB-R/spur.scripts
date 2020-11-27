@@ -90,81 +90,120 @@ basar_bbw_kanal <- getMonitoringTable(
 
 # make tables for target substances
 Zn <- rbind(makeSubstanceTable(
-  dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-              'basar_bbr_roof', 'basar_bbw_roof',
-              'basar_bbr_kanal','basar_bbw_kanal',
+  dbNames = c('basar_bbr_facade',
+              'basar_bbw_facade', 
+              'basar_bbr_roof',
+              'basar_bbw_roof',
+              'basar_bbr_kanal',
+              'basar_bbw_kanal',
               'spur_pkw'),
   substance = 'Zn_total'),
   makeSubstanceTable(
-    dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-                'basar_bbr_roof', 'basar_bbw_roof',
-                'basar_bbr_kanal','basar_bbw_kanal',
+    dbNames = c('basar_bbr_facade',
+                'basar_bbw_facade',
+                'basar_bbr_roof',
+                'basar_bbw_roof',
+                'basar_bbr_kanal',
+                'basar_bbw_kanal',
                 'spur_pkw'),
     substance = 'Zn'))
 
 Cu <- rbind(makeSubstanceTable(
-  dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-              'basar_bbr_roof', 'basar_bbw_roof',
-              'basar_bbr_kanal','basar_bbw_kanal',
+  dbNames = c('basar_bbr_facade',
+              'basar_bbw_facade', 
+              'basar_bbr_roof',
+              'basar_bbw_roof',
+              'basar_bbr_kanal',
+              'basar_bbw_kanal',
               'spur_pkw'),
+  
   substance = 'Cu_total'),
   makeSubstanceTable(
-    dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-                'basar_bbr_roof', 'basar_bbw_roof',
-                'basar_bbr_kanal','basar_bbw_kanal',
+    dbNames = c('basar_bbr_facade',
+                'basar_bbw_facade', 
+                'basar_bbr_roof',
+                'basar_bbw_roof',
+                'basar_bbr_kanal',
+                'basar_bbw_kanal',
                 'spur_pkw'),
     substance = 'Cu'))
 
 Diuron <- makeSubstanceTable(
-  dbNames = c('basar_bbw_facade', 
+  dbNames = c('basar_bbr_facade',
+              'basar_bbw_facade',
+              'basar_bbr_roof',
               'basar_bbw_roof',
+              'basar_bbr_kanal',
               'basar_bbw_kanal',
               'spur_pkw'),
   substance = 'Diuron')
 
+Diuron_without_gr <- Diuron[Diuron$site != 'bbr', ]
 
 Terbutryn <- makeSubstanceTable(
-  dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-              'basar_bbr_roof', 'basar_bbw_roof',
-              'basar_bbr_kanal','basar_bbw_kanal',
+  dbNames = c('basar_bbr_facade',
+              'basar_bbw_facade',
+              'basar_bbr_roof',
+              'basar_bbw_roof',
+              'basar_bbr_kanal',
+              'basar_bbw_kanal',
               'spur_pkw'),
   substance = 'Terbutryn')
 
 Terbutryn_desethyl <- makeSubstanceTable(
-  dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-              'basar_bbr_roof', 'basar_bbw_roof',
-              'basar_bbr_kanal','basar_bbw_kanal',
+  dbNames = c('basar_bbr_facade',
+              'basar_bbw_facade',
+              'basar_bbr_roof',
+              'basar_bbw_roof',
+              'basar_bbr_kanal',
+              'basar_bbw_kanal',
               'spur_pkw'),
   substance = 'Terbutryn_desethyl')
 
-Terbutryn_2_hydroxy <- rbind(
-  makeSubstanceTable(
-    dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-                'basar_bbr_roof', 'basar_bbw_roof',
-                'basar_bbr_kanal','basar_bbw_kanal',
-                'spur_pkw'),
-    substance = 'Terbutryn.2.hydroxy'),
-  makeSubstanceTable(
-    dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-                'basar_bbr_roof', 'basar_bbw_roof',
-                'basar_bbr_kanal','basar_bbw_kanal',
-                'spur_pkw'),
-    substance = 'Terbutryn-2-hydroxy'))
+# Terbutryn_2_hydroxy <- rbind(
+#   makeSubstanceTable(
+#     dbNames = c('basar_bbr_facade',
+#                 'basar_bbw_facade',
+#                 'basar_bbr_roof',
+#                 'basar_bbw_roof',
+#                 'basar_bbr_kanal',
+#                 'basar_bbw_kanal',
+#                 'spur_pkw'),
+#     substance = 'Terbutryn.2.hydroxy'),
+#   makeSubstanceTable(
+#     dbNames = c('basar_bbr_facade',
+#                 'basar_bbw_facade',
+#                 'basar_bbr_roof',
+#                 'basar_bbw_roof',
+#                 'basar_bbr_kanal',
+#                 'basar_bbw_kanal',
+#                 'spur_pkw'),
+#     substance = 'Terbutryn-2-hydroxy'))
 
 Mecoprop <- makeSubstanceTable(
-  dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-              'basar_bbr_roof', 'basar_bbw_roof',
-              'basar_bbr_kanal','basar_bbw_kanal',
+  dbNames = c('basar_bbr_facade',
+              'basar_bbw_facade', 
+              'basar_bbr_roof',
+              'basar_bbw_roof',
+              'basar_bbr_kanal',
+              'basar_bbw_kanal',
               'spur_pkw'), 
   substance = 'Mecoprop')
 
-Mecoprop_ohne_Gruendach <- Mecoprop[Mecoprop$site != 'bbr', ] # remove green roof
+# remove green roof
+Mecoprop_without_gr <- Mecoprop[Mecoprop$site != 'bbr', ]
 # remove facade
+Mecoprop_without_gr_f <- Mecoprop_without_gr[Mecoprop_without_gr$source != 'facade', ]
+
+
 
 Benzothiazol <- makeSubstanceTable(
-  dbNames = c('basar_bbr_facade', 'basar_bbw_facade', 
-              'basar_bbr_roof', 'basar_bbw_roof',
-              'basar_bbr_kanal','basar_bbw_kanal',
+  dbNames = c('basar_bbr_facade',
+              'basar_bbw_facade', 
+              'basar_bbr_roof',
+              'basar_bbw_roof',
+              'basar_bbr_kanal',
+              'basar_bbw_kanal',
               'spur_pkw'), 
   substance = 'Benzothiazol')
 
@@ -182,6 +221,7 @@ plotSubstance(Terbutryn)
 plotSubstance(Terbutryn_desethyl) 
 plotSubstance(Terbutryn_2_hydroxy)
 plotSubstance(Mecoprop)
+plotSubstance(Benzothiazol)
 
 ALT <- read.table('data/Konz_ALT.csv', header = TRUE, sep = ';')
 NEU <- read.table('data/Konz_NEU.csv', header = TRUE, sep = ';')
@@ -195,62 +235,185 @@ GEW <- read.table('data/Konz_EFH.csv', header = TRUE, sep = ';')
 #}
 
 
-#Mecoprop from Bitumendach [1]
-# Mecoprop_ohne_Gruendach$source <- factor(
-#   Mecoprop_ohne_Gruendach$source , 
-#   levels=c("facade", "roof", "sewer", "facade & roof"))
-
-Mecoprop_ohne_Gruendach$plotOrder <- plyr::mapvalues(Mecoprop_ohne_Gruendach$source,
-                                                     from = c('facade', 'roof', 'facade+roof', 'storm_sewer'), 
-                                                     to = c(1, 2, 4, 3))
-
+#Mecoprop
+Mecoprop_without_gr_f$plotOrder <- plyr::mapvalues(Mecoprop_without_gr_f$source,
+                                                     from = c('roof', 'facade+roof', 'storm_sewer'), 
+                                                     to = c(1, 3, 2))
 boxplot(concentration ~ plotOrder, 
-        data = Mecoprop_ohne_Gruendach, 
+        data = Mecoprop_without_gr_f, 
         main = 'Mecoprop', 
         xlab = NA , ylab = 'concentration [mg/L]', 
         outline= FALSE,
         xaxt = 'n')
-axis(1, at = 1:4, labels = c('facade', 
-                             'roof\n1 year old', 
-                             'storm sewer', 
-                             'facade+roof\nnew'),
+
+axis(side = 1, 
+     at = 1:3, 
+     labels = c('roof\n1 year old', 
+                'storm sewer', 
+                'facade+roof\nnew'),
      padj = 0.25)
+
 abline(h = (1000*c(ALT$Konz_Mecoprop[1], 
                    NEU$Konz_Mecoprop[1], 
                    EFH$Konz_Mecoprop[1], 
                    GEW$Konz_Mecoprop[1])), 
        col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x= 0.5 , y = 440, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty = 2)
+legend(x= 0.5 , y = 440,
+       legend = c('ALT', 'NEU', 'EFH', 'GEW'),
+       col = c('red','green','blue','orange'),lty = 2)
 
-#Diuron is only found in Putzfassade [6]
-Diuron$source <- factor(Diuron$source , levels=c("facade", "roof", "sewer", "facade & roof"))
-boxplot(concentration ~ source, data = Diuron, main = 'Diuron', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE)
-abline(h = (1000*c(ALT$Konz_Diuron[6], NEU$Konz_Diuron[6], EFH$Konz_Diuron[6], GEW$Konz_Diuron[6])), col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x= 3.5 , y = 1710, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty = 2)
+#Diuron
+Diuron_without_gr$plotOrder <- plyr::mapvalues(Diuron_without_gr$source,
+                                                   from = c('facade','roof', 'facade+roof', 'storm_sewer'), 
+                                                   to = c(1, 2, 4, 3))
 
-#Terbutryn from Putzfassade [6]
-Terbutryn$source <- factor(Terbutryn$source , levels=c("facade", "roof", "sewer", "facade & roof"))
-boxplot(concentration ~ source, data= Terbutryn, main = 'Terbutryn', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE, ylim = c(0, 120))
-abline(h = (1000*c(ALT$Konz_Terbutryn[6], NEU$Konz_Terbutryn[6], EFH$Konz_Terbutry[6], GEW$Konz_Terbutryn[6])), col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x = 3.5 , y = 121.25, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty = 2)
+boxplot(concentration ~ plotOrder,
+        data = Diuron_without_gr,
+        main = 'Diuron',
+        xlab = NA , ylab = 'concentration [mg/L]',
+        outline= FALSE,
+        xaxt = 'n'
+        )
 
-#Benzothiazol mostly from Streets and & yards but in our case it must be from Bitumendach [1] aswell. Anyways, we only have data from SpuR (not realy comprehensiv).
-Benzothiazol$source <- factor(Benzothiazol$source , levels=c("facade", "roof", "sewer", "facade & roof"))
-boxplot(concentration ~ source, data = Benzothiazol, main = 'Benzothiazol', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE, ylim = c(0, 25))
-abline(h = (1000*c(ALT$Konz_Benzothiazol[1], NEU$Konz_Benzothiazol[1], EFH$Konz_Benzothiazol[1], GEW$Konz_Benzothiazol[1])), col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x = 0.5 , y = 25.22, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
+axis(side = 1, 
+     at = 1:4, 
+     labels = c('facade','roof\n1 year old', 
+                'storm sewer', 
+                'facade+roof\nnew'),
+     padj = 0.25)
 
-#Zn mostly from Straße and Roof, therefore we take Bitumendach [1] as comparison value 
-Zn$source <- factor(Zn$source , levels=c("facade", "roof", "sewer", "facade & roof"))
-boxplot(concentration ~ source, data = Zn, main = 'Zn', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE)
-abline(h = (1000*c(ALT$Konz_Zn[1], NEU$Konz_Zn[1], EFH$Konz_Zn[1], GEW$Konz_Zn[1])), col= c('red', 'green','blue','orange' ),lwd = 1, lty = 2)
-legend(x= 3.5 , y=12958, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
+abline(h = (1000*c(ALT$Konz_Diuron[6],
+                   NEU$Konz_Diuron[6],
+                   EFH$Konz_Diuron[6],
+                   GEW$Konz_Diuron[6])),
+       col = c('red', 'green','blue','orange' ),lwd = 1, lty = 2)
 
-#Cu mostly from Streets and Roofs, therefore we take Bitumendach [1] as comparison value  
-Cu$source <- factor(Cu$source , levels=c("facade", "roof", "sewer", "facade & roof"))
-boxplot(concentration ~ source, data = Cu, main = 'Cu', xlab = NA , ylab = 'concentration [mg/L]', outline= FALSE)
-abline(h = (1000*c(ALT$Konz_Cu[1], NEU$Konz_Cu[1], EFH$Konz_Cu[1], GEW$Konz_Cu[1])), col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
-legend(x= 0.5 , y=776, legend = c('ALT', 'NEU', 'EFH', 'GEW'), col = c('red','green','blue','orange'), lty=2)
+legend(x= 3.5 , y = 1710,
+       legend = c('ALT', 'NEU', 'EFH', 'GEW'),
+       col = c('red','green','blue','orange'), lty = 2)
+
+#Terbutryn
+Terbutryn$plotOrder <- plyr::mapvalues(Terbutryn$source,
+                                               from = c('facade','roof', 'facade+roof', 'storm_sewer'), 
+                                               to = c(1, 2, 4, 3))
+
+boxplot(concentration ~ plotOrder,
+        data= Terbutryn,
+        main = 'Terbutryn',
+        xlab = NA , ylab = 'concentration [mg/L]',
+        outline= FALSE,
+        xaxt = 'n',
+        ylim = c(0, 120))
+
+axis(side = 1, 
+     at = 1:4, 
+     labels = c('facade','roof\n1 year old', 
+                'storm sewer', 
+                'facade+roof\nnew'),
+     padj = 0.25)
+
+abline(h = (1000*c(ALT$Konz_Terbutryn[6],
+                   NEU$Konz_Terbutryn[6],
+                   EFH$Konz_Terbutryn[6],
+                   GEW$Konz_Terbutryn[6])), 
+       col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+
+legend(x = 3.5 , y = 121.25,
+       legend = c('ALT', 'NEU', 'EFH', 'GEW'),
+       col = c('red','green','blue','orange'), lty = 2)
+
+#Benzothiazol
+Benzothiazol$plotOrder <- plyr::mapvalues(Benzothiazol$source,
+                                       from = c('facade','roof', 'facade+roof', 'storm_sewer'), 
+                                       to = c(1, 2, 4, 3))
+
+
+boxplot(concentration ~ plotOrder,
+        data = Benzothiazol,
+        main = 'Benzothiazol',
+        xlab = NA , ylab = 'concentration [mg/L]',
+        outline= FALSE,
+        xaxt = 'n',
+        ylim = c(0, 25))
+
+axis(side = 1, 
+     at = 1:4, 
+     labels = c('facade+roof\nnew',
+                'facade',
+                'roof\n1 year old', 
+                'storm sewer'),
+     padj = 0.25)
+
+abline(h = (1000*c(ALT$Konz_Benzothiazol[1],
+                   NEU$Konz_Benzothiazol[1],
+                   EFH$Konz_Benzothiazol[1],
+                   GEW$Konz_Benzothiazol[1])),
+       col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+
+legend(x = 0.5 , y = 25.22,
+       legend = c('ALT', 'NEU', 'EFH', 'GEW'),
+       col = c('red','green','blue','orange'), lty=2)
+
+#Zinc
+Zn$plotOrder <- plyr::mapvalues(Zn$source,
+                                       from = c('facade','roof', 'facade+roof', 'storm_sewer'), 
+                                       to = c(1, 2, 4, 3))
+boxplot(concentration ~ plotOrder,
+        data = Zn,
+        main = 'Zinc',
+        xlab = NA , ylab = 'concentration [mg/L]',
+        outline= FALSE,
+        xaxt = 'n',
+        ylim = c(0,2800))
+        
+axis(side = 1, 
+     at = 1:4, 
+     labels = c('facade',
+                'roof\n1 year old', 
+                'storm sewer',
+                'facade+roof\nnew'),
+     padj = 0.25)
+
+abline(h = (1000*c(ALT$Konz_Zn[1],
+                   NEU$Konz_Zn[1],
+                   EFH$Konz_Zn[1],
+                   GEW$Konz_Zn[1])),
+       col= c('red', 'green','blue','orange' ),lwd = 1, lty = 2)
+
+legend(x= 0.5 , y=2800,
+       legend = c('ALT', 'NEU', 'EFH', 'GEW'),
+       col = c('red','green','blue','orange'), lty=2)
+
+#Copper
+Cu$plotOrder <- plyr::mapvalues(Cu$source,
+                                from = c('facade','roof', 'facade+roof', 'storm_sewer'), 
+                                to = c(1, 2, 4, 3))
+
+boxplot(concentration ~ plotOrder,
+        data = Cu,
+        main = 'Copper',
+        xlab = NA , ylab = 'concentration [mg/L]',
+        outline= FALSE,
+        xaxt = 'n',
+        ylim = c(0,800))
+
+axis(side = 1, 
+     at = 1:4, 
+     labels = c('facade',
+                'roof\n1 year old', 
+                'storm sewer',
+                'facade+roof\nnew'),
+     padj = 0.25)
+
+abline(h = (1000*c(ALT$Konz_Cu[1],
+                   NEU$Konz_Cu[1],
+                   EFH$Konz_Cu[1],
+                   GEW$Konz_Cu[1])),
+       col= c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
+
+legend(x= 0.5 , y=800,
+       legend = c('ALT', 'NEU', 'EFH', 'GEW'),
+       col = c('red','green','blue','orange'), lty=2)
 
 
 
