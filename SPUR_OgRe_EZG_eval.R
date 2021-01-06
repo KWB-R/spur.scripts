@@ -8,8 +8,10 @@ data.dir <- "data/"
 write.dir <- "data/"
 
 #Robe's results in main directory
-robes_data.dir <- "data_facade_vol_c_annual/"
+robes_data.dir <- "data_prelim_sources/"
 
+#fraction of facade runoff that reaches storm sewer
+coeff_fac_sew <- 0.2
 
 #####format summary tables-----------------------------------------
 
@@ -60,11 +62,15 @@ x_Putz <- read.table(file = file.path(data.dir, "Putzfassaden.csv"),
 ##specific runoff volume from facades
 
 #load results of Robe's basar model
-x_runoff_facade <- read.table(file = file.path(robes_data.dir, "output_annualFacadeRunoff.txt"),
+x_runoff_facade <- read.table(file = file.path(robes_data.dir, "output_annualrunoffside.txt"),
                               header = TRUE, sep = ";", dec = ".")
 
 #average specific runoff [L/m2/yr]
-spec_fac_runoff <- sum(colMeans(x_runoff_facade[, c("runoffS", "runoffW", "runoffO", "runoffN")]))
+#spec_fac_runoff <- sum(colMeans(x_runoff_facade[, c("runoffS", "runoffW", "runoffO", "runoffN")]))
+spec_fac_runoff <- mean(colMeans(x_runoff_facade[, c("runoffS", "runoffW", "runoffO", "runoffN")]))
+
+#assumption: only 20% makes it from facade to sewer
+spec_fac_runoff <- spec_fac_runoff * coeff_fac_sew
 
 ##load Dachflaechen
 x_Dach <- read.table(file = file.path(data.dir, "Dachflaechen.csv"), 
