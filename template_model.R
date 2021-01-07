@@ -4,16 +4,25 @@
 vol <- foreign::read.dbf('data/vs_2019_SPUR.dbf')
 
 # backcalculated concentrations from OgRe
-files <- c('Konz_NEU.csv', 'Konz_GEW.csv', 'Konz_ALT.csv', 'Konz_EFH.csv')
-conc <- lapply(X = file.path('data', files),
+# Create name vector for OgRe files
+# read in Ogre Files
+files_OgRe <- c('Konz_NEU.csv', 'Konz_GEW.csv', 'Konz_ALT.csv', 'Konz_EFH.csv')
+conc_OgRe <- lapply(X = file.path('data', files_OgRe),
                FUN = read.csv,
                sep = ';',
                header = TRUE)
-names(conc) <- files
-
-
+names(conc_OgRe) <- files_OgRe
 
 # measurements from BaSaR
+# Create name vector for OgRe files
+# read in Ogre Files
+files_BaSaR <- c('BBRf_20200518_conc.csv', 'BBRr_20200518_conc.csv', 'BBRs_20200518_conc.csv','BBWf_20200518_conc.csv','BBWr_20200518_conc.csv', 'BBWs_20200518_conc.csv')
+
+conc_BaSaR <- lapply(X = file.path('data_prelim_sources', files_BaSaR),
+                    FUN = read.csv,
+                    sep = ';',
+                    header = TRUE)
+names(conc_BaSaR) <- files_BaSaR
 
 
 # literature data mining?
@@ -26,31 +35,105 @@ names(conc) <- files
 # 2. build distributions for concentrations ----------------------------------------------
 
 # get facade diuron, backcalculated from OgRe
-diuron_ALT <- conc$Konz_ALT.csv[
-  conc$Konz_ALT.csv$Source == 'Putzfassade' , 'Konz_Diuron']
-diuron_GEW <- conc$Konz_GEW.csv[
-  conc$Konz_GEW.csv$Source == 'Putzfassade' , 'Konz_Diuron']
-diuron_EFH <- conc$Konz_EFH.csv[
-  conc$Konz_EFH.csv$Source == 'Putzfassade' , 'Konz_Diuron']
-diuron <- c(ALT=diuron_ALT, 
+diuron_ALT <- conc_OgRe$Konz_ALT.csv[
+  conc_OgRe$Konz_ALT.csv$Source == 'Putzfassade' , 'Konz_Diuron']
+diuron_GEW <- conc_OgRe$Konz_GEW.csv[
+  conc_OgRe$Konz_GEW.csv$Source == 'Putzfassade' , 'Konz_Diuron']
+diuron_EFH <- conc_OgRe$Konz_EFH.csv[
+  conc_OgRe$Konz_EFH.csv$Source == 'Putzfassade' , 'Konz_Diuron']
+diuron_OgRe <- c(ALT=diuron_ALT, 
             GEW=diuron_GEW, 
             EFH=diuron_EFH)
 
+#Müsste nach unseren neuen Erkenntnissen Terbutryn nicht aus Dach und Fassade stammen?
 # get facade terbutryn, backcalculated from OgRe
-terbutryn_GEW <- conc$Konz_GEW.csv[
-  conc$Konz_GEW.csv$Source == 'Putzfassade' , 'Konz_Terbutryn']
-terbutryn_ALT <- conc$Konz_ALT.csv[
-  conc$Konz_ALT.csv$Source == 'Putzfassade' , 'Konz_Terbutryn']
-terbutryn_NEU <- conc$Konz_NEU.csv[
-  conc$Konz_NEU.csv$Source == 'Putzfassade' , 'Konz_Terbutryn']
-terbutryn_EFH <- conc$Konz_EFH.csv[
-  conc$Konz_EFH.csv$Source == 'Putzfassade' , 'Konz_Terbutryn']
-terbutryn <- c(ALT=terbutryn_ALT, 
+terbutryn_GEW <- conc_OgRe$Konz_GEW.csv[
+  conc_OgRe$Konz_GEW.csv$Source == 'Putzfassade' , 'Konz_Terbutryn']
+terbutryn_ALT <- conc_OgRe$Konz_ALT.csv[
+  conc_OgRe$Konz_ALT.csv$Source == 'Putzfassade' , 'Konz_Terbutryn']
+terbutryn_NEU <- conc_OgRe$Konz_NEU.csv[
+  conc_OgRe$Konz_NEU.csv$Source == 'Putzfassade' , 'Konz_Terbutryn']
+terbutryn_EFH <- conc_OgRe$Konz_EFH.csv[
+  conc_OgRe$Konz_EFH.csv$Source == 'Putzfassade' , 'Konz_Terbutryn']
+terbutryn_OgRe <- c(ALT=terbutryn_ALT, 
                GEW=terbutryn_GEW, 
                EFH=terbutryn_EFH, 
                NEU=terbutryn_NEU)
 
+# get roof mecoprop, backcalculated from OgRe
+mecoprop_GEW <- conc_OgRe$Konz_GEW.csv[
+  conc_OgRe$Konz_GEW.csv$Source == 'Bitumendach' , 'Konz_Mecoprop']
+mecoprop_ALT <- conc_OgRe$Konz_ALT.csv[
+  conc_OgRe$Konz_ALT.csv$Source == 'Bitumendach' , 'Konz_Mecoprop']
+mecoprop_NEU <- conc_OgRe$Konz_NEU.csv[
+  conc_OgRe$Konz_NEU.csv$Source == 'Bitumendach' , 'Konz_Mecoprop']
+mecoprop_EFH <- conc_OgRe$Konz_EFH.csv[
+  conc_OgRe$Konz_EFH.csv$Source == 'Bitumendach' , 'Konz_Mecoprop']
+mecoprop_OgRe <- c(ALT=mecoprop_ALT, 
+               GEW=mecoprop_GEW, 
+               EFH=mecoprop_EFH, 
+               NEU=mecoprop_NEU)
+
+#benzothiazol kommt vor allem aus dem Straßenablauf wird das beachtet?
+# get roof benzothiazol, backcalculated from OgRe
+benzothiazol_GEW <- conc_OgRe$Konz_GEW.csv[
+  conc_OgRe$Konz_GEW.csv$Source == 'Bitumendach' , 'Konz_Benzothiazol']
+benzothiazol_ALT <- conc_OgRe$Konz_ALT.csv[
+  conc_OgRe$Konz_ALT.csv$Source == 'Bitumendach' , 'Konz_Benzothiazol']
+benzothiazol_NEU <- conc_OgRe$Konz_NEU.csv[
+  conc_OgRe$Konz_NEU.csv$Source == 'Bitumendach' , 'Konz_Benzothiazol']
+benzothiazol_EFH <- conc_OgRe$Konz_EFH.csv[
+  conc_OgRe$Konz_EFH.csv$Source == 'Bitumendach' , 'Konz_Benzothiazol']
+benzothiazol_OgRe <- c(ALT=benzothiazol_ALT, 
+              GEW=benzothiazol_GEW, 
+              EFH=benzothiazol_EFH, 
+              NEU=terbutryn_NEU)
+
+# get roof zinc, backcalculated from OgRe
+zinc_GEW <- conc_OgRe$Konz_GEW.csv[
+  conc_OgRe$Konz_GEW.csv$Source == 'Bitumendach' , 'Konz_Zn']
+zinc_ALT <- conc_OgRe$Konz_ALT.csv[
+  conc_OgRe$Konz_ALT.csv$Source == 'Bitumendach' , 'Konz_Zn']
+zinc_NEU <- conc_OgRe$Konz_NEU.csv[
+  conc_OgRe$Konz_NEU.csv$Source == 'Bitumendach' , 'Konz_Zn']
+zinc_EFH <- conc_OgRe$Konz_EFH.csv[
+  conc_OgRe$Konz_EFH.csv$Source == 'Bitumendach' , 'Konz_Zn']
+zinc_Ogre <- c(ALT=zinc_ALT, 
+               GEW=zinc_GEW, 
+               EFH=zinc_EFH, 
+               NEU=zinc_NEU)
+
+#kupfer kommt vor allem aus dem Straßenablauf wird das beachtet?
+# get roof copper, backcalculated from OgRe
+copper_GEW <- conc_OgRe$Konz_GEW.csv[
+  conc_OgRe$Konz_GEW.csv$Source == 'Bitumendach' , 'Konz_Cu']
+copper_ALT <- conc_OgRe$Konz_ALT.csv[
+  conc_OgRe$Konz_ALT.csv$Source == 'Bitumendach' , 'Konz_Cu']
+copper_NEU <- conc_OgRe$Konz_NEU.csv[
+  conc_OgRe$Konz_NEU.csv$Source == 'Bitumendach' , 'Konz_Cu']
+copper_EFH <- conc_OgRe$Konz_EFH.csv[
+  conc_OgRe$Konz_EFH.csv$Source == 'Bitumendach' , 'Konz_Cu']
+copper_OgRe <- c(ALT=copper_ALT, 
+          GEW=copper_GEW, 
+          EFH=copper_EFH, 
+          NEU=copper_NEU)
 # BaSaR...
+substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
+locations <- c('BBRf', 'BBRr', 'BBRs', 'BBWf', 'BBWr', 'BBWs')
+
+for (i in 1:length(substances)){
+
+  for (j in 1:length(locations)){
+    print(paste(paste(substances[i], locations[j],sep = "_"), '<-', paste('conc_BaSaR$', locations[j], '_20200518_conc.csv$', substances[i], sep = "")))   
+  }  
+}
+
+Diuron_BBRf <- conc_BaSaR$BBRf_20200518_conc.csv$Diuron
+Diuron_BBRr <- conc_BaSaR$BBRr_20200518_conc.csv$Diuron
+DiurOn_BBRs <- conc_BaSaR$BBRs_20200518_conc.csv$Diuron
+Diuron_BBWf <- conc_BaSaR$BBWf_20200518_conc.csv$Diuron
+Diuron_BBWr <- conc_BaSaR$BBWr_20200518_conc.csv$Diuron
+Diuron_BBWs <- conc_BaSaR$BBWs_20200518_conc.csv$Diuron
 
 # other sources of concentration data
 
@@ -73,11 +156,28 @@ terbutryn <- c(ALT=terbutryn_ALT,
 # 3. emissions status quo ---------------------------------------------------------------
 
 # for each substance:
+for(substanc in substances)
 
 #    for each source:
+sources <- c('Bitumendach', 'Ziegeldach', 'Dach_weitere', 'Strasse', 'Hof', 'Putzfassade')  
+  
+for(i in BTF){
+  load_roof_BTF[i] <- vol_roof_BTF[i]
+  load_BTF[i] <- load_roof_BTF[i]+lood_street_BTF[i]+load_yard_BTF[i]
+}
+  
+  
+  load_Bitumendach <- vol_bitumendach*conc_anchor[substanc]
+
+  load_Ziegeldach
+  load_Dach_weitere
+  load_Strasse
+  load_Hof
+  load_Putzfassade
 #      load_blockteilfläche = load_roof + load_street + load_yard
 
 #      load_roof = vol_roof * mecoprop_normal
+
 #      load_street = load_facade + load_street_rest
 #      load_yard = load_facade + load_yard_rest
 
