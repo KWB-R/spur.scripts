@@ -227,11 +227,11 @@ boxplot(concentration ~ plotOrder,
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade',
-                'roof\n1 year old', 
-                'storm sewer', 
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Mecoprop[1], 
                    NEU$Konz_Mecoprop[1], 
@@ -256,11 +256,11 @@ boxplot(concentration ~ plotOrder,
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade',
-                'roof\n1 year old', 
-                'storm sewer', 
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Mecoprop[1], 
                    NEU$Konz_Mecoprop[1], 
@@ -278,19 +278,20 @@ Diuron_without_bbr$plotOrder <- plyr::mapvalues(Diuron_without_bbr$source,
                                                    to = c(1, 2, 4, 3))
 
 boxplot(concentration ~ plotOrder,
-        data = Diuron_without_gr,
+        data = Diuron_without_bbr,
         main = 'Diuron',
         xlab = NA , ylab = 'concentration [μg/L]',
         outline= FALSE,
         xaxt = 'n',
-        ylim = c(0, 1800))
+        ylim = c(0, 2000))
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade','roof\n1 year old', 
-                'storm sewer', 
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Diuron[6],
                    NEU$Konz_Diuron[6],
@@ -298,7 +299,7 @@ abline(h = (1000*c(ALT$Konz_Diuron[6],
                    GEW$Konz_Diuron[6])),
        col = c('red', 'green','blue','orange' ),lwd = 1, lty = 2)
 
-legend(x= 3.85 , y = 1800,
+legend(x= 3.5 , y = 2000,
        legend = c('ALT', 'NEU', 'EFH', 'GEW'),
        col = c('red','green','blue','orange'), lty = 2)
 
@@ -308,7 +309,7 @@ Diuron_without_bbr$plotOrder <- plyr::mapvalues(Diuron_without_bbr$source,
                                                 to = c(1, 2, 4, 3))
 
 boxplot(concentration ~ plotOrder,
-        data = Diuron_without_gr,
+        data = Diuron_without_bbr,
         main = 'Diuron',
         xlab = NA , ylab = 'concentration [μg/L]',
         outline= FALSE,
@@ -317,10 +318,11 @@ boxplot(concentration ~ plotOrder,
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade','roof\n1 year old', 
-                'storm sewer', 
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Diuron[6],
                    NEU$Konz_Diuron[6],
@@ -343,14 +345,15 @@ boxplot(concentration ~ plotOrder,
         xlab = NA , ylab = 'concentration [μg/L]',
         outline= FALSE,
         xaxt = 'n',
-        ylim = c(0, 120))
+        ylim = c(0, 2100))
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade','roof\n1 year old', 
-                'storm sewer', 
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Terbutryn[6],
                    NEU$Konz_Terbutryn[6],
@@ -358,7 +361,7 @@ abline(h = (1000*c(ALT$Konz_Terbutryn[6],
                    GEW$Konz_Terbutryn[6])), 
        col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
 
-legend(x = 3.85 , y = 120,
+legend(x = 3.5 , y = 2100,
        legend = c('ALT', 'NEU', 'EFH', 'GEW'),
        col = c('red','green','blue','orange'), lty = 2)
 
@@ -377,10 +380,11 @@ boxplot(concentration ~ plotOrder,
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade','roof\n1 year old', 
-                'storm sewer', 
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Terbutryn[6],
                    NEU$Konz_Terbutryn[6],
@@ -388,7 +392,7 @@ abline(h = (1000*c(ALT$Konz_Terbutryn[6],
                    GEW$Konz_Terbutryn[6])), 
        col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
 
-legend(x = 3.85 , y = 35,
+legend(x = 3.5 , y = 35,
        legend = c('ALT', 'NEU', 'EFH', 'GEW'),
        col = c('red','green','blue','orange'), lty = 2)
 
@@ -408,12 +412,9 @@ boxplot(concentration ~ plotOrder,
         ylim = c(0, 25))
 
 axis(side = 1, 
-     at = 1:4, 
-     labels = c('facade+roof\nnew',
-                'facade',
-                'roof\n1 year old', 
-                'storm sewer'),
-     padj = 0.25)
+     at = 1:1, 
+     labels = c('SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Benzothiazol[1],
                    NEU$Konz_Benzothiazol[1],
@@ -439,11 +440,11 @@ boxplot(concentration ~ plotOrder,
         
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade',
-                'roof\n1 year old', 
-                'storm sewer',
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Zn[1],
                    NEU$Konz_Zn[1],
@@ -469,11 +470,11 @@ boxplot(concentration ~ plotOrder,
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade',
-                'roof\n1 year old', 
-                'storm sewer',
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Zn[1],
                    NEU$Konz_Zn[1],
@@ -500,11 +501,11 @@ boxplot(concentration ~ plotOrder,
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade',
-                'roof\n1 year old', 
-                'storm sewer',
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Cu[1],
                    NEU$Konz_Cu[1],
@@ -532,11 +533,11 @@ boxplot(concentration ~ plotOrder,
 
 axis(side = 1, 
      at = 1:4, 
-     labels = c('facade',
-                'roof\n1 year old', 
-                'storm sewer',
-                'facade+roof\nnew'),
-     padj = 0.25)
+     labels = c('BaSaR\nfacade',
+                'BaSaR\nroof\n1 year old', 
+                'BaSaR\nstorm sewer', 
+                'SpuR\nfacade+roof\nnew'),
+     padj = 0.75)
 
 abline(h = (1000*c(ALT$Konz_Cu[1],
                    NEU$Konz_Cu[1],
