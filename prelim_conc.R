@@ -201,10 +201,10 @@ plotSubstance(Terbutryn_2_hydroxy)
 plotSubstance(Mecoprop)
 plotSubstance(Benzothiazol)
 
-ALT <- read.table('data/Konz_ALT.csv', header = TRUE, sep = ';')
-NEU <- read.table('data/Konz_NEU.csv', header = TRUE, sep = ';')
-EFH <- read.table('data/Konz_GEW.csv', header = TRUE, sep = ';')
-GEW <- read.table('data/Konz_EFH.csv', header = TRUE, sep = ';')
+c_ALT <- read.table('data/Konz_ALT.csv', header = TRUE, sep = ';')
+c_NEU <- read.table('data/Konz_NEU.csv', header = TRUE, sep = ';')
+c_EFH <- read.table('data/Konz_GEW.csv', header = TRUE, sep = ';')
+c_GEW <- read.table('data/Konz_EFH.csv', header = TRUE, sep = ';')
 
 # bring plots in the right order
 #substances<- c(Mecoprop$source, Diuron$source, Terbutryn$source, Benzothiazol$source, Zn$source, Cu$source)
@@ -283,7 +283,7 @@ boxplot(concentration ~ plotOrder,
         xlab = NA , ylab = 'concentration [μg/L]',
         outline= FALSE,
         xaxt = 'n',
-        ylim = c(0, 2000))
+        ylim = c(0, 1800))
 
 axis(side = 1, 
      at = 1:4, 
@@ -299,7 +299,7 @@ abline(h = (1000*c(ALT$Konz_Diuron[6],
                    GEW$Konz_Diuron[6])),
        col = c('red', 'green','blue','orange' ),lwd = 1, lty = 2)
 
-legend(x= 3.5 , y = 2000,
+legend(x= 3.5 , y = 1800,
        legend = c('ALT', 'NEU', 'EFH', 'GEW'),
        col = c('red','green','blue','orange'), lty = 2)
 
@@ -345,7 +345,7 @@ boxplot(concentration ~ plotOrder,
         xlab = NA , ylab = 'concentration [μg/L]',
         outline= FALSE,
         xaxt = 'n',
-        ylim = c(0, 2100))
+        ylim = c(0, 900))
 
 axis(side = 1, 
      at = 1:4, 
@@ -361,7 +361,7 @@ abline(h = (1000*c(ALT$Konz_Terbutryn[6],
                    GEW$Konz_Terbutryn[6])), 
        col = c('red', 'green','blue','orange' ), lwd = 1, lty = 2)
 
-legend(x = 3.5 , y = 2100,
+legend(x = 3.5 , y = 900,
        legend = c('ALT', 'NEU', 'EFH', 'GEW'),
        col = c('red','green','blue','orange'), lty = 2)
 

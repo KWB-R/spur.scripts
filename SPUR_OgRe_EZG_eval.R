@@ -11,7 +11,7 @@ write.dir <- "data/"
 robes_data.dir <- "data_prelim_sources/"
 
 #fraction of facade runoff that reaches storm sewer
-coeff_fac_sew <- 0.2
+coeff_fac_sew <- 0.5
 
 #####format summary tables-----------------------------------------
 

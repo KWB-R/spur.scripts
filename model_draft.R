@@ -1,3 +1,4 @@
+library(data.table)
 
 #directory for output data
 write.dir <- "data_output/"
@@ -9,6 +10,9 @@ write.dir <- "data_output/"
 
 # abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
 BTF_input <- foreign::read.dbf('data/berlin_runoff.dbf')
+setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+
+
 
 # backcalculated concentrations from OgRe
 c_NEU <- read.csv(file = 'data/Konz_NEU.csv', sep = ';')
@@ -118,6 +122,16 @@ substance_output <- data.frame("ID" = BTF_input$CODE,
 #                               "load_Hof" = NA,
 #                               "load_Putzfassade" = NA)
 #}
+
+for (substance in substances){
+  paste(substance,'output', sep= '_')
+  print(paste(substance,'output', sep= '_'))
+}
+
+
+
+
+
 
 
 
