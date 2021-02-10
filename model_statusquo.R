@@ -1,8 +1,37 @@
-OgRe_types <- c("ALT", "EFH", "GEW", "NEU")
+
 substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
+
+###city structure types and sources
+OgRe_types <- c("ALT", "EFH", "GEW", "NEU")
 sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
 
+###load data
+  # abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
+  BTF_input <- foreign::read.dbf('data/berlin_runoff.dbf')
+  BTF_input <- setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+  
+  
+  
+  # backcalculated concentrations from OgRe
+  c_NEU <- read.csv(file = 'data/Konz_NEU.csv', sep = ';')
+  c_ALT <- read.csv(file = 'data/Konz_ALT.csv', sep = ';')
+  c_GEW <- read.csv(file = 'data/Konz_GEW.csv', sep = ';')
+  c_EFH <- read.csv(file = 'data/Konz_EFH.csv', sep = ';')
+  
+  
+###result file
+  substance_output <- data.frame("ID" = BTF_input$CODE,
+                                 "Gewässser" = BTF_input$AGEB1,
+                                 "OgRe_Typ" = BTF_input$OgRe_Type,
+                                 "load_Bitumendach" = NA,
+                                 "load_Ziegeldach" = NA,
+                                 "load_Dach_weitere" = NA,
+                                 "load_Strasse" = NA,
+                                 "load_Hof" = NA,
+                                 "load_Putzfassade" = NA)
 
+
+###calculate loads  
 for (substance in substances) {
   
   #substanz auswählen
