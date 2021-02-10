@@ -15,25 +15,24 @@ for (substance in substances) {
     
     for (my_source in sources) {
 
-      c_current <- eval(parse(text = paste0("c_", OgRe_typ)))
+      OgRe_typ_current <- eval(parse(text = paste0("c_", OgRe_typ)))
       
-      col_Konz <- which(names(c_current) == paste0("Konz_", substance))
-      row_Konz <- which(c_current$Source == my_source)
+      col_Konz <- which(names(OgRe_typ_current) == paste0("Konz_", substance))
+      row_Konz <- which(OgRe_typ_current$Source == my_source)
       
-      concentration <- c_current[row_Konz, col_Konz]
+      concentration <- OgRe_typ_current[row_Konz, col_Konz]
       
       row_runoff <- which(BTF_input$OgRe_Type == OgRe_typ)
       
-      index_source <- which(sources$KLAR == my_source)
-      col_runoff <- which(names(BTF_input) == paste0("runoff_", sources))
+      index_source <- which(sources== my_source)
+      col_runoff <- which(names(BTF_input) == paste0("runoff_", sources[index_source]))
       
-      col_output <- which(names(substance_output) == paste0("load_", sources))
+      col_output <- which(names(substance_output) == paste0("load_", sources[index_source]))
       
       substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
       
       #Quelle auswählen (im entsprechenden c_ File (1 Zelle) und Abflussfile (1 Spalte))
       #multiplizieren
-      
       
     }
   }

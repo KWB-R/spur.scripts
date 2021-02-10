@@ -10,7 +10,7 @@ write.dir <- "data_output/"
 
 # abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
 BTF_input <- foreign::read.dbf('data/berlin_runoff.dbf')
-setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+BTF_input <- setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
 
 
 
@@ -105,8 +105,8 @@ substance_output <- data.frame("ID" = BTF_input$CODE,
                                             "OgRe_Typ" = BTF_input$OgRe_Type,
                                             "load_Bitumendach" = NA,
                                             "load_Ziegeldach" = NA,
-                                            "load_Dach_andere" = NA,
-                                            "load_Straße" = NA,
+                                            "load_Dach_weitere" = NA,
+                                            "load_Strasse" = NA,
                                             "load_Hof" = NA,
                                             "load_Putzfassade" = NA)
 
@@ -117,8 +117,8 @@ substance_output <- data.frame("ID" = BTF_input$CODE,
 #                                          "OgRe_Typ" = BTF_input$OgRe_Type,
 #                               "load_Bitumendach" = NA,
 #                               "load_Ziegeldach" = NA,
-#                               "load_Dach_andere" = NA,
-#                               "load_Straße" = NA,
+#                               "load_Dach_weitere" = NA,
+#                               "load_Strasse" = NA,
 #                               "load_Hof" = NA,
 #                               "load_Putzfassade" = NA)
 #}
@@ -142,8 +142,8 @@ paste(substance,'output', sep= '_') <- data.frame("ID" = BTF_input$CODE,
                                                   "OgRe_Typ" = BTF_input$OgRe_Type,
                                                   "load_Bitumendach" = NA,
                                                   "load_Ziegeldach" = NA,
-                                                  "load_Dach_andere" = NA,
-                                                  "load_Straße" = NA,
+                                                  "load_Dach_weitere" = NA,
+                                                  "load_Strasse" = NA,
                                                   "load_Hof" = NA,
                                                   "load_Putzfassade" = NA)
   
@@ -161,8 +161,8 @@ print(paste(substance,'output', sep= '_'))
                         "OgRe_Typ" = BTF_input$OgRe_Type,
                         "load_Bitumendach" = NA,
                         "load_Ziegeldach" = NA,
-                        "load_Dach_andere" = NA,
-                        "load_Straße" = NA,
+                        "load_Dach_weitere" = NA,
+                        "load_Strasse" = NA,
                         "load_Hof" = NA,
                         "load_Putzfassade" = NA)
 print(paste(substance,'output', sep= '_')
