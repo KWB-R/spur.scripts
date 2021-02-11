@@ -24,7 +24,7 @@ SpuR_statusquo_model <- function (
   ###load data
   # abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
   BTF_input <- foreign::read.dbf('data/berlin_runoff.dbf')
-  BTF_input <- setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+  BTF_input <- data.table::setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
   
   
   
@@ -45,6 +45,8 @@ SpuR_statusquo_model <- function (
                                  "load_Strasse" = NA,
                                  "load_Hof" = NA,
                                  "load_Putzfassade" = NA)
+  
+  my_list <- list()
   
   
   ###calculate loads  
@@ -82,11 +84,13 @@ SpuR_statusquo_model <- function (
       }
     }
     
-    #Ergebnis einm neuen data.frame zuweisen
-    assign(paste0(substance), substance_output)
+    #Ergebnis in Liste schreiben
+    index_list <- which(substances == substance)
+    my_list[[index_list]] <- substance_output
     
   } 
   
-  substance_output
+  names(my_list) <- substances
+  my_list
   
 }
