@@ -45,7 +45,11 @@ SpuR_statusquo_model <- function (
                                  "load_Strasse" = NA,
                                  "load_Hof" = NA,
                                  "load_Putzfassade" = NA)
-  
+
+list_substances_output<- list()  
+
+
+
   
   ###calculate loads  
   for (substance in substances) {
@@ -83,10 +87,11 @@ SpuR_statusquo_model <- function (
     }
     
     #Ergebnis einm neuen data.frame zuweisen
-    assign(paste0(substance), substance_output)
-    
+    assign(paste0(substance, '_output'), substance_output)
+    list_substances_output[[which(substance==substances)]] <- assign(paste0(substance, '_output'), substance_output)
+ 
   } 
-  
-  substance_output
-  
+
+ names(list_substances_output)<-substances  
+ list_substances_output 
 }
