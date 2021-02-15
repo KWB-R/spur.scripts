@@ -18,7 +18,7 @@ SpuR_statusquo_model <- function (
 )
 {
   ###city structure types and sources
-  OgRe_types <- c("ALT", "EFH", "GEW", "NEU")
+  OgRe_types <- c("ALT", "EFH", "GEW", "NEU", "AND")
   sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
   
   ###load data
@@ -33,7 +33,7 @@ SpuR_statusquo_model <- function (
   c_ALT <- read.csv(file = 'data/Konz_ALT.csv', sep = ';')
   c_GEW <- read.csv(file = 'data/Konz_GEW.csv', sep = ';')
   c_EFH <- read.csv(file = 'data/Konz_EFH.csv', sep = ';')
-  
+  c_AND <- read.csv(file = 'data/Konz_AND.csv', sep = ';')
   
   ###result files
   substance_output <- data.frame("ID" = BTF_input$CODE,
@@ -47,8 +47,6 @@ SpuR_statusquo_model <- function (
                                  "load_Putzfassade" = NA)
 
 list_substances_output<- list()  
-
-
 
   
   ###calculate loads  
