@@ -78,7 +78,18 @@ index_source <- which(sources== my_source)
 col_runoff <- which(names(BTF_input) == paste0("runoff_", sources[index_source]))
 col_output <- which(names(substance_output) == paste0("load_", sources[index_source]))
 
+#loads when therer is no uncertainty for facade volumes
 substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
+
+
+# create normal distributed runoff volumes for facades
+#if (my_source == "Putzfassade" ){
+#  facade_proportion<- runif(n=1, min = 0.1, max = 0.9)
+#substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]/0.5*facade_proportion
+
+#}else{
+#substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
+#}
 
 #Quelle auswählen (im entsprechenden c_ File (1 Zelle) und Abflussfile (1 Spalte))
 #multiplizieren
@@ -86,12 +97,11 @@ substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff
       }
    }
   
-  #Ergebnis einm neuen data.frame zuweisen
+  #Ergebnis einem neuen data.frame zuweisen
 assign(paste0(substance, '_output'), substance_output)
 current_output <- assign(paste0(substance, '_output'), substance_output)
 
 
-#loads <- cbind(loads,assign(paste0(substance, '_load'), sum(colSums(Filter(is.numeric, current_output)))))
 loads[[n, index_substance]]<- sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE))
   
 
