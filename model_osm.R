@@ -1,0 +1,159 @@
+library(data.table)
+
+###city structure types and sources
+substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
+OgRe_types <- c("ALT", "EFH", "GEW", "NEU", "AND")
+sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
+
+###load data
+# abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
+BTF_input <- foreign::read.dbf('data/berlin_runoff.dbf')
+BTF_input <- setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+
+# read in backcalculated concentrations from OgRe
+# read in relativ standard deviations
+sd_list <- list()
+for( OgRe_typ in OgRe_types){
+  assign(paste0('c_',OgRe_typ), read.csv(paste0('data/Konz_',OgRe_typ,'.csv'), sep = ';')) 
+  index_OgRe_typ <- which(OgRe_types==OgRe_typ)
+  sd_list[[index_OgRe_typ]] <-assign(paste0('rel_sd_',OgRe_typ), read.csv(paste0('data/rel_sd_', OgRe_typ,'.csv')))
+}
+
+substance_output <- data.frame("ID" = BTF_input$CODE,
+                               "Gewässser" = BTF_input$AGEB1,
+                               "OgRe_Typ" = BTF_input$OgRe_Type,
+                               "load_Bitumendach" = NA,
+                               "load_Ziegeldach" = NA,
+                               "load_Dach_weitere" = NA,
+                               "load_Strasse" = NA,
+                               "load_Hof" = NA,
+                               "load_Putzfassade" = NA)
+
+
+
+#creating data frame for loads
+set.seed(5)
+nMC <- 1000
+total_loads <- matrix(nrow = nMC, ncol = length(substances))
+
+substance_load <- matrix(nrow = nMC, ncol = 5)
+colnames(substance_load)<- c('load_Dach','load_Strasse', 'load_Hof', 'load_Putzfassade', 'load_total')
+Diuron_load <- substance_load
+Mecoprop_load <- substance_load
+Terbutryn_load <- substance_load
+Benzothiazol_load <- substance_load
+Zn_load <- substance_load
+Cu_load <- substance_load
+
+#measurements on the source:
+measurement_extent <- c(0.2, 0, 0, 0, 0, 0)
+reduction_efficiencies <- c(1,0,0,0,0,0)
+
+
+for (n in 1:nMC){
+  ###calculate loads  
+  for (substance in substances) {
+    
+    #substanz auswählen
+    
+    
+    for (OgRe_typ in OgRe_types) {
+      
+      #Zeilen auswählen die OgRe_typ entsprechen
+      
+      
+      for (my_source in sources) {
+        
+        OgRe_typ_current <- eval(parse(text = paste0("c_", OgRe_typ)))
+        
+        col_Konz <- which(names(OgRe_typ_current) == paste0("Konz_", substance))
+        row_Konz <- which(OgRe_typ_current$Source == my_source)
+        
+        c_anchor <- OgRe_typ_current[row_Konz, col_Konz]
+        
+        #with lognormal distribiuted concentrations
+        if(c_anchor == 0){
+          concentration <- 0
+        } else {
+          index_substance <- which(substances==substance)
+          index_OgRe_typ <- which(OgRe_types==OgRe_typ)
+          
+          rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_typ]])
+          sd_temp<- c_anchor*rel_sd_temp[1,1+index_substance]
+          
+          location<- log(c_anchor^2/sqrt(sd_temp^2+c_anchor^2))
+          shape<- sqrt(log(1+(sd_temp^2/c_anchor^2)))
+          concentration <- rlnorm(n=1, meanlog = location, sdlog = shape)
+        }
+        #pick all BTF which are OgRe_typ
+        row_runoff <- which(BTF_input$OgRe_Type == OgRe_typ)
+        index_source <- which(sources== my_source)
+        
+        #pick column from BTF_input with runoffs from current source
+        col_runoff <- which(names(BTF_input) == paste0("runoff_", sources[index_source]))
+        #selects the column in which the calculated load is to be written
+        col_output <- which(names(substance_output) == paste0("load_", sources[index_source]))
+        
+        #calculates the load and writes it into the intended cell (calculation for fixed facade runoff)
+        
+        treated_volume <- measurement_extent[index_substance]*BTF_input[row_runoff, col_runoff]
+        treated_concentration <- concentration * (1-reduction_efficiencies[index_substance])
+        untreated_volume <- (1-measurement_extent[index_substance])*BTF_input[row_runoff, col_runoff]
+        untreated_concentration <- concentration
+        
+        substance_output[row_runoff, col_output] <- treated_volume * treated_concentration + untreated_volume * untreated_concentration
+        
+        
+        # create normal distributed runoff volumes for facades
+        #if (my_source == "Putzfassade" ){
+        #  facade_proportion<- runif(n=1, min = 0.1, max = 0.9)
+        #substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]/0.5*facade_proportion
+        
+        #}else{
+        #substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
+        #}
+        
+        #Quelle auswählen (im entsprechenden c_ File (1 Zelle) und Abflussfile (1 Spalte))
+        #multiplizieren
+        
+      }
+    }
+    
+    #Ergebnis einem neuen data.frame zuweisen
+    assign(paste0(substance, '_output'), substance_output)
+    current_output <- assign(paste0(substance, '_output'), substance_output)
+    
+    
+    total_loads[[n, index_substance]]<- sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE))/1000 #from g to kg
+    
+    
+    #Stoffspezifische Ergebnisse mit Aufschlüsselung nach Quelle zuweisen (temporär, weil hardgecoded)  
+    current_load<-c(sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)[1:3]),colSums(Filter(is.numeric, current_output),na.rm = TRUE)[4:6], sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)))/1000 #from g to kg
+    
+    if(substance== 'Diuron'){
+      Diuron_load[n,]<-current_load
+    }else if(substance== 'Mecoprop'){
+      Mecoprop_load[n,]<-current_load
+    }else if(substance== 'Terbutryn'){
+      Terbutryn_load[n,]<-current_load
+    }else if(substance== 'Benzothiazol'){
+      Benzothiazol_load[n,]<-current_load
+    }else if(substance== 'Zn'){
+      Zn_load[n,]<-current_load
+    }else if(substance== 'Cu'){
+      Cu_load[n,]<-current_load
+    }
+    
+  }
+  
+}  
+
+colnames(total_loads)<-substances
+write.csv(total_loads,'data/osm_simulated_loads.csv',row.names = FALSE)
+
+write.csv(Diuron_load, 'data/osm_load_Diuron.csv', row.names = FALSE)
+write.csv(Mecoprop_load, 'data/osm_load_Mecoprop.csv', row.names = FALSE)
+write.csv(Terbutryn_load, 'data/osm_load_Terbutryn.csv', row.names = FALSE)
+write.csv(Benzothiazol_load, 'data/osm_load_Benzothiazol.csv', row.names = FALSE)
+write.csv(Zn_load, 'data/osm_load_Zn.csv', row.names = FALSE)
+write.csv(Cu_load, 'data/osm_load_Cu.csv', row.names = FALSE)
