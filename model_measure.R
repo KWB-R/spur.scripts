@@ -34,20 +34,24 @@ substance_output <- data.frame("ID" = BTF_input$CODE,
 #creating data frame for loads
 set.seed(5)
 nMC <- 1000
-total_loads <- matrix(nrow = nMC, ncol = length(substances))
+total_reduced <- matrix(nrow = nMC, ncol = length(substances))
 
 substance_load <- matrix(nrow = nMC, ncol = 5)
 colnames(substance_load)<- c('load_Dach','load_Strasse', 'load_Hof', 'load_Putzfassade', 'load_total')
-Diuron_load <- substance_load
-Mecoprop_load <- substance_load
-Terbutryn_load <- substance_load
-Benzothiazol_load <- substance_load
-Zn_load <- substance_load
-Cu_load <- substance_load
+Diuron_reduced <- substance_load
+Mecoprop_reduced <- substance_load
+Terbutryn_reduced <- substance_load
+Benzothiazol_reduced <- substance_load
+Zn_reduced <- substance_load
+Cu_reduced <- substance_load
 
 #measure on the source:
 measure_extent <- c(0.2, 0, 0, 0, 0, 0)
 reduction_efficiencies <- c(1,0,0,0,0,0)
+
+#filter
+filter_capacity <- 0.2
+filter_efficiencies <- c(0.97, 0.85, 0.93 ,0.94, 0.93, 0.89)
 
 
 for (n in 1:nMC){
@@ -71,13 +75,12 @@ for (n in 1:nMC){
         
         c_anchor <- OgRe_typ_current[row_Konz, col_Konz]
         
+        index_substance <- which(substances==substance)
+        index_OgRe_typ <- which(OgRe_types==OgRe_typ)
         #with lognormal distribiuted concentrations
         if(c_anchor == 0){
           concentration <- 0
         } else {
-          index_substance <- which(substances==substance)
-          index_OgRe_typ <- which(OgRe_types==OgRe_typ)
-          
           rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_typ]])
           sd_temp<- c_anchor*rel_sd_temp[1,1+index_substance]
           
@@ -123,35 +126,38 @@ for (n in 1:nMC){
     assign(paste0(substance, '_output'), substance_output)
     current_output <- assign(paste0(substance, '_output'), substance_output)
     
-    total_loads[[n, index_substance]]<- sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE))/1000 #from g to kg
+    total_reduced[[n, index_substance]]<- sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE))/1000 #from g to kg
+    
+    #load reduction through filtration.dependent from filter efficiencies per substance and treated volume (filter capacity) 
+    total_reduced <-total_reduced - filter_capacity*sweep(total_reduced, MARGIN = 2, filter_efficiencies, '*')
     
     #Stoffspezifische Ergebnisse mit Aufschlüsselung nach Quelle zuweisen (temporär, weil hardgecoded)  
     current_load<-c(sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)[1:3]),colSums(Filter(is.numeric, current_output),na.rm = TRUE)[4:6], sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)))/1000 #from g to kg
     
     if(substance== 'Diuron'){
-      Diuron_load[n,]<-current_load
+      Diuron_reduced[n,]<-current_load - filter_capacity*current_load*filter_efficiencies[index_substance]
     }else if(substance== 'Mecoprop'){
-      Mecoprop_load[n,]<-current_load
+      Mecoprop_reduced[n,]<-current_load - filter_capacity*current_load*filter_efficiencies[index_substance]
     }else if(substance== 'Terbutryn'){
-      Terbutryn_load[n,]<-current_load
+      Terbutryn_reduced[n,]<-current_load - filter_capacity*current_load*filter_efficiencies[index_substance]
     }else if(substance== 'Benzothiazol'){
-      Benzothiazol_load[n,]<-current_load
+      Benzothiazol_reduced[n,]<-current_load - filter_capacity*current_load*filter_efficiencies[index_substance]
     }else if(substance== 'Zn'){
-      Zn_load[n,]<-current_load
+      Zn_reduced[n,]<-current_load - filter_capacity*current_load*filter_efficiencies[index_substance]
     }else if(substance== 'Cu'){
-      Cu_load[n,]<-current_load
+      Cu_reduced[n,]<-current_load - filter_capacity*current_load*filter_efficiencies[index_substance]
     }
     
   }
   
 }  
 
-colnames(total_loads)<-substances
-write.csv(total_loads,'data/osm_simulated_loads.csv',row.names = FALSE)
+colnames(total_reduced)<-substances
+write.csv(total_reduced,'data/reduced_simulated_loads.csv',row.names = FALSE)
 
-write.csv(Diuron_load, 'data/osm_load_Diuron.csv', row.names = FALSE)
-write.csv(Mecoprop_load, 'data/osm_load_Mecoprop.csv', row.names = FALSE)
-write.csv(Terbutryn_load, 'data/osm_load_Terbutryn.csv', row.names = FALSE)
-write.csv(Benzothiazol_load, 'data/osm_load_Benzothiazol.csv', row.names = FALSE)
-write.csv(Zn_load, 'data/osm_load_Zn.csv', row.names = FALSE)
-write.csv(Cu_load, 'data/osm_load_Cu.csv', row.names = FALSE)
+write.csv(Diuron_reduced, 'data/reduced_load_Diuron.csv', row.names = FALSE)
+write.csv(Mecoprop_reduced, 'data/reduced_load_Mecoprop.csv', row.names = FALSE)
+write.csv(Terbutryn_reduced, 'data/reduced_load_Terbutryn.csv', row.names = FALSE)
+write.csv(Benzothiazol_reduced, 'data/reduced_load_Benzothiazol.csv', row.names = FALSE)
+write.csv(Zn_reduced, 'data/reduced_load_Zn.csv', row.names = FALSE)
+write.csv(Cu_reduced, 'data/reduced_load_Cu.csv', row.names = FALSE)

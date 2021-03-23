@@ -1,7 +1,5 @@
 library(data.table)
 
-
-
 ###city structure types and sources
 substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
 OgRe_types <- c("ALT", "EFH", "GEW", "NEU", "AND")
@@ -47,10 +45,8 @@ Benzothiazol_load_filtered <- substance_load
 Zn_load_filtered <- substance_load
 Cu_load_filtered <- substance_load
 
-#measurements:
 #filter
 filter_capacity <- 0.2
-#filter_efficiencies<- read.csv('data/filter_efficiencies.csv')
 filter_efficiencies <- c(0.97, 0.85, 0.93 ,0.94, 0.93, 0.89)
 
 
@@ -124,9 +120,8 @@ for (n in 1:nMC){
     
     total_loads[[n, index_substance]]<- sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE))/1000 #from g to kg
         
-    #load reductiont through filtration.dependent from filter efficiencies per susbtance and treated volume (filter capacaty) 
+    #load reduction through filtration.dependent from filter efficiencies per substance and treated volume (filter capacity) 
     filtered_loads <-total_loads - filter_capacity*sweep(total_loads, MARGIN = 2, filter_efficiencies, '*')
-    
     
     #Stoffspezifische Ergebnisse mit Aufschlüsselung nach Quelle zuweisen (temporär, weil hardgecoded)  
     current_load<-c(sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)[1:3]),colSums(Filter(is.numeric, current_output),na.rm = TRUE)[4:6], sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)))/1000 #from g to kg
@@ -150,11 +145,11 @@ for (n in 1:nMC){
 }  
 
 colnames(filtered_loads)<-substances
-write.csv(filtered_loads,'data/simulated_loads_filtered.csv',row.names = FALSE)
+write.csv(filtered_loads,'data/filtered_simulated_loads.csv',row.names = FALSE)
 
-write.csv(Diuron_load_filtered, 'data/load_Diuron_filtered.csv', row.names = FALSE)
-write.csv(Mecoprop_load_filtered, 'data/load_Mecoprop_filtered.csv', row.names = FALSE)
-write.csv(Terbutryn_load_filtered, 'data/load_Terbutryn_filtered.csv', row.names = FALSE)
-write.csv(Benzothiazol_load_filtered, 'data/load_Benzothiazol_filtered.csv', row.names = FALSE)
-write.csv(Zn_load_filtered, 'data/load_Zn_filtered.csv', row.names = FALSE)
-write.csv(Cu_load_filtered, 'data/load_Cu_filtered.csv', row.names = FALSE)
+write.csv(Diuron_load_filtered, 'data/filtered_load_Diuron.csv', row.names = FALSE)
+write.csv(Mecoprop_load_filtered, 'data/filtered_load_Mecoprop.csv', row.names = FALSE)
+write.csv(Terbutryn_load_filtered, 'data/filtered_load_Terbutryn.csv', row.names = FALSE)
+write.csv(Benzothiazol_load_filtered, 'data/filtered_load_Benzothiazol.csv', row.names = FALSE)
+write.csv(Zn_load_filtered, 'data/filtered_load_Zn.csv', row.names = FALSE)
+write.csv(Cu_load_filtered, 'data/filtered_load_Cu.csv', row.names = FALSE)

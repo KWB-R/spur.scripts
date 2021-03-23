@@ -32,7 +32,22 @@ write.csv(x, paste0( 'data/rel_sd_', OgRe_typ, '.csv'), row.names = FALSE)
 
 
 # create rel_sd for OgRe_typ AND
-#because no such data for AND is present, the mean of the other OgRe_types will be used
-y<-(ALT_rel_sd[,2:7]+NEU_rel_sd[,2:7]+GEW_rel_sd[,2:7]+EFH_rel_sd[,2:7]+STR_rel_sd[,2:7])/length(OgRe_types)
-AND_rel_sd<-data.frame(sources,y)
-write.csv(AND_rel_sd,'data/rel_sd_AND.csv',row.names = FALSE)
+#because no such data for AND is present, the mean of all other OgRe_types will be used
+
+for (substance in substances) {
+  
+  index_substance <- which(substances==substance)
+
+temp <- (filter(OgRe_composite_SPUR, OgRe_composite_SPUR$VariableCode == substance ))
+mean_temp<- mean(temp$DataValue, na.rm = TRUE)  
+sd_temp <- sd(temp$DataValue)
+
+if(mean_temp==0){
+  rel_sd[,index_substance+1]<- 0
+} else {
+  rel_sd[,index_substance+1]<- sd_temp/mean_temp
+}
+}
+
+x<- assign('AND_rel_sd', rel_sd)
+write.csv(x, 'data/rel_sd_AND.csv', row.names = FALSE)

@@ -33,7 +33,7 @@ substance_output <- data.frame("ID" = BTF_input$CODE,
 
 #creating data frame for loads
 set.seed(5)
-nMC <- 10
+nMC <- 1000
 total_loads <- matrix(nrow = nMC, ncol = length(substances))
 
 substance_load <- matrix(nrow = nMC, ncol = 5)
@@ -115,11 +115,11 @@ for (n in 1:nMC){
     current_output <- assign(paste0(substance, '_output'), substance_output)
     
     
-    total_loads[[n, index_substance]]<- sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE))
+    total_loads[[n, index_substance]]<- sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE))/1000 #from g to kg
     
     
     #Stoffspezifische Ergebnisse mit Aufschlüsselung nach Quelle zuweisen (temporär, weil hardgecoded)  
-    current_load<-c(sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)[1:3]),colSums(Filter(is.numeric, current_output),na.rm = TRUE)[4:6], sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)))
+    current_load<-c(sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)[1:3]),colSums(Filter(is.numeric, current_output),na.rm = TRUE)[4:6], sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)))/1000 #from g to kg
 
     if(substance== 'Diuron'){
     Diuron_load[n,]<-current_load
@@ -137,10 +137,10 @@ for (n in 1:nMC){
 
   }
   
-  }  
+}  
 
 colnames(total_loads)<-substances
-write.csv(total_loads,'data/simulated_loads_test.csv',row.names = FALSE)
+write.csv(total_loads,'data/simulated_loads.csv',row.names = FALSE)
 
 write.csv(Diuron_load, 'data/load_Diuron.csv', row.names = FALSE)
 write.csv(Mecoprop_load, 'data/load_Mecoprop.csv', row.names = FALSE)
