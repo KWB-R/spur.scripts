@@ -255,10 +255,14 @@ for (OgRe_Type in OgRe_Types) {
 ###load Berlin shape with ABIMO results
 x_berlin_runoff <- foreign::read.dbf(file = file.path(data.dir, "vs_2019_SPUR.dbf"), as.is = TRUE)
 
-###add result columns
+###add result columns for runoff
 x_berlin_runoff[,c("runoff_street","runoff_yard","runoff_bit", "runoff_zieg", "runoff_restdach", "runoff_putz")] <- NA
 
-###set runoff values in m3/yr by OgRe Type
+###add result columns for connected impervious areas AU
+x_berlin_runoff[,c("AU_street","AU_yard","AU_bit", "AU_zieg", "AU_restdach", "AU_putz")] <- NA
+
+
+###set runoff values in m3/yr and AU in m2 by OgRe Type
 
 ##add row to summary table for areas not covered by OgRe-types
 x_summary[5,] <- NA
@@ -279,6 +283,11 @@ for (OgRe_Type in c(OgRe_Types, "AND")) {
                             x_summary$Runoff_ZiegDach[index] + 
                             x_summary$Runoff_RestDach[index]
   
+  total_roof_area_EZG <- x_summary$Fl_BitDach[index] + 
+    x_summary$Fl_ZiegDach[index] + 
+    x_summary$Fl_RestDach[index]
+  
+  ##roof-related runoff
   x_berlin_runoff$runoff_bit[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
                                               x_summary$Runoff_BitDach[index] / total_roof_runoff_EZG
   
@@ -290,15 +299,35 @@ for (OgRe_Type in c(OgRe_Types, "AND")) {
   
   x_berlin_runoff$runoff_putz[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
                                                x_summary$Runoff_PutzFass[index] / total_roof_runoff_EZG
+  ##roof-related areas AU
+  x_berlin_runoff$AU_bit[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
+                                          x_summary$Fl_BitDach[index] / total_roof_area_EZG
+  
+  x_berlin_runoff$AU_restdach[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
+                                          x_summary$Fl_RestDach[index] / total_roof_area_EZG
+  
+  x_berlin_runoff$AU_zieg[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
+                                          x_summary$Fl_ZiegDach[index] / total_roof_area_EZG
+  
+  x_berlin_runoff$AU_putz[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
+                                           x_summary$Fl_PutzFass[index] / total_roof_area_EZG
   
   ##reduce yard and street runoff by added facade runoff
   
-  x_berlin_runoff$runoff_street[index_berlin] <- max(0, x_berlin_runoff$ROW_street[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] -
-                                                 x_berlin_runoff$runoff_putz[index_berlin] / 2)     
-  x_berlin_runoff$runoff_yard[index_berlin] <- max(0, x_berlin_runoff$ROW_yards[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] - 
-                                               x_berlin_runoff$runoff_putz[index_berlin] / 2)                                              
+  x_berlin_runoff$runoff_street[index_berlin] <- x_berlin_runoff$ROW_street[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] -
+                                                 x_berlin_runoff$runoff_putz[index_berlin] / 2    
+  x_berlin_runoff$runoff_yard[index_berlin] <- x_berlin_runoff$ROW_yards[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] - 
+                                               x_berlin_runoff$runoff_putz[index_berlin] / 2                                            
   
+  index_neg <- which(x_berlin_runoff$runoff_street < 0)
+  x_berlin_runoff$runoff_street[index_neg] <- 0
   
+  index_neg <- which(x_berlin_runoff$runoff_yard < 0)
+  x_berlin_runoff$runoff_yard[index_neg] <- 0
+  
+  ##yard and street areas
+  x_berlin_runoff$AU_street[index_berlin] <- x_berlin_runoff$STR_FLGES[index_berlin] * x_berlin_runoff$VGSTRASSE[index_berlin] / 100 * x_berlin_runoff$KAN_STR[index_berlin] / 100
+  x_berlin_runoff$AU_yard[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROVGU[index_berlin] / 100 * x_berlin_runoff$KAN_VGU[index_berlin] / 100  
 }
 
 ###order and write combined file to match map
