@@ -10,6 +10,8 @@ sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Put
 BTF_input <- foreign::read.dbf('data/berlin_runoff.dbf')
 BTF_input <- setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
 
+
+
 # read in backcalculated concentrations from OgRe
 # read in relativ standard deviations
 sd_list <- list()
