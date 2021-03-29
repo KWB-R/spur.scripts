@@ -13,15 +13,15 @@ BTF_input <- setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit',
 # read in backcalculated concentrations from OgRe
 # read in relativ standard deviations
 sd_list <- list()
-for( OgRe_typ in OgRe_types){
-  assign(paste0('c_',OgRe_typ), read.csv(paste0('data/Konz_',OgRe_typ,'.csv'), sep = ';')) 
-  index_OgRe_typ <- which(OgRe_types==OgRe_typ)
-  sd_list[[index_OgRe_typ]] <-assign(paste0('rel_sd_',OgRe_typ), read.csv(paste0('data/rel_sd_', OgRe_typ,'.csv')))
+for( OgRe_type in OgRe_types){
+  assign(paste0('c_',OgRe_type), read.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';')) 
+  index_OgRe_type <- which(OgRe_types==OgRe_type)
+  sd_list[[index_OgRe_type]] <-assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data/rel_sd_', OgRe_type,'.csv')))
 }
 
 substance_output <- data.frame("ID" = BTF_input$CODE,
                                "Gewässser" = BTF_input$AGEB1,
-                               "OgRe_Typ" = BTF_input$OgRe_Type,
+                               "OgRe_Type" = BTF_input$OgRe_Type,
                                "load_Bitumendach" = NA,
                                "load_Ziegeldach" = NA,
                                "load_Dach_weitere" = NA,
@@ -61,35 +61,35 @@ for (n in 1:nMC){
     #substanz auswählen
     
     
-    for (OgRe_typ in OgRe_types) {
+    for (OgRe_type in OgRe_types) {
       
-      #Zeilen auswählen die OgRe_typ entsprechen
+      #Zeilen auswählen die OgRe_type entsprechen
       
       
       for (my_source in sources) {
         
-        OgRe_typ_current <- eval(parse(text = paste0("c_", OgRe_typ)))
+        OgRe_type_current <- eval(parse(text = paste0("c_", OgRe_type)))
         
-        col_Konz <- which(names(OgRe_typ_current) == paste0("Konz_", substance))
-        row_Konz <- which(OgRe_typ_current$Source == my_source)
+        col_Konz <- which(names(OgRe_type_current) == paste0("Konz_", substance))
+        row_Konz <- which(OgRe_type_current$Source == my_source)
         
-        c_anchor <- OgRe_typ_current[row_Konz, col_Konz]
+        c_anchor <- OgRe_type_current[row_Konz, col_Konz]
         
         index_substance <- which(substances==substance)
-        index_OgRe_typ <- which(OgRe_types==OgRe_typ)
+        index_OgRe_type <- which(OgRe_types==OgRe_type)
         #with lognormal distribiuted concentrations
         if(c_anchor == 0){
           concentration <- 0
         } else {
-          rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_typ]])
+          rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_type]])
           sd_temp<- c_anchor*rel_sd_temp[1,1+index_substance]
           
           location<- log(c_anchor^2/sqrt(sd_temp^2+c_anchor^2))
           shape<- sqrt(log(1+(sd_temp^2/c_anchor^2)))
           concentration <- rlnorm(n=1, meanlog = location, sdlog = shape)
         }
-        #pick all BTF which are OgRe_typ
-        row_runoff <- which(BTF_input$OgRe_Type == OgRe_typ)
+        #pick all BTF which are OgRe_type
+        row_runoff <- which(BTF_input$OgRe_Type == OgRe_type)
         index_source <- which(sources== my_source)
         
         #pick column from BTF_input with runoffs from current source
@@ -153,11 +153,11 @@ for (n in 1:nMC){
 }  
 
 colnames(total_reduced)<-substances
-write.csv(total_reduced,'data/reduced_simulated_loads.csv',row.names = FALSE)
+write.csv(total_reduced,'data_output/calculation_load_reduction/reduced_simulated_loads.csv',row.names = FALSE)
 
-write.csv(Diuron_reduced, 'data/reduced_load_Diuron.csv', row.names = FALSE)
-write.csv(Mecoprop_reduced, 'data/reduced_load_Mecoprop.csv', row.names = FALSE)
-write.csv(Terbutryn_reduced, 'data/reduced_load_Terbutryn.csv', row.names = FALSE)
-write.csv(Benzothiazol_reduced, 'data/reduced_load_Benzothiazol.csv', row.names = FALSE)
-write.csv(Zn_reduced, 'data/reduced_load_Zn.csv', row.names = FALSE)
-write.csv(Cu_reduced, 'data/reduced_load_Cu.csv', row.names = FALSE)
+write.csv(Diuron_reduced, 'data_output/calculation_load_reduction/reduced_load_Diuron.csv', row.names = FALSE)
+write.csv(Mecoprop_reduced, 'data_output/calculation_load_reduction/reduced_load_Mecoprop.csv', row.names = FALSE)
+write.csv(Terbutryn_reduced, 'data_output/calculation_load_reduction/reduced_load_Terbutryn.csv', row.names = FALSE)
+write.csv(Benzothiazol_reduced, 'data_output/calculation_load_reduction/reduced_load_Benzothiazol.csv', row.names = FALSE)
+write.csv(Zn_reduced, 'data_output/calculation_load_reduction/reduced_load_Zn.csv', row.names = FALSE)
+write.csv(Cu_reduced, 'data_output/calculation_load_reduction/reduced_load_Cu.csv', row.names = FALSE)
