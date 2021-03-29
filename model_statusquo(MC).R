@@ -6,22 +6,27 @@ OgRe_types <- c("ALT", "EFH", "GEW", "NEU", "AND")
 sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
 
 ###load data
-# abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
-BTF_input <- foreign::read.dbf('data/berlin_runoff.dbf')
-BTF_input <- setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+# ABIMO runoff and OgRe information (roof, yard, street (last two include facade runoff))
+berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
+berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+#choosing catchment area (5th for loop as wrapper, catchment vector)
+BTF_input <- subset(berlin_runoff, AGEB1=='Wuhle')
 
-# read in backcalculated concentrations from OgRe
-# read in relativ standard deviations
+  which(names(BTF_input) == paste0("runoff_", sources[index_source]))
+  
+# read in back calculated concentrations from OgRe
+# read in relative standard deviations
 sd_list <- list()
-for( OgRe_typ in OgRe_types){
-  assign(paste0('c_',OgRe_typ), read.csv(paste0('data/Konz_',OgRe_typ,'.csv'), sep = ';')) 
-  index_OgRe_typ <- which(OgRe_types==OgRe_typ)
-  sd_list[[index_OgRe_typ]] <-assign(paste0('rel_sd_',OgRe_typ), read.csv(paste0('data/rel_sd_', OgRe_typ,'.csv')))
+for( OgRe_type in OgRe_types){
+  index_OgRe_type <- which(OgRe_types==OgRe_type)
+  assign(paste0('c_',OgRe_type), read.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';')) 
+  sd_list[[index_OgRe_type]] <-assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data/rel_sd_', OgRe_type,'.csv')))
 }
 
+# creating data fram to store loads for every source in every BTF
 substance_output <- data.frame("ID" = BTF_input$CODE,
                                "Gewässser" = BTF_input$AGEB1,
-                               "OgRe_Typ" = BTF_input$OgRe_Type,
+                               "OgRe_Type" = BTF_input$OgRe_Type,
                                "load_Bitumendach" = NA,
                                "load_Ziegeldach" = NA,
                                "load_Dach_weitere" = NA,
@@ -31,9 +36,13 @@ substance_output <- data.frame("ID" = BTF_input$CODE,
 
 
 
-#creating data frame for loads
+# set a fixed start for the random algorithm
 set.seed(5)
+
+# Number of laps for the MonteCarlo simulation
 nMC <- 1000
+
+#creating data frame for loads
 total_loads <- matrix(nrow = nMC, ncol = length(substances))
 
 substance_load <- matrix(nrow = nMC, ncol = 5)
@@ -53,36 +62,37 @@ for (n in 1:nMC){
     #substanz auswählen
     
     
-    for (OgRe_typ in OgRe_types) {
+    for (OgRe_type in OgRe_types) {
       
-      #Zeilen auswählen die OgRe_typ entsprechen
+      #Zeilen auswählen die OgRe_type entsprechen
       
       
       for (my_source in sources) {
         
-        OgRe_typ_current <- eval(parse(text = paste0("c_", OgRe_typ)))
+        # Which concentration file is to be used
+        OgRe_type_current <- eval(parse(text = paste0("c_", OgRe_type)))
+        # which row and which column must be selected for the correct cell
+        col_Konz <- which(names(OgRe_type_current) == paste0("Konz_", substance))
+        row_Konz <- which(OgRe_type_current$Source == my_source)
+        # find and store anchor concentration
+        c_anchor <- OgRe_type_current[row_Konz, col_Konz]
         
-        col_Konz <- which(names(OgRe_typ_current) == paste0("Konz_", substance))
-        row_Konz <- which(OgRe_typ_current$Source == my_source)
-        
-        c_anchor <- OgRe_typ_current[row_Konz, col_Konz]
-        
-        #with lognormal distribiuted concentrations
+        #Set parameters for lognormal distribution; bypass 0
         if(c_anchor == 0){
           concentration <- 0
         } else {
           index_substance <- which(substances==substance)
-          index_OgRe_typ <- which(OgRe_types==OgRe_typ)
+          index_OgRe_type <- which(OgRe_types==OgRe_type)
           
-          rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_typ]])
+          rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_type]])
           sd_temp<- c_anchor*rel_sd_temp[1,1+index_substance]
           
           location<- log(c_anchor^2/sqrt(sd_temp^2+c_anchor^2))
           shape<- sqrt(log(1+(sd_temp^2/c_anchor^2)))
           concentration <- rlnorm(n=1, meanlog = location, sdlog = shape)
         }
-        #pick all BTF which are OgRe_typ
-        row_runoff <- which(BTF_input$OgRe_Type == OgRe_typ)
+        #pick all BTF belonging to OgRe_type
+        row_runoff <- which(BTF_input$OgRe_Type == OgRe_type)
         index_source <- which(sources== my_source)
         
         #pick column from BTF_input with runoffs from current source
@@ -93,19 +103,6 @@ for (n in 1:nMC){
         #calculates the load and writes it into the intended cell (calculation for fixed facade runoff)
        
         substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
-        
-        
-        # create normal distributed runoff volumes for facades
-        #if (my_source == "Putzfassade" ){
-        #  facade_proportion<- runif(n=1, min = 0.1, max = 0.9)
-        #substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]/0.5*facade_proportion
-        
-        #}else{
-        #substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
-        #}
-        
-        #Quelle auswählen (im entsprechenden c_ File (1 Zelle) und Abflussfile (1 Spalte))
-        #multiplizieren
         
       }
     }
@@ -140,11 +137,11 @@ for (n in 1:nMC){
 }  
 
 colnames(total_loads)<-substances
-write.csv(total_loads,'data/simulated_loads.csv',row.names = FALSE)
+write.csv(total_loads,'data_output/calculation_status_quo/Wuhle_simulated_loads.csv',row.names = FALSE)
 
-write.csv(Diuron_load, 'data/load_Diuron.csv', row.names = FALSE)
-write.csv(Mecoprop_load, 'data/load_Mecoprop.csv', row.names = FALSE)
-write.csv(Terbutryn_load, 'data/load_Terbutryn.csv', row.names = FALSE)
-write.csv(Benzothiazol_load, 'data/load_Benzothiazol.csv', row.names = FALSE)
-write.csv(Zn_load, 'data/load_Zn.csv', row.names = FALSE)
-write.csv(Cu_load, 'data/load_Cu.csv', row.names = FALSE)
+write.csv(Diuron_load, 'data_output/calculation_status_quo/Wuhle_load_Diuron.csv', row.names = FALSE)
+write.csv(Mecoprop_load, 'data_output/calculation_status_quo/Wuhle_load_Mecoprop.csv', row.names = FALSE)
+write.csv(Terbutryn_load, 'data_output/calculation_status_quo/Wuhle_load_Terbutryn.csv', row.names = FALSE)
+write.csv(Benzothiazol_load, 'data_output/calculation_status_quo/Wuhle_load_Benzothiazol.csv', row.names = FALSE)
+write.csv(Zn_load, 'data_output/calculation_status_quo/Wuhle_load_Zn.csv', row.names = FALSE)
+write.csv(Cu_load, 'data_output/calculation_status_quo/Wuhle_load_Cu.csv', row.names = FALSE)
