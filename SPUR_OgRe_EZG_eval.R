@@ -17,19 +17,22 @@ coeff_fac_sew <- 0.5
 
 OgRe_Types <- c("ALT", "NEU", "EFH", "GEW")
 
-sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
+#sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
+sources <- c("Dach", "Strasse", "Hof", "Putzfassade")
 
 #prepare summary table for OgRe EZG
 x_summary <- data.frame("OgRe_Type" = OgRe_Types,
-                        "Fl_BitDach" = NA,
-                        "Fl_ZiegDach" = NA,
-                        "Fl_RestDach" = NA,
+                       # "Fl_BitDach" = NA,
+                       #  "Fl_ZiegDach" = NA,
+                       # "Fl_RestDach" = NA,
+                        "Fl_Dach" = NA,
                         "Fl_Hof" = NA,
                         "Fl_Str" = NA,
                         "Fl_PutzFass" = NA,
-                        "Runoff_BitDach" = NA,
-                        "Runoff_ZiegDach" = NA,
-                        "Runoff_RestDach" = NA,
+                       # "Runoff_BitDach" = NA,
+                       # "Runoff_ZiegDach" = NA,
+                       # "Runoff_RestDach" = NA,
+                        "Runoff_Dach" = NA,
                         "Runoff_Hof" = NA,
                         "Runoff_Str" = NA,
                         "Runoff_PutzFass" = NA,
@@ -73,8 +76,8 @@ spec_fac_runoff <- mean(colMeans(x_runoff_facade[, c("runoffS", "runoffW", "runo
 spec_fac_runoff <- spec_fac_runoff * coeff_fac_sew
 
 ##load Dachflaechen
-x_Dach <- read.table(file = file.path(data.dir, "Dachflaechen.csv"), 
-                     header = TRUE, sep = ";", dec = ".")
+#x_Dach <- read.table(file = file.path(data.dir, "Dachflaechen.csv"), 
+#                     header = TRUE, sep = ";", dec = ".")
 
 
 ##assemble data by OgRe monitoring catchment
@@ -90,15 +93,17 @@ for (OgRe_Type in OgRe_Types) {
   x_type$clip_factor <- x_type$clip_area / x_type$FLGES
   
   #impervious surfaces in m2
-  x_summary$Fl_BitDach[index] <- sum(x_type$FLGES * x_type$clip_factor * #area
-                          x_type$PROBAU /100 * x_type$KAN_BEB /100) * #impervious and sewered area only
-                          x_Dach$Bitumendach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO
-  x_summary$Fl_ZiegDach[index] <- sum(x_type$FLGES * x_type$clip_factor * #area
-                                       x_type$PROBAU /100 * x_type$KAN_BEB /100) * #impervious and sewered area only
-                                       x_Dach$Ziegeldach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO
-  x_summary$Fl_RestDach[index] <- sum(x_type$FLGES * x_type$clip_factor * #area
-                                        x_type$PROBAU /100 * x_type$KAN_BEB /100) * #impervious and sewered area only
-                                        x_Dach$Restdach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO
+  #x_summary$Fl_BitDach[index] <- sum(x_type$FLGES * x_type$clip_factor * #area
+  #                        x_type$PROBAU /100 * x_type$KAN_BEB /100) * #impervious and sewered area only
+  #                        x_Dach$Bitumendach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO
+  #x_summary$Fl_ZiegDach[index] <- sum(x_type$FLGES * x_type$clip_factor * #area
+  #                                     x_type$PROBAU /100 * x_type$KAN_BEB /100) * #impervious and sewered area only
+  #                                     x_Dach$Ziegeldach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO
+  #x_summary$Fl_RestDach[index] <- sum(x_type$FLGES * x_type$clip_factor * #area
+  #                                      x_type$PROBAU /100 * x_type$KAN_BEB /100) * #impervious and sewered area only
+  #                                      x_Dach$Restdach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO
+  x_summary$Fl_Dach[index] <- sum(x_type$FLGES * x_type$clip_factor * #area
+                                   x_type$PROBAU /100 * x_type$KAN_BEB /100) #impervious and sewered roof area only
   x_summary$Fl_Hof[index] <- sum(x_type$FLGES * x_type$clip_factor * #area
                                     x_type$PROVGU /100 * x_type$KAN_VGU /100) #impervious and sewered area only
   x_summary$Fl_Str[index] <- sum(x_type$STR_FLGES * x_type$clip_factor * #area
@@ -106,12 +111,13 @@ for (OgRe_Type in OgRe_Types) {
   x_summary$Fl_PutzFass[index] <- x_Putz$FL_Putz_ha[x_Putz$OgRe_Type == OgRe_Type] * 100 * 100 #calculate m2 from hectares
   
   #runoff in m3/yr for ABIMO output (mm times total area (FLAECHE = FLGES + STR_FLGES))
-  x_summary$Runoff_BitDach[index] <- sum(x_type$ROW_roof / 1000 * x_type$FLAECHE * x_type$clip_factor) * # [mm/yr /1000m/m2 * m2] = [m3/yr]
-                                  x_Dach$Bitumendach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO  
-  x_summary$Runoff_ZiegDach[index] <- sum(x_type$ROW_roof / 1000 * x_type$FLAECHE * x_type$clip_factor) * # [mm/yr /1000m/m2 * m2] = [m3/yr]
-                                     x_Dach$Ziegeldach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO  
-  x_summary$Runoff_RestDach[index] <- sum(x_type$ROW_roof / 1000 * x_type$FLAECHE * x_type$clip_factor) * # [mm/yr /1000m/m2 * m2] = [m3/yr]
-                                     x_Dach$Restdach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO  
+  #x_summary$Runoff_BitDach[index] <- sum(x_type$ROW_roof / 1000 * x_type$FLAECHE * x_type$clip_factor) * # [mm/yr /1000m/m2 * m2] = [m3/yr]
+  #                                x_Dach$Bitumendach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO  
+  #x_summary$Runoff_ZiegDach[index] <- sum(x_type$ROW_roof / 1000 * x_type$FLAECHE * x_type$clip_factor) * # [mm/yr /1000m/m2 * m2] = [m3/yr]
+  #                                   x_Dach$Ziegeldach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO  
+  #x_summary$Runoff_RestDach[index] <- sum(x_type$ROW_roof / 1000 * x_type$FLAECHE * x_type$clip_factor) * # [mm/yr /1000m/m2 * m2] = [m3/yr]
+  #                                   x_Dach$Restdach_ha[index] / x_Dach$Dach_gesamt_ha[index] # correct to match area considered in ABIMO  
+  x_summary$Runoff_Dach[index] <- sum(x_type$ROW_roof / 1000 * x_type$FLAECHE * x_type$clip_factor) # [mm/yr /1000m/m2 * m2] = [m3/yr]
   x_summary$Runoff_Hof[index] <- sum(x_type$ROW_yards / 1000 * x_type$FLAECHE * x_type$clip_factor) # [mm/yr /1000m/m2 * m2] = [m3/yr]
   x_summary$Runoff_Str[index] <- sum(x_type$ROW_street / 1000 * x_type$FLAECHE * x_type$clip_factor) # [mm/yr /1000m/m2 * m2] = [m3/yr]
   
@@ -147,16 +153,17 @@ for (OgRe_Type in OgRe_Types) {
   index <- which(x_summary$OgRe_Type == OgRe_Type)
   
   ##source indices
-  index_bitu <- which(x_summary_Konz$Source == "Bitumendach")
-  index_zieg <- which(x_summary_Konz$Source == "Ziegeldach")
-  index_dach <- which(x_summary_Konz$Source == "Dach_weitere")
+  #index_bitu <- which(x_summary_Konz$Source == "Bitumendach")
+  #index_zieg <- which(x_summary_Konz$Source == "Ziegeldach")
+  #index_dach <- which(x_summary_Konz$Source == "Dach_weitere")
+  index_roof <- which(x_summary_Konz$Source == "Dach")
   index_yard <- which(x_summary_Konz$Source == "Hof")
   index_str <- which(x_summary_Konz$Source == "Strasse")
   index_putz <- which(x_summary_Konz$Source == "Putzfassade")
   
-  ##Mecoprop, assumed from bituminous roof only in mg/L = g/m3
+  ##Mecoprop, assumed from roofs only in mg/L = g/m3
   x_summary_Konz$Konz_Mecoprop <- 0
-  x_summary_Konz$Konz_Mecoprop[index_bitu] <- x_summary$Load_Mecoprop[index] / x_summary$Runoff_BitDach[index] * 1000 #from [kg/m3] to [g/m3]
+  x_summary_Konz$Konz_Mecoprop[index_roof] <- x_summary$Load_Mecoprop[index] / x_summary$Runoff_Dach[index] * 1000 #from [kg/m3] to [g/m3]
   
   ##Zinc, assumed from buildings (all roof types) and streets in mg/L = g/m3
   
@@ -172,13 +179,15 @@ for (OgRe_Type in OgRe_Types) {
     x_summary_Konz$Konz_Zn <- 0
     x_summary_Konz$Konz_Zn[index_str] <-  Load_str /  # load from streets
                                           x_summary$Runoff_Str[index] * 1000           #from [kg/m3] to [g/m3]
-    x_summary_Konz$Konz_Zn[index_bitu] <- Load_roof /  # load from streets
-                                          (x_summary$Runoff_BitDach[index] + 
-                                             x_summary$Runoff_ZiegDach[index] + 
-                                             x_summary$Fl_RestDach[index]) * 1000           #from [kg/m3] to [g/m3]
+    x_summary_Konz$Konz_Zn[index_roof] <- Load_roof /  # load from roofs
+                                            (x_summary$Runoff_Dach[index]) * 1000           #from [kg/m3] to [g/m3]
+    #x_summary_Konz$Konz_Zn[index_bitu] <- Load_roof /  # load from streets
+    #                                      (x_summary$Runoff_BitDach[index] + 
+    #                                         x_summary$Runoff_ZiegDach[index] + 
+    #                                         x_summary$Runoff_RestDach[index]) * 1000           #from [kg/m3] to [g/m3]
     
-    x_summary_Konz$Konz_Zn[index_zieg] <- x_summary_Konz$Konz_Zn[index_bitu] #same for all roof types
-    x_summary_Konz$Konz_Zn[index_dach] <- x_summary_Konz$Konz_Zn[index_bitu]
+    #x_summary_Konz$Konz_Zn[index_zieg] <- x_summary_Konz$Konz_Zn[index_bitu] #same for all roof types
+    #x_summary_Konz$Konz_Zn[index_dach] <- x_summary_Konz$Konz_Zn[index_bitu]
     
   ##Copper, assumed from buildings (all roof types) and streets in mg/L = g/m3
     
@@ -194,13 +203,16 @@ for (OgRe_Type in OgRe_Types) {
     x_summary_Konz$Konz_Cu <- 0
     x_summary_Konz$Konz_Cu[index_str] <-  Load_str /  # load from streets
       x_summary$Runoff_Str[index] * 1000           #from [kg/m3] to [g/m3]
-    x_summary_Konz$Konz_Cu[index_bitu] <- Load_roof /  # load from streets
-      (x_summary$Runoff_BitDach[index] + 
-         x_summary$Runoff_ZiegDach[index] + 
-         x_summary$Fl_RestDach[index]) * 1000           #from [kg/m3] to [g/m3]
+    x_summary_Konz$Konz_Cu[index_roof] <- Load_roof /  # load from streets
+        (x_summary$Runoff_Dach[index]) * 1000           #from [kg/m3] to [g/m3]
     
-    x_summary_Konz$Konz_Cu[index_zieg] <- x_summary_Konz$Konz_Cu[index_bitu] #same for all roof types
-    x_summary_Konz$Konz_Cu[index_dach] <- x_summary_Konz$Konz_Cu[index_bitu]
+    #x_summary_Konz$Konz_Cu[index_bitu] <- Load_roof /  # load from streets
+    #  (x_summary$Runoff_BitDach[index] + 
+    #     x_summary$Runoff_ZiegDach[index] + 
+    #     x_summary$Runoff_RestDach[index]) * 1000           #from [kg/m3] to [g/m3]
+    
+    #x_summary_Konz$Konz_Cu[index_zieg] <- x_summary_Konz$Konz_Cu[index_bitu] #same for all roof types
+    #x_summary_Konz$Konz_Cu[index_dach] <- x_summary_Konz$Konz_Cu[index_bitu]
     
   ##Benzothiazole, assumed from buildings, yards and streets in mg/L = g/m3
     
@@ -221,10 +233,13 @@ for (OgRe_Type in OgRe_Types) {
     x_summary_Konz$Konz_Benzothiazol[index_str] <-  Load_str /  # load from streets
                                                     x_summary$Runoff_Str[index] * 1000           #from [kg/m3] to [g/m3]
     x_summary_Konz$Konz_Benzothiazol[-c(index_str, index_putz)] <- Load_type /  # load from yards and roofs
-                                          (x_summary$Runoff_BitDach[index] + 
-                                             x_summary$Runoff_ZiegDach[index] + 
-                                             x_summary$Runoff_RestDach[index] +
-                                             x_summary$Runoff_Hof[index]) * 1000 # total runoff from yard and roofs, from [kg/m3] to [g/m3]                                    
+                                            (x_summary$Runoff_Dach[index] +
+                                               x_summary$Runoff_Hof[index]) * 1000 # total runoff from yard and roofs, from [kg/m3] to [g/m3]  
+    #x_summary_Konz$Konz_Benzothiazol[-c(index_str, index_putz)] <- Load_type /  # load from yards and roofs
+    #                                      (x_summary$Runoff_BitDach[index] + 
+    #                                         x_summary$Runoff_ZiegDach[index] + 
+    #                                         x_summary$Runoff_RestDach[index] +
+    #                                         x_summary$Runoff_Hof[index]) * 1000 # total runoff from yard and roofs, from [kg/m3] to [g/m3]                                    
                                                  
     
   ##Terbutryn, assumed from facades only
@@ -256,10 +271,12 @@ for (OgRe_Type in OgRe_Types) {
 x_berlin_runoff <- foreign::read.dbf(file = file.path(data.dir, "vs_2019_SPUR.dbf"), as.is = TRUE)
 
 ###add result columns for runoff
-x_berlin_runoff[,c("runoff_street","runoff_yard","runoff_bit", "runoff_zieg", "runoff_restdach", "runoff_putz")] <- NA
+#x_berlin_runoff[,c("runoff_street","runoff_yard","runoff_bit", "runoff_zieg", "runoff_restdach", "runoff_putz")] <- NA
+x_berlin_runoff[,c("runoff_street","runoff_yard","runoff_roof", "runoff_putz")] <- NA
 
 ###add result columns for connected impervious areas AU
-x_berlin_runoff[,c("AU_street","AU_yard","AU_bit", "AU_zieg", "AU_restdach", "AU_putz")] <- NA
+#x_berlin_runoff[,c("AU_street","AU_yard","AU_bit", "AU_zieg", "AU_restdach", "AU_putz")] <- NA
+x_berlin_runoff[,c("AU_street","AU_yard", "AU_roof", "AU_putz")] <- NA
 
 
 ###set runoff values in m3/yr and AU in m2 by OgRe Type
@@ -279,36 +296,38 @@ for (OgRe_Type in c(OgRe_Types, "AND")) {
   index_berlin <- which(x_berlin_runoff$OgRe_Type == OgRe_Type)
   
   ##assume same relation to total roof runoff as in OgRe EZGs
-  total_roof_runoff_EZG <- x_summary$Runoff_BitDach[index] + 
-                            x_summary$Runoff_ZiegDach[index] + 
-                            x_summary$Runoff_RestDach[index]
+  #total_roof_runoff_EZG <- x_summary$Runoff_BitDach[index] + 
+  #                          x_summary$Runoff_ZiegDach[index] + 
+  #                          x_summary$Runoff_RestDach[index]
   
-  total_roof_area_EZG <- x_summary$Fl_BitDach[index] + 
-    x_summary$Fl_ZiegDach[index] + 
-    x_summary$Fl_RestDach[index]
+  total_roof_runoff_EZG <- x_summary$Runoff_Dach[index]
+  total_roof_area_EZG <- x_summary$Fl_Dach[index] 
   
   ##roof-related runoff
-  x_berlin_runoff$runoff_bit[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
-                                              x_summary$Runoff_BitDach[index] / total_roof_runoff_EZG
+  #x_berlin_runoff$runoff_bit[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
+  #                                            x_summary$Runoff_BitDach[index] / total_roof_runoff_EZG
   
-  x_berlin_runoff$runoff_zieg[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
-                                               x_summary$Runoff_ZiegDach[index] / total_roof_runoff_EZG
+  #x_berlin_runoff$runoff_zieg[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
+  #                                             x_summary$Runoff_ZiegDach[index] / total_roof_runoff_EZG
   
-  x_berlin_runoff$runoff_restdach[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
-                                                   x_summary$Runoff_RestDach[index] / total_roof_runoff_EZG
+  #x_berlin_runoff$runoff_restdach[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
+  #                                                 x_summary$Runoff_RestDach[index] / total_roof_runoff_EZG
+  
+  x_berlin_runoff$runoff_roof[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin]
   
   x_berlin_runoff$runoff_putz[index_berlin] <- x_berlin_runoff$ROW_roof[index_berlin] / 1000 * x_berlin_runoff$FLAECHE[index_berlin] *
                                                x_summary$Runoff_PutzFass[index] / total_roof_runoff_EZG
   ##roof-related areas AU
-  x_berlin_runoff$AU_bit[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
-                                          x_summary$Fl_BitDach[index] / total_roof_area_EZG
+  #x_berlin_runoff$AU_bit[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
+  #                                        x_summary$Fl_BitDach[index] / total_roof_area_EZG
   
-  x_berlin_runoff$AU_restdach[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
-                                          x_summary$Fl_RestDach[index] / total_roof_area_EZG
+  #x_berlin_runoff$AU_restdach[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
+  #                                        x_summary$Fl_RestDach[index] / total_roof_area_EZG
   
-  x_berlin_runoff$AU_zieg[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
-                                          x_summary$Fl_ZiegDach[index] / total_roof_area_EZG
+  #x_berlin_runoff$AU_zieg[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
+  #                                        x_summary$Fl_ZiegDach[index] / total_roof_area_EZG
   
+  x_berlin_runoff$AU_roof[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100
   x_berlin_runoff$AU_putz[index_berlin] <- x_berlin_runoff$FLGES[index_berlin] * x_berlin_runoff$PROBAU[index_berlin]/100 * x_berlin_runoff$KAN_BEB[index_berlin]/100 *
                                            x_summary$Fl_PutzFass[index] / total_roof_area_EZG
   
