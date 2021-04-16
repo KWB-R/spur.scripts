@@ -76,8 +76,11 @@ boxplot(Wuhle_Benzothiazol, ylab = 'load [kg/a)', las=1, main = 'Benzothiazol', 
 boxplot(Wuhle_Zn, ylab = 'load [kg/a)', main = 'Zn', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
 boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
 
+
+
+
 # Plots catchment area analysis
- catchments <- c('Wuhle')
+ catchments <- c('Wuhle', 'Flughafensee')
  substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
  OgRe_types <- c("ALT", "NEU", "EFH", "GEW","AND")
 
@@ -112,3 +115,106 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
      }
    }
  }
+ 
+ 
+ 
+ 
+ # grouped barplots: substance shares for each SST per source in relation to total load from SST
+ library(datasets)
+ catchments <- c('Wuhle', 'Flughafensee')
+ substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
+ OgRe_types <- c("ALT", "NEU", "EFH", "GEW","AND")
+ sources <- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
+ 
+ # build output matrix
+ catchment_substance_shares<- matrix(nrow = 6, ncol = 5)
+ colnames(catchment_substance_shares)<- c('ALT','NEU', 'EFH', 'GEW', 'AND')
+ rownames(catchment_substance_shares)<- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
+ 
+ for(catchment in catchments){
+   for(substance in substances){
+     
+     #read in substance load tables for every SST
+     current_data <- read.csv(paste0('data_output/catchment_area_analysis/',catchment,'_',substance,'.csv'), sep = ',')
+     # assign current output matrix (specific for catchment and substance)
+     current_shares<- catchment_substance_shares
+     
+     for (OgRe_type in OgRe_types) {
+       
+      for (my_source in sources) {
+        #crating indices to assign results to the right cell
+        index_OgRe_type <- which(OgRe_types==OgRe_type)
+        index_source <- which(sources==my_source)
+        
+        # Assign 0% to the cell if the total load is 0 to avoid dividing by 0.
+        # If not equal to 0, the source-specific load from the current OgRe area is
+        # divided by the total load from the OgRe area and is multiplied by 100.
+        if(current_data[7,index_OgRe_type]==0){
+          current_shares[index_source,index_OgRe_type] <- 0
+        } else {
+        current_shares[index_source,index_OgRe_type] <- current_data[index_source,index_OgRe_type]/current_data[7, index_OgRe_type]*100
+        }
+        assign(paste0(catchment,'_',substance,'_shares'),current_shares)
+        #write.csv(current_shares, paste0('data_output/',catchment,'_',substance,'_shares'))
+        }
+      }
+      # assign the colour vector
+      # design the barplot
+      # shape the legend
+      colours <- c('slategray1','steelblue1','royalblue2', 'steelblue3', 'royalblue4')
+      barplot(t(current_shares), main = substance, sub = catchment, beside = T, ylim = c(0,100), ylab = 'Share of load [%]', col = colours, axis.lty="solid")
+      legend(100, rownames(t(current_shares)), cex = 0.8, fill = colours, title = "SST")
+     
+     }  
+ }
+ 
+
+ 
+ # grouped barplots: substance shares for each SST per source in relation to total load from catchment
+ library(datasets)
+ catchments <- c('Wuhle', 'Flughafensee')
+ substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
+ OgRe_types <- c("ALT", "NEU", "EFH", "GEW","AND")
+ sources <- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
+ 
+ # build output matrix
+ catchment_substance_shares<- matrix(nrow = 6, ncol = 5)
+ colnames(catchment_substance_shares)<- c('ALT','NEU', 'EFH', 'GEW', 'AND')
+ rownames(catchment_substance_shares)<- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
+ 
+ for(catchment in catchments){
+   for(substance in substances){
+     
+     #read in substance load tables for every SST
+     current_data <- read.csv(paste0('data_output/catchment_area_analysis/',catchment,'_',substance,'.csv'), sep = ',')
+     # assign current output matrix (specific for catchment and substance)
+     current_shares<- catchment_substance_shares
+     
+     for (OgRe_type in OgRe_types) {
+       
+       for (my_source in sources) {
+         #crating indices to assign results to the right cell
+         index_OgRe_type <- which(OgRe_types==OgRe_type)
+         index_source <- which(sources==my_source)
+         
+         # Assign 0% to the cell if the total load is 0 to avoid dividing by 0.
+         # If not equal to 0, the source-specific load from the current OgRe area is
+         # divided by the total load from the OgRe area and is multiplied by 100.
+         if(current_data[7,index_OgRe_type]==0){
+           current_shares[index_source,index_OgRe_type] <- 0
+         } else {
+           current_shares[index_source,index_OgRe_type] <- current_data[index_source,index_OgRe_type]/sum(current_data[7,])*100
+         }
+         assign(paste0(catchment,'_',substance,'_shares'),current_shares)
+         #write.csv(current_shares, paste0('data_output/',catchment,'_',substance,'_shares'))
+       }
+     }
+     # assign the colour vector
+     # design the barplot
+     # shape the legend
+     colours <- c('slategray1','steelblue1','royalblue2', 'steelblue3', 'royalblue4')
+     barplot(t(current_shares), main = substance, sub = catchment, beside = T, ylim = c(0,100), ylab = 'Share of load [%]', col = colours, axis.lty="solid")
+     legend(100, rownames(t(current_shares)), cex = 0.8, fill = colours, title = "SST")
+     
+   }  
+ }  
