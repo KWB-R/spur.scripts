@@ -1,5 +1,8 @@
 library(data.table)
 
+# set a fixed start for the random algorithm
+set.seed(5)
+
 ###city structure types and sources
 substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
 OgRe_types <- c("ALT", "EFH", "GEW", "NEU", "AND")
@@ -8,8 +11,13 @@ sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Put
 ###load data
 # abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
 BTF_input <- foreign::read.dbf('data/berlin_runoff.dbf')
-BTF_input <- setnames(BTF_input, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+BTF_input <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade','runoff_total'))
 
+#due to the uncertain connection of facades to the sewerage system, all BTF are assigned a connection grade between 10 and 90%.
+for( n in 1:nrow(BTF_input)){
+  BTF_input[n,52] <- BTF_input[n,52]/0.5*runif(n=1, min = 0.1, max=0.9)
+}
+  
 # read in backcalculated concentrations from OgRe
 # read in relativ standard deviations
 sd_list <- list()
@@ -32,7 +40,6 @@ substance_output <- data.frame("ID" = BTF_input$CODE,
 
 
 #creating data frame for loads
-set.seed(5)
 nMC <- 1000
 total_reduced <- matrix(nrow = nMC, ncol = length(substances))
 
