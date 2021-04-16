@@ -1,3 +1,5 @@
+library(data.table)
+
 ###load data
 # abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
 berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
@@ -5,11 +7,11 @@ berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runo
 
 #catchment <- 'Wuhle'
 #substance <- 'Diuron'
-#OgRe_type <- 'ALT'
+#OgRe_type <- 'NEU'
 #my_source <- 'Putzfassade'
 
 
-catchments <- c('Wuhle')
+catchments <- c('Wuhle', 'Flughafensee')
 substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
 OgRe_types <- c("ALT", "NEU", "EFH", "GEW", "AND")
 sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
