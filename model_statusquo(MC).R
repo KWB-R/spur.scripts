@@ -1,19 +1,28 @@
 library(data.table)
 
+# set a fixed start for the random algorithm
+set.seed(5)
+
 ###city structure types and sources
 substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
 OgRe_types <- c("ALT", "EFH", "GEW", "NEU", "AND")
 sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
 
+
 ###load data
 # ABIMO runoff and OgRe information (roof, yard, street (last two include facade runoff))
 berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
-berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade','runoff_total'))
 #choosing catchment area (5th for loop as wrapper, catchment vector)
 BTF_input <- subset(berlin_runoff, AGEB1=='Wuhle')
 
-  which(names(BTF_input) == paste0("runoff_", sources[index_source]))
-  
+areas<-c(sum(colSums(BTF_input[55:57])),colSums(BTF_input[53]),colSums(BTF_input[54]),colSums(BTF_input[58]), sum(colSums(BTF_input[8]),colSums(BTF_input[31])))
+
+#due to the uncertain connection of facades to the sewerage system, all BTF are assigned a connection grade between 10 and 90%.
+for( n in 1:nrow(BTF_input)){
+  BTF_input[n,52] <- BTF_input[n,52]/0.5*runif(n=1, min = 0.1, max=0.9)
+}
+
 # read in back calculated concentrations from OgRe
 # read in relative standard deviations
 sd_list <- list()
@@ -34,10 +43,6 @@ substance_output <- data.frame("ID" = BTF_input$CODE,
                                "load_Hof" = NA,
                                "load_Putzfassade" = NA)
 
-
-
-# set a fixed start for the random algorithm
-set.seed(5)
 
 # Number of laps for the MonteCarlo simulation
 nMC <- 1000
@@ -102,8 +107,17 @@ for (n in 1:nMC){
         
         #calculates the load and writes it into the intended cell (calculation for fixed facade runoff)
        
-        substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
+        #substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
         
+        if (my_source == "Putzfassade" ){
+          facade_proportion<-runif(n=1, min = 0.1, max = 0.9)
+          substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]/0.5*facade_proportion
+        }else{
+          substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
+          
+          
+          
+        }
       }
     }
     
@@ -134,7 +148,17 @@ for (n in 1:nMC){
 
   }
   
-}  
+}
+
+# specific loads g/(ha*a)
+specific_loads_diuron<-sweep(Diuron_load*1000, MARGIN = 2, areas/10000, '/')
+colnames(specific_loads_diuron) <- c('spec_Dach', 'spec_Strasse', 'spec_Hof', 'spec_Putzfassade', 'spec_Wuhle')
+
+#for (substance in substances){
+#  x<- 
+#  assign(paste0(substance,'_specific_loads', paste0(substance,'_load')*areas))
+#}
+
 
 colnames(total_loads)<-substances
 write.csv(total_loads,'data_output/calculation_status_quo/Wuhle_simulated_loads.csv',row.names = FALSE)
