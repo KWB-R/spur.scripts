@@ -3,7 +3,7 @@ library(data.table)
 ###load data
 # abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
 berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
-berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade'))
+berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_roo', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Dach','runoff_Putzfassade','runoff_total'))
 
 #catchment <- 'Wuhle'
 #substance <- 'Diuron'
@@ -14,11 +14,11 @@ berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runo
 catchments <- c('Wuhle', 'Flughafensee')
 substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
 OgRe_types <- c("ALT", "NEU", "EFH", "GEW", "AND")
-sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
+sources <- c("Dach", "Strasse", "Hof", "Putzfassade")
 
-catchment_substance <- matrix(nrow = 7, ncol = 5)
+catchment_substance <- matrix(nrow = 5, ncol = 5)
 colnames(catchment_substance) <- c('ALT','NEU', 'EFH', 'GEW', 'AND')
-rownames(catchment_substance) <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade", 'total')
+rownames(catchment_substance) <- c("Dach", "Strasse", "Hof", "Putzfassade", 'total')
 
 
 for(catchment in catchments){
@@ -62,7 +62,7 @@ for(my_source in sources){
   
   
       }  
-  current_output[7, index_OgRe_type]<- sum(current_output[,index_OgRe_type], na.rm = TRUE)
+  current_output[5, index_OgRe_type]<- sum(current_output[,index_OgRe_type], na.rm = TRUE)
     }
   assign(paste0(catchment,'_',substance), current_output)
   write.csv(current_output, paste0('data_output/catchment_area_analysis/',catchment,'_',substance,'.csv'), row.names = FALSE)

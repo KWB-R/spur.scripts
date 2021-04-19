@@ -1,7 +1,7 @@
 ###load data
 # abimo runoff and OgRe information (roof, yard, street (last two include facade runoff))
 berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
-berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade','runoff_total'))
+berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_roo', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Dach','runoff_Putzfassade','runoff_total'))
 
 catchments <- c('Wuhle', 'Flughafensee')
 

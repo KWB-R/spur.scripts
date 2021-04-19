@@ -123,13 +123,13 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
  library(datasets)
  catchments <- c('Wuhle', 'Flughafensee')
  substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
- OgRe_types <- c("ALT", "NEU", "EFH", "GEW","AND")
- sources <- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
+ OgRe_types <- c("ALT", "NEU", "EFH", "GEW", "AND")
+ sources <- c("Dach", "Strasse", "Hof", "Putzfassade")
  
  # build output matrix
- catchment_substance_shares<- matrix(nrow = 6, ncol = 5)
+ catchment_substance_shares<- matrix(nrow = 4, ncol = 5)
  colnames(catchment_substance_shares)<- c('ALT','NEU', 'EFH', 'GEW', 'AND')
- rownames(catchment_substance_shares)<- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
+ rownames(catchment_substance_shares)<- c("Dach", "Strasse", "Hof", "Putzfassade")
  
  for(catchment in catchments){
    for(substance in substances){
@@ -149,10 +149,10 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
         # Assign 0% to the cell if the total load is 0 to avoid dividing by 0.
         # If not equal to 0, the source-specific load from the current OgRe area is
         # divided by the total load from the OgRe area and is multiplied by 100.
-        if(current_data[7,index_OgRe_type]==0){
+        if(current_data[5,index_OgRe_type]==0){
           current_shares[index_source,index_OgRe_type] <- 0
         } else {
-        current_shares[index_source,index_OgRe_type] <- current_data[index_source,index_OgRe_type]/current_data[7, index_OgRe_type]*100
+        current_shares[index_source,index_OgRe_type] <- current_data[index_source,index_OgRe_type]/current_data[5, index_OgRe_type]*100
         }
         assign(paste0(catchment,'_',substance,'_shares'),current_shares)
         #write.csv(current_shares, paste0('data_output/',catchment,'_',substance,'_shares'))
@@ -175,12 +175,12 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
  catchments <- c('Wuhle', 'Flughafensee')
  substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
  OgRe_types <- c("ALT", "NEU", "EFH", "GEW","AND")
- sources <- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
+ sources <- c("Dach", "Strasse", "Hof", "Putzfassade")
  
  # build output matrix
- catchment_substance_shares<- matrix(nrow = 6, ncol = 5)
+ catchment_substance_shares<- matrix(nrow = 4, ncol = 5)
  colnames(catchment_substance_shares)<- c('ALT','NEU', 'EFH', 'GEW', 'AND')
- rownames(catchment_substance_shares)<- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
+ rownames(catchment_substance_shares)<- c("Dach weitere", "Strasse", "Hof", "Putzfassade")
  
  for(catchment in catchments){
    for(substance in substances){
@@ -200,10 +200,10 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
          # Assign 0% to the cell if the total load is 0 to avoid dividing by 0.
          # If not equal to 0, the source-specific load from the current OgRe area is
          # divided by the total load from the OgRe area and is multiplied by 100.
-         if(current_data[7,index_OgRe_type]==0){
+         if(current_data[5,index_OgRe_type]==0){
            current_shares[index_source,index_OgRe_type] <- 0
          } else {
-           current_shares[index_source,index_OgRe_type] <- current_data[index_source,index_OgRe_type]/sum(current_data[7,])*100
+           current_shares[index_source,index_OgRe_type] <- current_data[index_source,index_OgRe_type]/sum(current_data[5,])*100
          }
          assign(paste0(catchment,'_',substance,'_shares'),current_shares)
          #write.csv(current_shares, paste0('data_output/',catchment,'_',substance,'_shares'))
@@ -214,7 +214,7 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
      # shape the legend
      colours <- c('slategray1','steelblue1','royalblue2', 'steelblue3', 'royalblue4')
      barplot(t(current_shares), main = substance, sub = catchment, beside = T, ylim = c(0,100), ylab = 'Share of load [%]', col = colours, axis.lty="solid")
-     legend(100, rownames(t(current_shares)), cex = 0.8, fill = colours, title = "SST")
+     legend(20,100, rownames(t(current_shares)), cex = 0.8, fill = colours, title = "SST")
      
    }  
  }  

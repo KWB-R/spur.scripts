@@ -6,21 +6,21 @@ set.seed(5)
 ###city structure types and sources
 substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
 OgRe_types <- c("ALT", "EFH", "GEW", "NEU", "AND")
-sources <- c("Bitumendach", "Ziegeldach", "Dach_weitere", "Strasse", "Hof", "Putzfassade")
-
+sources <- c("Dach", "Strasse", "Hof", "Putzfassade")
 
 ###load data
 # ABIMO runoff and OgRe information (roof, yard, street (last two include facade runoff))
 berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
-berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_bit', 'runoff_zie', 'runoff_res', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Bitumendach','runoff_Ziegeldach','runoff_Dach_weitere','runoff_Putzfassade','runoff_total'))
+berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_roo', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Dach','runoff_Putzfassade','runoff_total'))
+
 #choosing catchment area (5th for loop as wrapper, catchment vector)
 BTF_input <- subset(berlin_runoff, AGEB1=='Wuhle')
 
-areas<-c(sum(colSums(BTF_input[55:57])),colSums(BTF_input[53]),colSums(BTF_input[54]),colSums(BTF_input[58]), sum(colSums(BTF_input[8]),colSums(BTF_input[31])))
+areas<-c(sum(BTF_input$AU_roof),sum(BTF_input$AU_street),sum(BTF_input$AU_yard),sum(BTF_input$AU_putz), sum(sum(BTF_input$FLGES),sum(BTF_input$STR_FLGES)))
 
 #due to the uncertain connection of facades to the sewerage system, all BTF are assigned a connection grade between 10 and 90%.
 for( n in 1:nrow(BTF_input)){
-  BTF_input[n,52] <- BTF_input[n,52]/0.5*runif(n=1, min = 0.1, max=0.9)
+  BTF_input[n,'runoff_Putzfassade'] <- BTF_input[n,'runoff_Putzfassade']/0.5*runif(n=1, min = 0.1, max=0.9)
 }
 
 # read in back calculated concentrations from OgRe
@@ -36,9 +36,7 @@ for( OgRe_type in OgRe_types){
 substance_output <- data.frame("ID" = BTF_input$CODE,
                                "Gewässser" = BTF_input$AGEB1,
                                "OgRe_Type" = BTF_input$OgRe_Type,
-                               "load_Bitumendach" = NA,
-                               "load_Ziegeldach" = NA,
-                               "load_Dach_weitere" = NA,
+                               "load_Dach" = NA,
                                "load_Strasse" = NA,
                                "load_Hof" = NA,
                                "load_Putzfassade" = NA)
@@ -82,13 +80,12 @@ for (n in 1:nMC){
         # find and store anchor concentration
         c_anchor <- OgRe_type_current[row_Konz, col_Konz]
         
+        index_substance <- which(substances==substance)
+          index_OgRe_type <- which(OgRe_types==OgRe_type)
         #Set parameters for lognormal distribution; bypass 0
         if(c_anchor == 0){
           concentration <- 0
         } else {
-          index_substance <- which(substances==substance)
-          index_OgRe_type <- which(OgRe_types==OgRe_type)
-          
           rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_type]])
           sd_temp<- c_anchor*rel_sd_temp[1,1+index_substance]
           
@@ -109,15 +106,8 @@ for (n in 1:nMC){
        
         #substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
         
-        if (my_source == "Putzfassade" ){
-          facade_proportion<-runif(n=1, min = 0.1, max = 0.9)
-          substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]/0.5*facade_proportion
-        }else{
           substance_output[row_runoff, col_output] <- concentration * BTF_input[row_runoff, col_runoff]
           
-          
-          
-        }
       }
     }
     
@@ -125,9 +115,7 @@ for (n in 1:nMC){
     assign(paste0(substance, '_output'), substance_output)
     current_output <- assign(paste0(substance, '_output'), substance_output)
     
-    
     total_loads[[n, index_substance]]<- sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE))/1000 #from g to kg
-    
     
     #Stoffspezifische Ergebnisse mit Aufschlüsselung nach Quelle zuweisen (temporär, weil hardgecoded)  
     current_load<-c(sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)[1:3]),colSums(Filter(is.numeric, current_output),na.rm = TRUE)[4:6], sum(colSums(Filter(is.numeric, current_output),na.rm = TRUE)))/1000 #from g to kg
@@ -155,7 +143,7 @@ specific_loads_diuron<-sweep(Diuron_load*1000, MARGIN = 2, areas/10000, '/')
 colnames(specific_loads_diuron) <- c('spec_Dach', 'spec_Strasse', 'spec_Hof', 'spec_Putzfassade', 'spec_Wuhle')
 
 #for (substance in substances){
-#  x<- 
+# x<- 
 #  assign(paste0(substance,'_specific_loads', paste0(substance,'_load')*areas))
 #}
 
