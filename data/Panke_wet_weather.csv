@@ -1,0 +1,987 @@
+SampleID;SiteID;LocalDateTime;DateTimeUTC;UTCOffset;SampleType;VariableName;UnitsAbbreviation;CensorCode;DataValue
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;2-phenylphenol;ug/L;lt;0.3
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;4-tert-butylphenol;ug/L;nc;0.3
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;acenaphthene;ug/L;lt;0.05
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;acenaphthylene;ug/L;lt;0.05
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;acesulfame;ug/L;nc;1.7
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;AMPA;ug/L;lt;0.1
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;anthracene;ug/L;lt;0.01
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benz[a]anthracene;ug/L;nc;0.015
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benzisothiazolinone;ug/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benzo[a]pyrene;ug/L;lt;0.005
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.019
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benzo[g,h,i]perylene;ug/L;lt;0.01
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benzo[k]fluoranthene;ug/L;lt;0.01
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benzothiazole;ug/L;nc;0.26
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benzotriazole;ug/L;nc;1.3
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;bisphenol F;ug/L;lt;0.3
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;caffeine;ug/L;nc;0.77
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;carbamazepine;ug/L;nc;0.19
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;carbendazim;ug/L;nc;0.73
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;chemical oxygen demand (COD);mg/L;nc;137
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;chrysene;ug/L;nc;0.023
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;copper;ug/L;nc;22
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;cybutryne;ug/L;lt;0.02
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;diazinon;ug/L;lt;0.02
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;dibenzo[a,h]anthracene;ug/L;lt;0.01
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;lt;0.2
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;2.1
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;diuron;ug/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;fluoranthene;ug/L;nc;0.045
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;fluorene;ug/L;lt;0.01
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.66
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;glyphosate;ug/L;nc;0.87
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;hydroxybenzothiazole;ug/L;nc;0.49
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;lt;0.01
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;isoproturon;ug/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;mecoprop;ug/L;nc;0.71
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;methyl tert-butyl ether (MTBE);ug/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.12
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;naphthalene;ug/L;lt;0.05
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;nicotine;ug/L;nc;2.6
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;octylisothiazolinone;ug/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;PAH 16 EPA;ug/L;nc;0.18
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;perfluorooctanesulfonic acid (PFOS);ug/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;perfluorooctanoic acid (PFOA);ug/L;nc;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;phenanthrene;ug/L;nc;0.049
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;pyrene;ug/L;nc;0.031
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;soluble reactive phosphorus;mg/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;tebuconazole;ug/L;lt;0.02
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;terbutryn;ug/L;nc;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;thiacloprid;ug/L;lt;0.02
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;titanium;ug/L;nc;11
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;tolyltriazole;ug/L;nc;0.54
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;total phosphorus;mg/L;nc;0.3
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;total suspended solids (TSS);mg/L;nc;37
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.03
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;0.91
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;0.11
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;nc;0.11
+18;6;2014-06-11 15:36:00;2014-06-11 13:36:00;2;Single;zinc;ug/L;nc;170
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;2-phenylphenol;ug/L;nc;0.1
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;4-tert-butylphenol;ug/L;nc;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;acenaphthene;ug/L;lt;0.05
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;acenaphthylene;ug/L;lt;0.05
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;acesulfame;ug/L;nc;0.69
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;AMPA;ug/L;nc;0.36
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;anthracene;ug/L;nc;0.031
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benz[a]anthracene;ug/L;nc;0.11
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benzisothiazolinone;ug/L;lt;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benzo[a]pyrene;ug/L;nc;0.07
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.11
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benzo[g,h,i]perylene;ug/L;nc;0.051
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benzo[k]fluoranthene;ug/L;nc;0.047
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benzothiazole;ug/L;nc;0.36
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benzotriazole;ug/L;nc;0.76
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;94
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;bisphenol F;ug/L;lt;0.3
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;caffeine;ug/L;nc;0.71
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;carbamazepine;ug/L;nc;0.1
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;carbendazim;ug/L;nc;0.2
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;chemical oxygen demand (COD);mg/L;nc;295
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;chromium;ug/L;nc;18
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;chrysene;ug/L;nc;0.13
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;copper;ug/L;nc;98
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;cybutryne;ug/L;lt;0.02
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;diazinon;ug/L;lt;0.02
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;dibenzo[a,h]anthracene;ug/L;nc;0.015
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;nc;0.85
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;5.1
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;diuron;ug/L;lt;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;fluoranthene;ug/L;nc;0.31
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;fluorene;ug/L;nc;0.016
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.52
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;glyphosate;ug/L;nc;0.95
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;hydroxybenzothiazole;ug/L;nc;0.51
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;nc;0.081
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;isoproturon;ug/L;lt;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;lead;ug/L;nc;63
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;mecoprop;ug/L;nc;0.14
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;methyl tert-butyl ether (MTBE);ug/L;lt;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.16
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;naphthalene;ug/L;lt;0.05
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;nickel;ug/L;nc;13
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;nicotine;ug/L;nc;1.4
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;octylisothiazolinone;ug/L;lt;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;PAH 16 EPA;ug/L;nc;1.4
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;perfluorooctanesulfonic acid (PFOS);ug/L;lt;0.05
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;perfluorooctanoic acid (PFOA);ug/L;lt;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;phenanthrene;ug/L;nc;0.18
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;pyrene;ug/L;nc;0.24
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;soluble reactive phosphorus;mg/L;lt;0.03
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;tebuconazole;ug/L;lt;0.02
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;terbutryn;ug/L;nc;0.05
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;titanium;ug/L;nc;84
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;tolyltriazole;ug/L;nc;0.49
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;total phosphorus;mg/L;nc;1.9
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;total suspended solids (TSS);mg/L;nc;340
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;nc;0.26
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;9.5
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;0.31
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;vanadium;ug/L;nc;10
+22;6;2014-06-25 06:42:00;2014-06-25 04:42:00;2;Single;zinc;ug/L;nc;900
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;2-phenylphenol;ug/L;lt;0.3
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;4-tert-butylphenol;ug/L;lt;0.1
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;acenaphthene;ug/L;lt;0.05
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;acenaphthylene;ug/L;lt;0.05
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;acesulfame;ug/L;nc;2.2
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;AMPA;ug/L;lt;0.1
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;anthracene;ug/L;nc;0.034
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benz[a]anthracene;ug/L;nc;0.16
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benzisothiazolinone;ug/L;nc;0.03
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benzo[a]pyrene;ug/L;nc;0.074
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.19
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benzo[g,h,i]perylene;ug/L;nc;0.051
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benzo[k]fluoranthene;ug/L;nc;0.046
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benzothiazole;ug/L;nc;0.52
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benzotriazole;ug/L;nc;1.4
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;49
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;bisphenol A;ug/L;lt;0.2
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;bisphenol F;ug/L;lt;0.3
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;caffeine;ug/L;nc;0.46
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;carbamazepine;ug/L;lt;0.02
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;carbendazim;ug/L;nc;0.47
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;chemical oxygen demand (COD);mg/L;nc;283
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;chromium;ug/L;nc;19
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;chrysene;ug/L;nc;0.18
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;copper;ug/L;nc;110
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;cybutryne;ug/L;lt;0.02
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;diazinon;ug/L;lt;0.02
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;dibenzo[a,h]anthracene;ug/L;nc;0.018
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;nc;0.58
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;diethyltoluamide (DEET);ug/L;nc;0.03
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;4.9
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;diuron;ug/L;nc;0.04
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;fluoranthene;ug/L;nc;0.49
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;fluorene;ug/L;nc;0.018
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.55
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;glyphosate;ug/L;nc;5.67
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;hydroxybenzothiazole;ug/L;nc;0.64
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;nc;0.08
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;isoproturon;ug/L;lt;0.03
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;lead;ug/L;nc;79
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;mecoprop;ug/L;nc;0.59
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;methyl tert-butyl ether (MTBE);ug/L;lt;0.03
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.2
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;naphthalene;ug/L;lt;0.05
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;nickel;ug/L;nc;12
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;nicotine;ug/L;nc;1.4
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;octylisothiazolinone;ug/L;lt;0.03
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;PAH 16 EPA;ug/L;nc;1.9
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;perfluorooctanesulfonic acid (PFOS);ug/L;lt;0.05
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;perfluorooctanoic acid (PFOA);ug/L;lt;0.01
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;phenanthrene;ug/L;nc;0.23
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;pyrene;ug/L;nc;0.37
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;soluble reactive phosphorus;mg/L;lt;0.03
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;tebuconazole;ug/L;lt;0.02
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;terbutryn;ug/L;nc;0.06
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;thiacloprid;ug/L;lt;0.02
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;titanium;ug/L;nc;120
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;tolyltriazole;ug/L;nc;0.51
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;total phosphorus;mg/L;nc;1.4
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;total suspended solids (TSS);mg/L;nc;206
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;1.4
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;vanadium;ug/L;nc;10
+33;6;2014-07-08 17:02:00;2014-07-08 15:02:00;2;Single;zinc;ug/L;nc;900
+44;6;2014-07-24 23:42:00;2014-07-24 21:42:00;2;Single;chemical oxygen demand (COD);mg/L;nc;43.7
+44;6;2014-07-24 23:42:00;2014-07-24 21:42:00;2;Single;copper;ug/L;nc;20
+44;6;2014-07-24 23:42:00;2014-07-24 21:42:00;2;Single;titanium;ug/L;nc;9.2
+44;6;2014-07-24 23:42:00;2014-07-24 21:42:00;2;Single;total phosphorus;mg/L;nc;0.33
+44;6;2014-07-24 23:42:00;2014-07-24 21:42:00;2;Single;total suspended solids (TSS);mg/L;nc;19
+44;6;2014-07-24 23:42:00;2014-07-24 21:42:00;2;Single;zinc;ug/L;nc;230
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;2-phenylphenol;ug/L;lt;0.3
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;4-tert-butylphenol;ug/L;lt;0.1
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;acenaphthene;ug/L;lt;0.05
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;acenaphthylene;ug/L;lt;0.05
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;acesulfame;ug/L;nc;0.48
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;AMPA;ug/L;nc;0.61
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;anthracene;ug/L;nc;0.051
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;benz[a]anthracene;ug/L;nc;0.16
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;benzo[a]pyrene;ug/L;nc;0.13
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.27
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;benzo[g,h,i]perylene;ug/L;nc;0.085
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;benzo[k]fluoranthene;ug/L;nc;0.12
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;benzothiazole;ug/L;nc;0.21
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;benzotriazole;ug/L;nc;0.66
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;7
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;bisphenol A;ug/L;lt;0.2
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;bisphenol F;ug/L;lt;0.3
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;caffeine;ug/L;nc;0.39
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;carbamazepine;ug/L;nc;0.13
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;carbendazim;ug/L;nc;0.58
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;chemical oxygen demand (COD);mg/L;nc;316
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;chromium;ug/L;nc;18
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;chrysene;ug/L;nc;0.31
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;copper;ug/L;nc;89
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;cybutryne;ug/L;lt;0.02
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;diazinon;ug/L;lt;0.02
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;dibenzo[a,h]anthracene;ug/L;nc;0.021
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;nc;2.1
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;diethyltoluamide (DEET);ug/L;lt;0.03
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;diuron;ug/L;nc;0.04
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;fluoranthene;ug/L;nc;0.64
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;fluorene;ug/L;nc;0.02
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.22
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;glyphosate;ug/L;nc;0.31
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;hydroxybenzothiazole;ug/L;nc;0.33
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;nc;0.1
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;isoproturon;ug/L;lt;0.03
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;lead;ug/L;nc;59
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;mecoprop;ug/L;nc;0.08
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.12
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;naphthalene;ug/L;lt;0.05
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;nickel;ug/L;nc;19
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;nicotine;ug/L;nc;0.24
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;octylisothiazolinone;ug/L;nc;0.03
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;PAH 16 EPA;ug/L;nc;2.6
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;perfluorooctanesulfonic acid (PFOS);ug/L;lt;0.05
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;perfluorooctanoic acid (PFOA);ug/L;nc;0.01
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;phenanthrene;ug/L;nc;0.25
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;pyrene;ug/L;nc;0.44
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;soluble reactive phosphorus;mg/L;nc;0.12
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;tebuconazole;ug/L;lt;0.02
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;terbutryn;ug/L;lt;0.01
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;thiacloprid;ug/L;lt;0.02
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;titanium;ug/L;nc;96
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;tolyltriazole;ug/L;nc;0.46
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;total phosphorus;mg/L;nc;1.9
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;total suspended solids (TSS);mg/L;nc;485
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;1.1
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;0.19
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;vanadium;ug/L;nc;10
+52;6;2014-07-29 16:31:00;2014-07-29 14:31:00;2;Single;zinc;ug/L;nc;620
+55;6;2014-07-30 13:37:00;2014-07-30 11:37:00;2;Single;copper;ug/L;lt;10
+55;6;2014-07-30 13:37:00;2014-07-30 11:37:00;2;Single;titanium;ug/L;nc;6.7
+55;6;2014-07-30 13:37:00;2014-07-30 11:37:00;2;Single;total phosphorus;mg/L;nc;0.47
+55;6;2014-07-30 13:37:00;2014-07-30 11:37:00;2;Single;total suspended solids (TSS);mg/L;nc;11
+55;6;2014-07-30 13:37:00;2014-07-30 11:37:00;2;Single;zinc;ug/L;nc;31
+63;6;2014-08-11 01:06:00;2014-08-10 23:06:00;2;Single;chemical oxygen demand (COD);mg/L;nc;79.2
+63;6;2014-08-11 01:06:00;2014-08-10 23:06:00;2;Single;chromium;ug/L;nc;7.6
+63;6;2014-08-11 01:06:00;2014-08-10 23:06:00;2;Single;copper;ug/L;nc;58
+63;6;2014-08-11 01:06:00;2014-08-10 23:06:00;2;Single;lead;ug/L;nc;40
+63;6;2014-08-11 01:06:00;2014-08-10 23:06:00;2;Single;titanium;ug/L;nc;41
+63;6;2014-08-11 01:06:00;2014-08-10 23:06:00;2;Single;total phosphorus;mg/L;nc;0.96
+63;6;2014-08-11 01:06:00;2014-08-10 23:06:00;2;Single;total suspended solids (TSS);mg/L;nc;107
+63;6;2014-08-11 01:06:00;2014-08-10 23:06:00;2;Single;zinc;ug/L;nc;550
+66;6;2014-08-14 01:01:00;2014-08-13 23:01:00;2;Single;chemical oxygen demand (COD);mg/L;nc;47.9
+66;6;2014-08-14 01:01:00;2014-08-13 23:01:00;2;Single;copper;ug/L;nc;27
+66;6;2014-08-14 01:01:00;2014-08-13 23:01:00;2;Single;titanium;ug/L;nc;19
+66;6;2014-08-14 01:01:00;2014-08-13 23:01:00;2;Single;total phosphorus;mg/L;nc;0.48
+66;6;2014-08-14 01:01:00;2014-08-13 23:01:00;2;Single;total suspended solids (TSS);mg/L;nc;55
+66;6;2014-08-14 01:01:00;2014-08-13 23:01:00;2;Single;zinc;ug/L;nc;280
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;2-phenylphenol;ug/L;lt;0.3
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;acenaphthene;ug/L;lt;0.05
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;acenaphthylene;ug/L;lt;0.05
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;acesulfame;ug/L;nc;0.44
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;AMPA;ug/L;nc;0.97
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;anthracene;ug/L;nc;0.041
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benz[a]anthracene;ug/L;nc;0.21
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benzisothiazolinone;ug/L;lt;0.03
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benzo[a]pyrene;ug/L;nc;0.13
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.18
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benzo[g,h,i]perylene;ug/L;nc;0.069
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benzo[k]fluoranthene;ug/L;nc;0.084
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benzothiazole;ug/L;nc;0.4
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benzotriazole;ug/L;nc;0.39
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;8
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;bisphenol A;ug/L;lt;0.2
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;bisphenol F;ug/L;lt;0.3
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;caffeine;ug/L;nc;0.79
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;carbamazepine;ug/L;nc;0.72
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;carbendazim;ug/L;nc;0.17
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;chemical oxygen demand (COD);mg/L;nc;162
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;chromium;ug/L;nc;16
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;chrysene;ug/L;nc;0.34
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;copper;ug/L;nc;82
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;cybutryne;ug/L;lt;0.02
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;diazinon;ug/L;nc;0.02
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;dibenzo[a,h]anthracene;ug/L;nc;0.034
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;nc;2.2
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;diethyltoluamide (DEET);ug/L;nc;0.04
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;9.2
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;diuron;ug/L;lt;0.03
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;fluoranthene;ug/L;nc;0.6
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;fluorene;ug/L;nc;0.011
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;1.3
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;glyphosate;ug/L;nc;0.86
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;nc;0.11
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;isoproturon;ug/L;lt;0.03
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;lead;ug/L;nc;62
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;mecoprop;ug/L;nc;0.03
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.22
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;naphthalene;ug/L;lt;0.05
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;nicotine;ug/L;lt;0.1
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;octylisothiazolinone;ug/L;lt;0.03
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;PAH 16 EPA;ug/L;nc;2.5
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;perfluorooctanesulfonic acid (PFOS);ug/L;lt;0.05
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;perfluorooctanoic acid (PFOA);ug/L;lt;0.01
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;phenanthrene;ug/L;nc;0.24
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;pyrene;ug/L;nc;0.45
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;soluble reactive phosphorus;mg/L;nc;0.14
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;tebuconazole;ug/L;nc;0.02
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;terbutryn;ug/L;nc;0.05
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;thiacloprid;ug/L;lt;0.02
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;titanium;ug/L;nc;110
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;tolyltriazole;ug/L;nc;0.82
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;total phosphorus;mg/L;nc;2
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;total suspended solids (TSS);mg/L;nc;357
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;nc;0.16
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;1.7
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;0.31
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+74;6;2014-09-10 19:52:00;2014-09-10 17:52:00;2;Single;zinc;ug/L;nc;590
+79;6;2014-09-14 10:47:00;2014-09-14 08:47:00;2;Single;chemical oxygen demand (COD);mg/L;nc;46.1
+79;6;2014-09-14 10:47:00;2014-09-14 08:47:00;2;Single;copper;ug/L;nc;24
+79;6;2014-09-14 10:47:00;2014-09-14 08:47:00;2;Single;titanium;ug/L;nc;23
+79;6;2014-09-14 10:47:00;2014-09-14 08:47:00;2;Single;total phosphorus;mg/L;nc;0.46
+79;6;2014-09-14 10:47:00;2014-09-14 08:47:00;2;Single;total suspended solids (TSS);mg/L;nc;50
+79;6;2014-09-14 10:47:00;2014-09-14 08:47:00;2;Single;zinc;ug/L;nc;240
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;2-phenylphenol;ug/L;lt;0.3
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;acenaphthene;ug/L;lt;0.05
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;acenaphthylene;ug/L;lt;0.05
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;acesulfame;ug/L;nc;0.21
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;AMPA;ug/L;nc;0.57
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;anthracene;ug/L;nc;0.018
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benz[a]anthracene;ug/L;nc;0.11
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benzisothiazolinone;ug/L;lt;0.03
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benzo[a]pyrene;ug/L;nc;0.051
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.11
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benzo[g,h,i]perylene;ug/L;nc;0.033
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benzo[k]fluoranthene;ug/L;nc;0.041
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benzothiazole;ug/L;nc;0.29
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benzotriazole;ug/L;nc;2
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;9
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;bisphenol A;ug/L;lt;0.2
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;bisphenol F;ug/L;lt;0.3
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;cadmium;ug/L;nc;0.81
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;caffeine;ug/L;nc;0.22
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;carbamazepine;ug/L;nc;0.47
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;carbendazim;ug/L;nc;0.2
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;chemical oxygen demand (COD);mg/L;nc;103
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;chromium;ug/L;nc;13
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;chrysene;ug/L;nc;0.13
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;copper;ug/L;nc;83
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;cybutryne;ug/L;lt;0.02
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;diazinon;ug/L;nc;0.02
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;dibenzo[a,h]anthracene;ug/L;lt;0.01
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;nc;1.3
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;diethyltoluamide (DEET);ug/L;lt;0.03
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;8
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;diuron;ug/L;nc;0.1
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;fluoranthene;ug/L;nc;0.21
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;fluorene;ug/L;lt;0.01
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.92
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;glyphosate;ug/L;nc;0.44
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;hydroxybenzothiazole;ug/L;nc;0.13
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;nc;0.049
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;isoproturon;ug/L;lt;0.03
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;lead;ug/L;nc;47
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;mecoprop;ug/L;nc;0.08
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.12
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;naphthalene;ug/L;lt;0.05
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;nickel;ug/L;nc;7.6
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;nicotine;ug/L;lt;0.1
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;octylisothiazolinone;ug/L;lt;0.03
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;PAH 16 EPA;ug/L;nc;0.99
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;perfluorooctanesulfonic acid (PFOS);ug/L;lt;0.05
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;perfluorooctanoic acid (PFOA);ug/L;lt;0.01
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;phenanthrene;ug/L;nc;0.071
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;pyrene;ug/L;nc;0.17
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;soluble reactive phosphorus;mg/L;nc;0.12
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;tebuconazole;ug/L;lt;0.02
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;terbutryn;ug/L;nc;0.06
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;thiacloprid;ug/L;lt;0.02
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;titanium;ug/L;nc;64
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;tolyltriazole;ug/L;nc;0.55
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;total phosphorus;mg/L;nc;1.8
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;total suspended solids (TSS);mg/L;nc;126
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;1.1
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;0.32
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;vanadium;ug/L;nc;6.7
+90;6;2014-10-11 08:46:00;2014-10-11 06:46:00;2;Single;zinc;ug/L;nc;800
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;6
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;cadmium;ug/L;nc;0.22
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;chromium;ug/L;nc;3.1
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;copper;ug/L;nc;29
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;lead;ug/L;nc;13
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;nickel;ug/L;nc;2.7
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;titanium;ug/L;nc;21
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;total phosphorus;mg/L;nc;0.64
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;total suspended solids (TSS);mg/L;nc;53
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;vanadium;ug/L;nc;2.2
+95;6;2014-10-22 03:46:00;2014-10-22 01:46:00;2;Single;zinc;ug/L;nc;370
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;2-phenylphenol;ug/L;nc;3.9
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;4-tert-butylphenol;ug/L;nc;0.2
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;4-tert-octylphenol;ug/L;nc;0.5
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;acenaphthene;ug/L;lt;0.05
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;acenaphthylene;ug/L;lt;0.05
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;acesulfame;ug/L;nc;0.65
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;AMPA;ug/L;nc;0.15
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;anthracene;ug/L;nc;0.011
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benz[a]anthracene;ug/L;nc;0.05
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benzisothiazolinone;ug/L;lt;0.03
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benzo[a]pyrene;ug/L;nc;0.013
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benzo[b]fluoranthene;ug/L;nc;0.05
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benzo[g,h,i]perylene;ug/L;lt;0.01
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benzo[k]fluoranthene;ug/L;nc;0.012
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benzothiazole;ug/L;nc;0.18
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benzotriazole;ug/L;nc;0.5
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;benzylbutyl phthalate;ug/L;lt;0.3
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;bisphenol A;ug/L;lt;0.2
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;bisphenol F;ug/L;lt;0.3
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;cadmium;ug/L;nc;0.14
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;caffeine;ug/L;nc;0.93
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;carbamazepine;ug/L;nc;0.1
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;carbendazim;ug/L;nc;0.02
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;chemical oxygen demand (COD);mg/L;nc;49.9
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;chromium;ug/L;nc;4
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;chrysene;ug/L;nc;0.047
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;copper;ug/L;nc;25
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;cybutryne;ug/L;lt;0.02
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;desethylterbuthylazine;ug/L;lt;0.03
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;diazinon;ug/L;lt;0.02
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;dibenzo[a,h]anthracene;ug/L;lt;0.01
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;dibutyl phthalate;ug/L;nc;1
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;diethyl phthalate;ug/L;lt;0.3
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;diethylhexyl phthalate (DEHP);ug/L;nc;0.5
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;diethyltoluamide (DEET);ug/L;nc;0.06
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;4.9
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;dimethyl phthalate;ug/L;lt;0.3
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;dioctyl phthalate;ug/L;lt;0.5
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;diuron;ug/L;nc;0.04
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;fluoranthene;ug/L;nc;0.14
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;fluorene;ug/L;lt;0.01
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.29
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;gabapentin;ug/L;nc;0.13
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;glyphosate;ug/L;nc;0.05
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;hydroxybenzothiazole;ug/L;nc;0.1
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;indeno[1,2,3-c,d]pyrene;ug/L;lt;0.01
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;isoproturon;ug/L;lt;0.03
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;lead;ug/L;nc;9.4
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;mecoprop;ug/L;nc;0.03
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;methylthiobenzothiazole;ug/L;nc;0.1
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;naphthalene;ug/L;lt;0.05
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;nickel;ug/L;nc;2.9
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;nicotine;ug/L;nc;0.62
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;octylisothiazolinone;ug/L;nc;1.2
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;PAH 16 EPA;ug/L;nc;0.53
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;phenanthrene;ug/L;nc;0.092
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;pyrene;ug/L;nc;0.12
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;simazine;ug/L;lt;0.03
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;tebuconazole;ug/L;lt;0.02
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;terbuthylazine;ug/L;lt;0.03
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;terbutryn;ug/L;nc;0.03
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;thiacloprid;ug/L;lt;0.02
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;titanium;ug/L;nc;28
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;tolyltriazole;ug/L;nc;0.32
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;total phosphorus;mg/L;nc;0.36
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;total suspended solids (TSS);mg/L;nc;43
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;2.2
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;0.78
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;nc;0.23
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;vanadium;ug/L;nc;2.3
+172;6;2014-12-11 20:16:00;2014-12-11 19:16:00;1;Single;zinc;ug/L;nc;200
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;2-phenylphenol;ug/L;lt;0.3
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;4-tert-butylphenol;ug/L;lt;0.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;4-tert-octylphenol;ug/L;lt;0.4
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;acenaphthene;ug/L;lt;0.05
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;acenaphthylene;ug/L;lt;0.05
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;acesulfame;ug/L;nc;0.62
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;ammonium;mg/L;nc;0.19
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;AMPA;ug/L;lt;0.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;anthracene;ug/L;nc;0.062
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benz[a]anthracene;ug/L;nc;0.29
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benzisothiazolinone;ug/L;lt;0.03
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benzo[a]pyrene;ug/L;nc;0.19
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benzo[b]fluoranthene;ug/L;nc;0.28
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benzo[g,h,i]perylene;ug/L;nc;0.15
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benzo[k]fluoranthene;ug/L;nc;0.15
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benzothiazole;ug/L;nc;0.14
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benzotriazole;ug/L;nc;0.18
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;benzylbutyl phthalate;ug/L;lt;0.3
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;biological oxygen deman (BOD5);mg/L;nc;4
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;bisphenol A;ug/L;lt;0.2
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;bisphenol F;ug/L;lt;0.3
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;cadmium;ug/L;nc;0.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;caffeine;ug/L;nc;1.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;carbamazepine;ug/L;nc;0.04
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;carbendazim;ug/L;nc;2.6
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;chemical oxygen demand (COD);mg/L;nc;33
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;chromium;ug/L;nc;3.3
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;chrysene;ug/L;nc;0.55
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;copper;ug/L;nc;19
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;cybutryne;ug/L;lt;0.02
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;desethylterbuthylazine;ug/L;lt;0.03
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;diazinon;ug/L;lt;0.02
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;dibenzo[a,h]anthracene;ug/L;nc;0.038
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;dibutyl phthalate;ug/L;lt;0.5
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;diethyl phthalate;ug/L;lt;0.3
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;diethylhexyl phthalate (DEHP);ug/L;nc;0.72
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;diethyltoluamide (DEET);ug/L;lt;0.03
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;5.5
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;dimethyl phthalate;ug/L;lt;0.3
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;dioctyl phthalate;ug/L;lt;0.5
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;diuron;ug/L;nc;0.06
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;fluoranthene;ug/L;nc;1.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;fluorene;ug/L;nc;0.08
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.05
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;gabapentin;ug/L;nc;0.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;glyphosate;ug/L;nc;0.03
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;hydroxybenzothiazole;ug/L;nc;0.15
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;indeno[1,2,3-c,d]pyrene;ug/L;nc;0.14
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;isoproturon;ug/L;nc;0.04
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;lead;ug/L;nc;7.7
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;mecoprop;ug/L;nc;0.02
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;methylthiobenzothiazole;ug/L;nc;0.06
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;naphthalene;ug/L;nc;0.084
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;nickel;ug/L;nc;2.5
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;nicotine;ug/L;nc;0.96
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;octylisothiazolinone;ug/L;lt;0.03
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;PAH 16 EPA;ug/L;nc;4.8
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;phenanthrene;ug/L;nc;0.64
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;pyrene;ug/L;nc;1.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;simazine;ug/L;lt;0.03
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;soluble reactive phosphorus;mg/L;nc;0.05
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;tebuconazole;ug/L;lt;0.02
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;terbuthylazine;ug/L;lt;0.03
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;terbutryn;ug/L;nc;0.04
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;thiacloprid;ug/L;lt;0.02
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;titanium;ug/L;nc;20
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;tolyltriazole;ug/L;nc;0.13
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;total phosphorus;mg/L;nc;0.27
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;total suspended solids (TSS);mg/L;nc;28
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;lt;0.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;vanadium;ug/L;nc;1.8
+182;6;2015-01-29 00:01:00;2015-01-28 23:01:00;1;Single;zinc;ug/L;nc;190
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;cadmium;ug/L;nc;0.24
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;chemical oxygen demand (COD);mg/L;nc;67.5
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;chromium;ug/L;nc;7.3
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;copper;ug/L;nc;41
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;lead;ug/L;nc;18
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;nickel;ug/L;nc;4.3
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;titanium;ug/L;nc;37
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;total phosphorus;mg/L;nc;0.47
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;total suspended solids (TSS);mg/L;nc;83
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;vanadium;ug/L;nc;3.4
+188;6;2014-12-19 15:16:00;2014-12-19 14:16:00;1;Single;zinc;ug/L;nc;340
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;2-phenylphenol;ug/L;nc;0.3
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;4-tert-butylphenol;ug/L;lt;0.1
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;4-tert-octylphenol;ug/L;lt;0.4
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;acenaphthene;ug/L;lt;0.05
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;acenaphthylene;ug/L;lt;0.05
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;acesulfame;ug/L;nc;0.88
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;ammonium;mg/L;nc;0.5
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;AMPA;ug/L;nc;0.15
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;anthracene;ug/L;nc;0.013
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;benz[a]anthracene;ug/L;nc;0.11
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;benzisothiazolinone;ug/L;lt;0.03
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;benzo[a]pyrene;ug/L;nc;0.037
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;benzo[b]fluoranthene;ug/L;nc;0.12
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;benzo[g,h,i]perylene;ug/L;nc;0.038
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;benzo[k]fluoranthene;ug/L;nc;0.018
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;benzothiazole;ug/L;nc;0.16
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;benzotriazole;ug/L;nc;0.39
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;biological oxygen deman (BOD5);mg/L;nc;4
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;bisphenol A;ug/L;lt;0.2
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;bisphenol F;ug/L;lt;0.3
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;cadmium;ug/L;nc;0.087
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;caffeine;ug/L;nc;1.1
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;carbamazepine;ug/L;nc;0.05
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;carbendazim;ug/L;nc;0.02
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;chemical oxygen demand (COD);mg/L;nc;20
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;chromium;ug/L;nc;2.6
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;chrysene;ug/L;nc;0.12
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;copper;ug/L;nc;17
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;cybutryne;ug/L;lt;0.02
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;desethylterbuthylazine;ug/L;lt;0.03
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;diazinon;ug/L;lt;0.02
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;dibenzo[a,h]anthracene;ug/L;lt;0.01
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;diethyltoluamide (DEET);ug/L;nc;0.04
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;diuron;ug/L;nc;0.12
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;fluoranthene;ug/L;nc;0.2
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;fluorene;ug/L;lt;0.01
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.16
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;gabapentin;ug/L;nc;0.14
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;glyphosate;ug/L;lt;0.02
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;hydroxybenzothiazole;ug/L;nc;0.15
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;imidacloprid;ug/L;lt;0.05
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;indeno[1,2,3-c,d]pyrene;ug/L;nc;0.046
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;isoproturon;ug/L;lt;0.03
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;lead;ug/L;nc;5.3
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;mecoprop;ug/L;nc;0.02
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;methylthiobenzothiazole;ug/L;nc;0.1
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;naphthalene;ug/L;lt;0.05
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;nickel;ug/L;nc;2.4
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;nicotine;ug/L;nc;1.2
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;octylisothiazolinone;ug/L;lt;0.03
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;PAH 16 EPA;ug/L;nc;1
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;phenanthrene;ug/L;nc;0.093
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;pyrene;ug/L;nc;0.2
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;simazine;ug/L;lt;0.03
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;soluble reactive phosphorus;mg/L;nc;0.15
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;tebuconazole;ug/L;lt;0.02
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;terbuthylazine;ug/L;lt;0.03
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;terbutryn;ug/L;nc;0.05
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;thiacloprid;ug/L;lt;0.02
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;titanium;ug/L;nc;20
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;tolyltriazole;ug/L;nc;0.32
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;total phosphorus;mg/L;nc;0.25
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;total suspended solids (TSS);mg/L;nc;32
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;1.8
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;vanadium;ug/L;nc;1.4
+291;6;2015-03-03 22:37:00;2015-03-03 21:37:00;1;Single;zinc;ug/L;nc;180
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;2-phenylphenol;ug/L;lt;0.3
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;4-tert-butylphenol;ug/L;lt;0.1
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;acenaphthene;ug/L;lt;0.05
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;acenaphthylene;ug/L;lt;0.05
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;acesulfame;ug/L;nc;0.61
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;ammonium;mg/L;nc;0.35
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;AMPA;ug/L;nc;1
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;anthracene;ug/L;lt;0.01
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;benz[a]anthracene;ug/L;nc;0.013
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;benzo[a]pyrene;ug/L;lt;0.005
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.018
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;benzo[g,h,i]perylene;ug/L;lt;0.01
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;benzo[k]fluoranthene;ug/L;lt;0.01
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;benzothiazole;ug/L;nc;0.86
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;benzotriazole;ug/L;nc;4.9
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;31
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;bisphenol A;ug/L;lt;0.2
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;bisphenol F;ug/L;lt;0.3
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;cadmium;ug/L;nc;1.1
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;cadmium dissolved;ug/L;lt;0.05
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;caffeine;ug/L;nc;0.65
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;carbamazepine;ug/L;nc;0.7
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;carbendazim;ug/L;nc;0.03
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;chemical oxygen demand (COD);mg/L;nc;357
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;chromium;ug/L;nc;22
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;chromium dissolved;ug/L;nc;0.28
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;chrysene;ug/L;nc;0.01
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;copper;ug/L;nc;160
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;copper dissolved;ug/L;lt;5
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;cybutryne;ug/L;lt;0.02
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;desethylterbuthylazine;ug/L;lt;0.03
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;diazinon;ug/L;lt;0.02
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;dibenzo[a,h]anthracene;ug/L;lt;0.01
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;nc;0.26
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;diethyltoluamide (DEET);ug/L;nc;0.17
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;2.8
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;diuron;ug/L;lt;0.03
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;fluoranthene;ug/L;nc;0.02
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;fluorene;ug/L;lt;0.01
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;1.7
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;gabapentin;ug/L;nc;0.87
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;glyphosate;ug/L;nc;4.5
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;hydroxybenzothiazole;ug/L;nc;0.51
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;lt;0.01
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;isoproturon;ug/L;lt;0.03
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;lead;ug/L;nc;93
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;lead dissolved;ug/L;lt;0.5
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;mecoprop;ug/L;nc;0.14
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.23
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;naphthalene;ug/L;lt;0.05
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;nickel;ug/L;nc;13
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;nickel dissolved;ug/L;nc;2.5
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;nicotine;ug/L;nc;1.7
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;PAH 16 EPA;ug/L;nc;0.094
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;phenanthrene;ug/L;nc;0.019
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;pyrene;ug/L;nc;0.014
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;simazine;ug/L;lt;0.03
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;soluble reactive phosphorus;mg/L;nc;0.06
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;tebuconazole;ug/L;nc;0.04
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;terbuthylazine;ug/L;nc;0.04
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;terbutryn;ug/L;nc;0.05
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;thiacloprid;ug/L;lt;0.02
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;titanium;ug/L;nc;110
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;titanium dissolved;ug/L;lt;2
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;tolyltriazole;ug/L;nc;1.1
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;total phosphorus;mg/L;nc;1.5
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;total phosphorus filtered;mg/L;nc;0.45
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;total suspended solids (TSS);mg/L;nc;479
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;2.4
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;1.4
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;vanadium;ug/L;nc;11
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;vanadium dissolved;ug/L;nc;0.48
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;zinc;ug/L;nc;1100
+322;6;2015-05-12 20:47:00;2015-05-12 18:47:00;2;Single;zinc dissolved;ug/L;nc;51
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;2-phenylphenol;ug/L;lt;0.3
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;4-tert-butylphenol;ug/L;lt;0.1
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;acenaphthene;ug/L;lt;0.05
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;acenaphthylene;ug/L;lt;0.05
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;acesulfame;ug/L;nc;0.45
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;ammonium;mg/L;nc;0.05
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;AMPA;ug/L;nc;0.38
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;anthracene;ug/L;nc;0.04
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benz[a]anthracene;ug/L;nc;0.16
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benzisothiazolinone;ug/L;nc;0.06
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benzo[a]pyrene;ug/L;nc;0.056
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.28
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benzo[g,h,i]perylene;ug/L;nc;0.055
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benzo[k]fluoranthene;ug/L;nc;0.027
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benzothiazole;ug/L;nc;0.68
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benzotriazole;ug/L;nc;2
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;150
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;bisphenol A;ug/L;lt;0.2
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;bisphenol F;ug/L;lt;0.3
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;cadmium;ug/L;nc;1.1
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;cadmium dissolved;ug/L;lt;0.05
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;caffeine;ug/L;nc;1.1
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;carbamazepine;ug/L;nc;0.29
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;carbendazim;ug/L;nc;0.07
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;chemical oxygen demand (COD);mg/L;nc;439
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;chromium;ug/L;nc;17
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;chromium dissolved;ug/L;nc;0.79
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;chrysene;ug/L;nc;0.16
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;copper;ug/L;nc;130
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;copper dissolved;ug/L;lt;10
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;cybutryne;ug/L;lt;0.02
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;desethylterbuthylazine;ug/L;nc;0.18
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;diazinon;ug/L;lt;0.02
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;dibenzo[a,h]anthracene;ug/L;lt;0.01
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;nc;0.5
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;diethyltoluamide (DEET);ug/L;lt;0.03
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;8.4
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;diuron;ug/L;nc;0.04
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;fluoranthene;ug/L;nc;0.37
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;fluorene;ug/L;nc;0.031
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;0.63
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;gabapentin;ug/L;nc;0.19
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;glyphosate;ug/L;nc;1.3
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;hydroxybenzothiazole;ug/L;nc;1.2
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;nc;0.081
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;isoproturon;ug/L;nc;0.08
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;lead;ug/L;nc;75
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;lead dissolved;ug/L;nc;2
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;mecoprop;ug/L;nc;0.81
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.27
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;naphthalene;ug/L;lt;0.05
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;nickel;ug/L;nc;11
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;nickel dissolved;ug/L;nc;3
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;nicotine;ug/L;nc;4.2
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;octylisothiazolinone;ug/L;lt;0.03
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;PAH 16 EPA;ug/L;nc;1.8
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;phenanthrene;ug/L;nc;0.23
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;pyrene;ug/L;nc;0.32
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;simazine;ug/L;lt;0.03
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;soluble reactive phosphorus;mg/L;nc;0.19
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;tebuconazole;ug/L;lt;0.02
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;terbuthylazine;ug/L;nc;0.14
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;terbutryn;ug/L;nc;0.1
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;thiacloprid;ug/L;lt;0.02
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;titanium;ug/L;nc;110
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;titanium dissolved;ug/L;lt;2
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;tolyltriazole;ug/L;nc;0.77
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;total phosphorus;mg/L;nc;1.5
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;total phosphorus filtered;mg/L;nc;0.3
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;total suspended solids (TSS);mg/L;nc;251
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;2.6
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;0.2
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;vanadium;ug/L;nc;9.8
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;vanadium dissolved;ug/L;nc;1
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;zinc;ug/L;nc;1000
+374;6;2015-06-13 20:47:00;2015-06-13 18:47:00;2;Single;zinc dissolved;ug/L;nc;72
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;ammonium;mg/L;nc;0.26
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;biological oxygen deman (BOD5);mg/L;nc;35
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;cadmium;ug/L;nc;0.13
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;cadmium dissolved;ug/L;lt;0.05
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;chemical oxygen demand (COD);mg/L;nc;118
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;chromium;ug/L;nc;2
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;chromium dissolved;ug/L;nc;0.25
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;copper;ug/L;nc;17
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;copper dissolved;ug/L;lt;5
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;lead;ug/L;nc;8.2
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;lead dissolved;ug/L;lt;0.5
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;nickel;ug/L;nc;3.1
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;nickel dissolved;ug/L;nc;2.4
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;soluble reactive phosphorus;mg/L;lt;0.01
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;titanium;ug/L;nc;10
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;titanium dissolved;ug/L;lt;2
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;total phosphorus;mg/L;nc;0.45
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;total phosphorus filtered;mg/L;nc;0.036
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;total suspended solids (TSS);mg/L;nc;39
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;vanadium;ug/L;nc;1.7
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;vanadium dissolved;ug/L;nc;0.69
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;zinc;ug/L;nc;150
+387;6;2015-06-22 06:52:00;2015-06-22 04:52:00;2;Single;zinc dissolved;ug/L;nc;110
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;2-phenylphenol;ug/L;lt;0.3
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;2,4-dichlorophenoxyacetic acid (2,4-D);ug/L;lt;0.02
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;2,6-dichlorbenzamide;ug/L;lt;0.03
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;4-tert-butylphenol;ug/L;lt;0.1
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;4-tert-octylphenol;ug/L;lt;0.4
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;acenaphthene;ug/L;lt;0.05
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;acenaphthylene;ug/L;lt;0.05
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;acesulfame;ug/L;nc;0.85
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;AMPA;ug/L;nc;0.97
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;anthracene;ug/L;lt;0.01
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benz[a]anthracene;ug/L;nc;0.019
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benzisothiazolinone;ug/L;lt;0.03
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benzo[a]pyrene;ug/L;lt;0.005
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benzo[b]fluoranthene;ug/L;nc;0.012
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benzo[g,h,i]perylene;ug/L;lt;0.01
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benzo[k]fluoranthene;ug/L;lt;0.01
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benzothiazole;ug/L;nc;0.31
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benzotriazole;ug/L;nc;4.7
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;benzylbutyl phthalate;ug/L;lt;0.3
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;bisphenol A;ug/L;lt;0.2
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;bisphenol F;ug/L;lt;0.3
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;cadmium;ug/L;nc;0.056
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;cadmium dissolved;ug/L;lt;0.05
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;caffeine;ug/L;nc;1.2
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;carbamazepine;ug/L;nc;0.98
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;carbendazim;ug/L;nc;0.06
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;chemical oxygen demand (COD);mg/L;nc;47.1
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;chromium;ug/L;nc;1.5
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;chromium dissolved;ug/L;nc;0.36
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;chrysene;ug/L;nc;0.011
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;copper;ug/L;nc;10
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;copper dissolved;ug/L;nc;5
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;cybutryne;ug/L;lt;0.02
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;desethylterbuthylazine;ug/L;nc;0.06
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;diazinon;ug/L;lt;0.02
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;dibenzo[a,h]anthracene;ug/L;lt;0.01
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;dibutyl phthalate;ug/L;lt;0.5
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;diethyl phthalate;ug/L;lt;0.3
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;diethylhexyl phthalate (DEHP);ug/L;lt;0.2
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;diethyltoluamide (DEET);ug/L;lt;0.03
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;diisodecyl phthalate + diisononyl phthalate (DIDP + DINP);ug/L;nc;2.2
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;dimethyl phthalate;ug/L;lt;0.3
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;dioctyl phthalate;ug/L;lt;0.5
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;diuron;ug/L;nc;0.04
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;fluoranthene;ug/L;nc;0.035
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;fluorene;ug/L;lt;0.01
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;formyl-amino-antipyrine (FAA);ug/L;nc;2.2
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;gabapentin;ug/L;nc;1.1
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;glyphosate;ug/L;nc;0.45
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;hydroxybenzothiazole;ug/L;nc;0.06
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;indeno[1,2,3-c,d]pyrene;ug/L;lt;0.01
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;isoproturon;ug/L;lt;0.03
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;lead;ug/L;nc;3.4
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;lead dissolved;ug/L;lt;0.5
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;mecoprop;ug/L;nc;0.18
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;methylthiobenzothiazole;ug/L;nc;0.31
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;naphthalene;ug/L;lt;0.05
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;nickel;ug/L;nc;2.6
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;nickel dissolved;ug/L;nc;2.2
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;nicotine;ug/L;nc;0.36
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;octylisothiazolinone;ug/L;lt;0.03
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;PAH 16 EPA;ug/L;nc;0.12
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;phenanthrene;ug/L;nc;0.016
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;pyrene;ug/L;nc;0.023
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;simazine;ug/L;lt;0.03
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;tebuconazole;ug/L;lt;0.02
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;terbuthylazine;ug/L;nc;0.04
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;terbutryn;ug/L;nc;0.05
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;thiacloprid;ug/L;lt;0.02
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;titanium;ug/L;nc;7
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;titanium dissolved;ug/L;lt;2
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;tolyltriazole;ug/L;nc;1.3
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;total phosphorus;mg/L;nc;0.42
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;total phosphorus filtered;mg/L;nc;0.097
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;total suspended solids (TSS);mg/L;nc;19
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;total suspended solids <63µm;mg/L;nc;18.2
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;tributyl phosphate + triisobutyl phosphate (TBP);ug/L;lt;0.1
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;tris(1,3-dichloorisopropyl)phosphate (TDCP);ug/L;lt;0.1
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;tris(2-butoxyethyl)phosphate (TBEP);ug/L;nc;0.51
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;tris(2-chloro-1-methylethyl)phosphate (TCPP);ug/L;nc;0.58
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;tris(2-chloroethyl)phosphate (TCEP);ug/L;lt;0.1
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;vanadium;ug/L;nc;1.4
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;vanadium dissolved;ug/L;nc;0.82
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;zinc;ug/L;nc;100
+411;6;2015-06-27 18:37:00;2015-06-27 16:37:00;2;Single;zinc dissolved;ug/L;nc;120
