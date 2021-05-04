@@ -37,14 +37,14 @@ n2<- c(0.97, 0.85, 0.93)
 names(n2)<- substances
 
 # Frachtreduktion durch Maßnahemn
-names_F<- list(substances, sources)
+names_lr<- list(substances, sources)
 
 for (catchment in catchments) {
   index_catchment <- which(catchments==catchment)
   for(OgRe_type in OgRe_types){
     
   #Erstellen einer Matrix für die verbeleibende Fracht  
-  x<- matrix(nrow = 3, ncol = length(sources), dimnames = names_F)
+  x<- matrix(nrow = 3, ncol = length(sources), dimnames = names_lr)
   
     for(substance in substances){
       index_substance<- which(substances==substance)
@@ -60,7 +60,7 @@ for (catchment in catchments) {
       }
     }
   # Frachtreduktionspotenzial OgRe-type und catchment zuweisen
-  assign(paste0('F_',catchment,'_',OgRe_type),x)
+  assign(paste0('lr_',catchment,'_',OgRe_type),x)
    }
 }
 
@@ -136,7 +136,7 @@ names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
       names_Ogre_type_loads <- list ('load', substances)
       OgRe_type_loads <-matrix(nrow = 1, ncol = length(substances), dimnames = names_Ogre_type_loads)
     
-      for (substance in substances) {
+        for (substance in substances) {
       
             #substanz auswählen
       
@@ -177,13 +177,28 @@ names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
         
           #Berechnung der Frachten ohne Maßnahmen (zufällig durch log Normalverteilung generiert)
           source_loads[index_substance, index_source] <- concentration*sum(BTFs_current[row_runoff, col_runoff])
-        
+          
+          
+          
         }
-        OgRe_type_loads[,index_substance]<- sum(source_loads[index_substance,])
+
+        
       }
-    
-      assign(paste0(OgRe_type,'_source_loads'), source_loads)
-      assign(paste0(OgRe_type,'_loads'), OgRe_type_loads)
+      
+      
+        #Reduktion durch Maßnahmen
+        current_lr <- eval(parse(text = paste0('lr_',catchment,'_',OgRe_type)))
+        reduced_source_loads<-source_loads*current_lr
+     
+        for (substance in substances) {
+        index_substance <-  which(substances==substance)
+          
+        OgRe_type_loads[,index_substance]<- sum(reduced_source_loads[index_substance,])
+        #assign(paste0(OgRe_type,'_source_loads'), source_loads)
+        assign(paste0(OgRe_type,'_loads'), OgRe_type_loads)  
+        }
+     
+      
       }
   
     for (substance in substances) {
