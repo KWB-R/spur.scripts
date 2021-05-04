@@ -3,7 +3,7 @@ library(data.table)
 # set a fixed start for the random algorithm
 set.seed(5)
 
-###city structure types and sources
+### loop parameters for substances, city structure types and sources
 substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
 OgRe_types <- c("ALT", "EFH", "GEW", "NEU", "AND")
 sources <- c("Dach", "Strasse", "Hof", "Putzfassade")
@@ -16,11 +16,13 @@ berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runo
 #choosing catchment area (5th for loop as wrapper, catchment vector)
 BTF_input <- subset(berlin_runoff, AGEB1=='Wuhle')
 
-areas<-c(sum(BTF_input$AU_roof),sum(BTF_input$AU_street),sum(BTF_input$AU_yard),sum(BTF_input$AU_putz), sum(sum(BTF_input$FLGES),sum(BTF_input$STR_FLGES)))
+# finding the areas for different sources and the total catachment are (with and without runoff formation)
+areas <-c(sum(BTF_input$AU_roof),sum(BTF_input$AU_street),sum(BTF_input$AU_yard),sum(BTF_input$AU_putz), sum(sum(BTF_input$FLGES),sum(BTF_input$STR_FLGES)))
+names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
 
 #due to the uncertain connection of facades to the sewerage system, all BTF are assigned a connection grade between 10 and 90%.
 for( n in 1:nrow(BTF_input)){
-  BTF_input[n,'runoff_Putzfassade'] <- BTF_input[n,'runoff_Putzfassade']/0.5*runif(n=1, min = 0.1, max=0.9)
+  BTF_input[n, 'runoff_Putzfassade'] <- BTF_input[n,'runoff_Putzfassade']/0.5*runif(n=1, min = 0.1, max=0.9)
 }
   
 # read in back calculated concentrations from OgRe
@@ -29,7 +31,7 @@ sd_list <- list()
 for( OgRe_type in OgRe_types){
   index_OgRe_type <- which(OgRe_types==OgRe_type)
   assign(paste0('c_',OgRe_type), read.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';')) 
-  sd_list[[index_OgRe_type]] <-assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data/rel_sd_', OgRe_type,'.csv')))
+  sd_list[[index_OgRe_type]] <-assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data/rel_sd_', OgRe_type,'.csv'), sep = ';'))
 }
 
 # creating data fram to store loads for every source in every BTF

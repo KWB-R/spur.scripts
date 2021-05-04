@@ -29,7 +29,7 @@ sd_list <- list()
 for( OgRe_type in OgRe_types){
   index_OgRe_type <- which(OgRe_types==OgRe_type)
   assign(paste0('c_',OgRe_type), read.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';')) 
-  sd_list[[index_OgRe_type]] <-assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data/rel_sd_', OgRe_type,'.csv')))
+  sd_list[[index_OgRe_type]] <-assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data/rel_sd_', OgRe_type,'.csv'), sep = ';'))
 }
 
 # creating data fram to store loads for every source in every BTF

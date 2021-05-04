@@ -213,8 +213,67 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
      # design the barplot
      # shape the legend
      colours <- c('slategray1','steelblue1','royalblue2', 'steelblue3', 'royalblue4')
-     barplot(t(current_shares), main = substance, sub = catchment, beside = T, ylim = c(0,100), ylab = 'Share of load [%]', col = colours, axis.lty="solid")
-     legend(20,100, rownames(t(current_shares)), cex = 0.8, fill = colours, title = "SST")
+     barplot(t(current_shares), main = substance, sub = catchment, beside = T, ylim = c(0,100), ylab = 'Fracht [%]', col = colours, axis.lty="solid", cex.axis = 1.5, cex.names =1.5, cex.lab=1.5, cex.sub=1.5, cex.main= 2)
+     legend(20,100, rownames(t(current_shares)), cex = 1, fill = colours, title = "SST")
      
    }  
- }  
+ }
+ 
+ #### Plots für Andreas und Daniel 29.4.2021
+ 
+ 
+ # Plots Wuhle
+ # Daten einlesen
+ Wuhle_0<-read.csv('data_output/calculation_load_reduction/loads_Wuhle_measure_extend_0%.csv')
+ Wuhle_10<- read.csv('data_output/calculation_load_reduction/loads_Wuhle_measure_extend_10%.csv')
+ Wuhle_20 <- read.csv('data_output/calculation_load_reduction/loads_Wuhle_measure_extend_20%.csv')
+ Wuhle_50 <- read.csv('data_output/calculation_load_reduction/loads_Wuhle_measure_extend_50%.csv')
+ Flughafensee_0 <- read.csv('data_output/calculation_load_reduction/loads_Flughafensee_measure_extend_0%.csv')
+ Flughafensee_10 <- read.csv('data_output/calculation_load_reduction/loads_Flughafensee_measure_extend_10%.csv')
+ Flughafensee_20 <- read.csv('data_output/calculation_load_reduction/loads_Flughafensee_measure_extend_20%.csv')
+ Flughafensee_50 <- read.csv('data_output/calculation_load_reduction/loads_Flughafensee_measure_extend_50%.csv')
+ 
+Wuhle_Diuron <- cbind(Wuhle_0[1],Wuhle_10[1],Wuhle_20[1],Wuhle_50[1])
+Wuhle_Mecoprop <- cbind(Wuhle_0[2],Wuhle_10[2],Wuhle_20[2],Wuhle_50[2])
+Wuhle_Zn <- cbind(Wuhle_0[3],Wuhle_10[3],Wuhle_20[3],Wuhle_50[3])
+
+
+boxplot(Wuhle_Diuron, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+boxplot(Wuhle_Mecoprop, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+boxplot(Wuhle_Zn, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+
+
+ # Box-plots erstellen
+ boxplot(Wuhle_0, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+ boxplot(Wuhle_Diuron, ylab = 'load [kg/a)', las=1, main = 'Diuron', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+ boxplot(Wuhle_Mecoprop, ylab = 'load [kg/a)', las=1, main = 'Mecoprop', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+ boxplot(Wuhle_Terbutryn, ylab = 'load [kg/a)', las=1, main = 'Terbutryn', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+ boxplot(Wuhle_Benzothiazol, ylab = 'load [kg/a)', las=1, main = 'Benzothiazol', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+ boxplot(Wuhle_Zn, ylab = 'load [kg/a)', main = 'Zn', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+ 
+ 
+ 
+ # Einzelwerte
+ Wuhle_0_solo<-read.csv('data_output/Frachtreduktion/loads_Wuhle_measure_extend_0%.csv')
+ Wuhle_10_solo<- read.csv('data_output/Frachtreduktion/loads_Wuhle_measure_extend_10%.csv')
+ Wuhle_20_solo <- read.csv('data_output/Frachtreduktion/loads_Wuhle_measure_extend_20%.csv')
+ Wuhle_50_solo <- read.csv('data_output/Frachtreduktion/loads_Wuhle_measure_extend_50%.csv')
+ Flughafensee_0_solo <- read.csv('data_output/Frachtreduktion/loads_Flughafensee_measure_extend_0%.csv')
+ Flughafensee_10_solo <- read.csv('data_output/Frachtreduktion/loads_Flughafensee_measure_extend_10%.csv')
+ Flughafensee_20_solo <- read.csv('data_output/Frachtreduktion/loads_Flughafensee_measure_extend_20%.csv')
+ Flughafensee_50_solo <- read.csv('data_output/Frachtreduktion/loads_Flughafensee_measure_extend_50%.csv')
+ 
+ Wuhle_Diuron_solo <- cbind(Wuhle_0_solo[1],Wuhle_10_solo[1],Wuhle_20_solo[1],Wuhle_50_solo[1])
+ Wuhle_Mecoprop_solo <- cbind(Wuhle_0_solo[2],Wuhle_10_solo[2],Wuhle_20_solo[2],Wuhle_50_solo[2])
+ Wuhle_Zn_solo <- cbind(Wuhle_0_solo[3],Wuhle_10_solo[3],Wuhle_20_solo[3],Wuhle_50_solo[3])
+ 
+ 
+ WD <- Wuhle_Diuron_solo/Wuhle_Diuron_solo[1,1]
+ WM <- Wuhle_Mecopropsolo/Wuhle_Mecoprop_solo[1,1]
+ WZ <- Wuhle_Zn_solo/Wuhle_Zn_solo[1,1]
+ as.matrix(WD)
+ class(WD)
+ 
+ barplot(WD)
+ barplo
