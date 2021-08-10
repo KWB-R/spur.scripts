@@ -33,6 +33,6 @@ for(catchment in catchments){
   composition <- 100* c( x_ALT, x_NEU, x_EFH, x_GEW, x_AND) 
   #Säulendiagram
   names(composition)<- c('ALT','NEU','EFH','GEW','AND')
-  barplot(composition, ylim = c(0,100), ylab='runoff [%]' , main = catchment)
+  barplot(composition, ylim = c(0,50), ylab='runoff [%]' , main = catchment)
   
  }
