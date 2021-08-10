@@ -1,32 +1,45 @@
 library(data.table)
+library(plyr)
 
-# 1. Abschnitt Reduktionszenario
+
+# Allgemeine Parameter
 substances<- c('Diuron', 'Mecoprop', 'Zn')
 OgRe_types<- c('ALT', 'EFH', 'GEW', 'NEU', 'AND')
 sources <-  c("Dach", "Strasse", "Hof", "Putzfassade")
 measures <- c('OSM', 'Filter')
 catchments <- c('Wuhle', 'Flughafensee')
 
-# Maßnahmen Umfang für die verscheidenen OgRe-types
-mr<-0.5
+### 1. Abschnitt: Definition der Maßnahmen
+
+# Maßnahmenumfang für die verschiedenen OgRe-types
+mr<-1
+#Name der Maßnahme
+Szenario<-'Szenario_1'
 
 
-# Maßnahmenumfang Wuhle; vielleicht noch in Liste verstauen
+# Maßnahmenumfang Wuhle; vielleicht noch in Liste verstauena
 names_U<-list(measures, sources)
+
+# Maßnahmenumfang für unterschiedliche Abflüsse:
+# c(Dach_OSM, Dach_filter, Strasse_OSM, Strasse_Filter, Hof_OSM, Hof_fitler, putzfassade_OSM, Putzfassade_filter)
 U_Wuhle_ALT<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 U_Wuhle_EFH<-matrix(c(0, 0, 0, 0, 0, 0, mr, 0), nrow = 2, ncol = 4, dimnames = names_U)
-U_Wuhle_GEW<-matrix(c(0, mr, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
-U_Wuhle_NEU<-matrix(c(0, mr, 0, 0, 0, mr, 0, mr/2), nrow = 2, ncol = 4, dimnames = names_U)
+U_Wuhle_GEW<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
+U_Wuhle_NEU<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 U_Wuhle_AND<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 
 
-# MAßnahmenumfang Flughafensee; vielleicht noch in Liste verstauen
-U_Flughafensee_ALT<-matrix(c(0, mr, 0, 0, 0, mr, mr, mr/2), nrow = 2, ncol = 4, dimnames = names_U)
-U_Flughafensee_EFH<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
-U_Flughafensee_GEW<-matrix(c(0, mr, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
+# Maßnahmenumfang für unterschiedliche Abflüsse:
+# c(Dach_OSM, Dach_filter, Strasse_OSM, Strasse_Filter, Hof_OSM, Hof_fitler, putzfassade_OSM, Putzfassade_filter)
+U_Flughafensee_ALT<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
+U_Flughafensee_EFH<-matrix(c(0, 0, 0, 0, 0, 0, mr, 0), nrow = 2, ncol = 4, dimnames = names_U)
+U_Flughafensee_GEW<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 U_Flughafensee_NEU<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 U_Flughafensee_AND<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 
+
+### 2. Welcher Anteil der Fracht gelangt bei der oben definierten Maßnahme ins Gewässer. 
+### Aufgelöst nach OgRe_type und Quelle (in lr_catchment_OgRe_type gespeichert)
 
 # Maßnahmen Effizienz 
 # n1= diuronfreie Farbe
@@ -36,7 +49,7 @@ names(n1)<- substances
 n2<- c(0.97, 0.85, 0.93)
 names(n2)<- substances
 
-# Frachtreduktion durch Maßnahemn
+# Frachtreduktion durch Maßnahmen
 names_lr<- list(substances, sources)
 
 for (catchment in catchments) {
@@ -59,16 +72,15 @@ for (catchment in catchments) {
         x[index_substance, index_source]<- 1-U[1, index_source]*n1[index_substance]-U[2,index_source]*n2[index_substance]+U[1, index_source]*n1[index_substance]*U[2,index_source]*n2[index_substance]
       }
     }
-  # Frachtreduktionspotenzial OgRe-type und catchment zuweisen
+  # Frachtreduktionspotenzial OgRe-type und catchment zuweisen #lr =load recduction
   assign(paste0('lr_',catchment,'_',OgRe_type),x)
    }
 }
 
 
+###  2. Abschnitt Frachtberechnung unter Anwedung gewählter Szenarien
 
-####  2. Abschnitt Frachtberechnung unter Anwedung gewählter Szenarien
-
-##    2.1 Festlegung von Parametern
+##   2.1 Festlegung von Parametern
 
 # set a fixed start for the random algorithm
 set.seed(5)
@@ -84,7 +96,7 @@ berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runo
 sd_list <- list()
 for( OgRe_type in OgRe_types){
   index_OgRe_type <- which(OgRe_types==OgRe_type)
-  # read in back calculated concentrations from OgRe
+  # read in back calculated concentrations from Project OgRe
   assign(paste0('c_',OgRe_type), read.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';'))
   # read in relative standard deviations
   sd_list[[index_OgRe_type]] <-assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data/rel_sd_', OgRe_type,'.csv'), sep = ';'))
@@ -115,9 +127,10 @@ areas <-c(sum(BTFs_current$AU_roof),sum(BTFs_current$AU_street),sum(BTFs_current
 names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
 
 
-# AUfgrund von nicht bekanntem Anschlussgrad von Fassaden an die Kanalisation wird jeder BTF ein zufälliger Anschlussgrad zwischen 10 und 90% zugewiesen
+# Aufgrund von nicht bekanntem Anschlussgrad von Fassaden an die Kanalisation wird jeder BTF
+# ein zufälliger Anschlussgrad zwischen 10 und 90% zugewiesen
   for( n in 1:nrow(BTFs_current)){
-    BTFs_current[n, 'runoff_Putzfassade'] <- BTFs_current[n,'runoff_Putzfassade']/0.5*runif(n=1, min = 0.1, max=0.9)
+    BTFs_current[n, 'runoff_Putzfassade'] <- BTFs_current[n,'runoff_Putzfassade']*runif(n=1, min = 0.1, max=0.9)
   }
 
 
@@ -129,7 +142,6 @@ names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
     
       #Tabelle um berechneten Frachten zu speichern
 
-    
       #Erstellen einer Matrix für die verbeleibende Fracht  
       names_source_loads<- list(substances, sources)
       source_loads<- matrix(nrow = 3, ncol = length(sources), dimnames = names_source_loads)
@@ -177,12 +189,7 @@ names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
         
           #Berechnung der Frachten ohne Maßnahmen (zufällig durch log Normalverteilung generiert)
           source_loads[index_substance, index_source] <- concentration*sum(BTFs_current[row_runoff, col_runoff])
-          
-          
-          
         }
-
-        
       }
       
       
@@ -194,7 +201,6 @@ names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
         index_substance <-  which(substances==substance)
           
         OgRe_type_loads[,index_substance]<- sum(reduced_source_loads[index_substance,])
-        #assign(paste0(OgRe_type,'_source_loads'), source_loads)
         assign(paste0(OgRe_type,'_loads'), OgRe_type_loads)  
         }
      
@@ -215,6 +221,72 @@ for(catchment in catchments){
   
   MC_loads<- eval(parse(text = paste0('MC_loads_',catchment)))
   
-  write.csv(MC_loads, paste0('data_output/calculation_load_reduction/loads_',catchment,'_measure_extend_',mr*100,'%.csv'),row.names = FALSE)
+  write.csv(MC_loads, paste0('data_output/calculation_load_reduction/', Szenario,'/' ,catchment,'/', Szenario ,'_',mr*100,'%.csv'),row.names = FALSE)
 
 }
+
+# Berechnung des Maßnahmenaufwands (wie viel Volumen muss gefiltert werden,
+# wie viel, Fläche an der Quelle müssen behandelt werden )
+
+for (catchment in catchments) {
+  
+  Putzfassadenfläche_behandelt <- 0
+  Volumen_behandelt <-0 
+  
+  BTFs_catchment<- subset(berlin_runoff, AGEB1== catchment)
+  #Spalten anpassen
+  colnames(BTFs_catchment) <- c(names(BTFs_catchment[0:51]),'AU_Strasse','AU_Hof','AU_Dach','AU_Putzfassade')
+  
+  #Gesamtvolumen und OSM Flächen
+  Putzfassadenfläche_gesamt <- sum(BTFs_catchment$AU_Putzfassade)
+  Volumen_gesamt <- sum(BTFs_catchment$runoff_total)
+  
+  for (OgRe_type in OgRe_types) {
+    
+    BTFs_OgRe_type<- as.data.frame(subset( BTFs_catchment, OgRe_Type== OgRe_type))
+    
+    U<- eval(parse(text = paste0('U_', catchment, '_', OgRe_type)))
+    
+    Putzfassadenfläche_behandelt <- Putzfassadenfläche_behandelt+ U[1,4]*sum(BTFs_OgRe_type$AU_Putzfassade)
+
+    for (my_source in sources) {
+      index_source <- which(sources== my_source) 
+     
+      Volumen_behandelt <- Volumen_behandelt+ U[2,index_source]*sum(BTFs_OgRe_type[paste0('runoff_',my_source)])
+    }
+  }
+  
+Aufwand_current<- cbind(Volumen_behandelt/Volumen_gesamt*100,Putzfassadenfläche_behandelt/Putzfassadenfläche_gesamt*100)
+as.data.frame(Aufwand_current)  
+colnames(Aufwand_current) <- c('Volumen [%]', 'Fassade [%]')
+write.csv(Aufwand_current,paste0('data_output/calculation_load_reduction/', Szenario,'/' ,catchment,'/', Szenario ,'_',mr*100,'%_Aufwand.csv'),row.names = FALSE)
+}
+
+
+### Flächenanteile von Dächern und Putzfassade 
+
+#for (catchment in catchments) {
+  
+#  BTFs_catchment<- subset(berlin_runoff, AGEB1== catchment)
+  #Spalten anpassen
+#  colnames(BTFs_catchment) <- c(names(BTFs_catchment[0:51]),'AU_Strasse','AU_Hof','AU_Dach','AU_Putzfassade')
+  
+  
+#  for (OgRe_type in OgRe_types) {
+ 
+#    BTFs_OgRe_type<- as.data.frame(subset( BTFs_catchment, OgRe_Type== OgRe_type))
+    
+#    for (my_source in sources) {
+      
+#      assign(paste0(my_source,'fläche_gesamt'), eval(parse(text = paste0('sum(BTFs_catchment$AU_', my_source,')'))))
+
+#      assign(paste0('Fläche_',my_source,'_',OgRe_type,'_',catchment), sum(eval(parse(text=paste0('BTFs_OgRe_type$AU_',my_source)))))
+      
+#      print(paste0('Anteil_',my_source,'_',OgRe_type,'_',catchment))
+#      print(assign(paste0('Anteil_',my_source,'_',OgRe_type,'_',catchment),eval(parse(text =paste0('Fläche_',my_source,'_',OgRe_type,'_',catchment)))/eval(parse(text = paste0(my_source,'fläche_gesamt')))*100))
+#    }  
+#  }
+#}
+
+
+
