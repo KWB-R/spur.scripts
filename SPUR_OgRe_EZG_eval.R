@@ -72,7 +72,7 @@ x_runoff_facade <- read.table(file = file.path(robes_data.dir, "output_annualrun
 #spec_fac_runoff <- sum(colMeans(x_runoff_facade[, c("runoffS", "runoffW", "runoffO", "runoffN")]))
 spec_fac_runoff <- mean(colMeans(x_runoff_facade[, c("runoffS", "runoffW", "runoffO", "runoffN")]))
 
-#assumption: only 20% makes it from facade to sewer
+#assumption: only 50% makes it from facade to sewer
 spec_fac_runoff <- spec_fac_runoff * coeff_fac_sew
 
 ##load Dachflaechen
