@@ -3,8 +3,6 @@ library(tidyverse)
 substances <-c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
 
 
-
-
 for (substance in substances) {
   index_substance<- which(substances==substance)
   boxplot(simulated_loads[,index_substance], 
@@ -20,15 +18,18 @@ for (substance in substances) {
 
 # Plots Berlin
 # Daten einlesen
-simulated_loads<-read.csv('data/simulated_loads.csv')
-Diuron_load <- read.csv('data/load_Diuron.csv')
-Mecoprop_load <- read.csv('data/load_Mecoprop.csv')
-Terbutryn_load <- read.csv('data/load_Terbutryn.csv')
-Benzothiazol_load <- read.csv('data/load_Benzothiazol.csv')
-Zn_load <- read.csv('data/load_Zn.csv')
-Cu_load <- read.csv('data/load_Cu.csv')
+simulated_loads<-read.csv('data_output/calculation_status_quo/simulated_loads.csv')
+simulated_loads<- simulated_loads[,c('Diuron','Mecoprop','Zn')]
+
+Diuron_load <- read.csv('data_output/calculation_status_quo/load_Diuron.csv')
+Mecoprop_load <- read.csv('data_output/calculation_status_quo/load_Mecoprop.csv')
+Terbutryn_load <- read.csv('data_output/calculation_status_quo/load_Terbutryn.csv')
+Benzothiazol_load <- read.csv('data_output/calculation_status_quo/load_Benzothiazol.csv')
+Zn_load <- read.csv('data_output/calculation_status_quo/load_Zn.csv')
+Cu_load <- read.csv('data_output/calculation_status_quo/load_Cu.csv')
 # Box-plots erstellen
-boxplot(simulated_loads, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+boxplot(simulated_loads, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, las=0, cex.axis= 1.2, cex.lab= 1.2, col = 'lightblue')
+
 boxplot(Diuron_load, ylab = 'load [kg/a)', las=1, main = 'Diuron', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
 boxplot(Mecoprop_load, ylab = 'load [kg/a)', las=1, main = 'Mecoprop', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
 boxplot(Terbutryn_load, ylab = 'load [kg/a)', las=1, main = 'Terbutryn', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
@@ -78,98 +79,6 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
 
 
 
-
-# Plots catchment area analysis
- catchments <- c('Wuhle', 'Flughafensee')
- substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
- OgRe_types <- c("ALT", "NEU", "EFH", "GEW","AND")
-
- 
- 
- for(catchment in catchments){
-  for(substance in substances){
-    
-    data <- read.csv(paste0('data_output/catchment_area_analysis/',catchment,'_',substance,'.csv'), sep = ',')
-    load_fraction <- c(data[7,1], data[7,2], data[7,3], data[7,4], data[7,5])/sum(data[7,])*100
-
-    names(load_fraction)<- c('ALT','NEU','EFH','GEW','AND')
-    
-    barplot(load_fraction, ylim = c(0, 100), main =substance , sub = catchment)
-  }  
- }
- 
- for(catchment in catchments){
-   for(substance in substances){
-     for(OgRe_type in OgRe_types){
-       data <-  read.csv(paste0('data_output/catchment_area_analysis/',catchment,'_',substance,'.csv'), sep = ',')
-       index_OgRe_type <- which(OgRe_types==OgRe_type)
-       
-       if(data[7,index_OgRe_type]==0){
-         sub_data[]<-0
-      }
-       else{
-       sub_data <- data[1:6,index_OgRe_type]/data[7,index_OgRe_type]*100
-      }
-       names(sub_data)<- c("Bitumendach", "Ziegeldach", "Dach weitere", "Strasse", "Hof", "Putzfassade")
-       barplot(sub_data, ylim = c(0, 100), main = OgRe_type , sub = substance)
-     }
-   }
- }
- 
- 
- 
- 
- # grouped barplots: substance shares for each SST per source in relation to total load from SST
- library(datasets)
- catchments <- c('Wuhle', 'Flughafensee')
- substances <- c('Diuron', 'Mecoprop', 'Terbutryn', 'Benzothiazol', 'Zn', 'Cu')
- OgRe_types <- c("ALT", "NEU", "EFH", "GEW", "AND")
- sources <- c("Dach", "Strasse", "Hof", "Putzfassade")
- 
- # build output matrix
- catchment_substance_shares<- matrix(nrow = 4, ncol = 5)
- colnames(catchment_substance_shares)<- c('ALT','NEU', 'EFH', 'GEW', 'AND')
- rownames(catchment_substance_shares)<- c("Dach", "Strasse", "Hof", "Putzfassade")
- 
- for(catchment in catchments){
-   for(substance in substances){
-     
-     #read in substance load tables for every SST
-     current_data <- read.csv(paste0('data_output/catchment_area_analysis/',catchment,'_',substance,'.csv'), sep = ',')
-     # assign current output matrix (specific for catchment and substance)
-     current_shares<- catchment_substance_shares
-     
-     for (OgRe_type in OgRe_types) {
-       
-      for (my_source in sources) {
-        #crating indices to assign results to the right cell
-        index_OgRe_type <- which(OgRe_types==OgRe_type)
-        index_source <- which(sources==my_source)
-        
-        # Assign 0% to the cell if the total load is 0 to avoid dividing by 0.
-        # If not equal to 0, the source-specific load from the current OgRe area is
-        # divided by the total load from the OgRe area and is multiplied by 100.
-        if(current_data[5,index_OgRe_type]==0){
-          current_shares[index_source,index_OgRe_type] <- 0
-        } else {
-        current_shares[index_source,index_OgRe_type] <- current_data[index_source,index_OgRe_type]/current_data[5, index_OgRe_type]*100
-        }
-        assign(paste0(catchment,'_',substance,'_shares'),current_shares)
-        #write.csv(current_shares, paste0('data_output/',catchment,'_',substance,'_shares'))
-        }
-      }
-      # assign the colour vector
-      # design the barplot
-      # shape the legend
-      colours <- c('slategray1','steelblue1','royalblue2', 'steelblue3', 'royalblue4')
-      barplot(t(current_shares), main = substance, sub = catchment, beside = T, ylim = c(0,100), ylab = 'Share of load [%]', col = colours, axis.lty="solid")
-      legend(100, rownames(t(current_shares)), cex = 0.8, fill = colours, title = "SST")
-     
-     }  
- }
- 
-
- 
  # grouped barplots: substance shares for each SST per source in relation to total load from catchment
  library(datasets)
  catchments <- c('Wuhle', 'Flughafensee')
@@ -180,7 +89,7 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
  # build output matrix
  catchment_substance_shares<- matrix(nrow = 4, ncol = 5)
  colnames(catchment_substance_shares)<- c('ALT','NEU', 'EFH', 'GEW', 'AND')
- rownames(catchment_substance_shares)<- c("Dach weitere", "Strasse", "Hof", "Putzfassade")
+ rownames(catchment_substance_shares)<- c("Dach", "Strasse", "Hof", "Putzfassade")
  
  for(catchment in catchments){
    for(substance in substances){
@@ -213,67 +122,24 @@ boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse
      # design the barplot
      # shape the legend
      colours <- c('slategray1','steelblue1','royalblue2', 'steelblue3', 'royalblue4')
-     barplot(t(current_shares), main = substance, sub = catchment, beside = T, ylim = c(0,100), ylab = 'Fracht [%]', col = colours, axis.lty="solid", cex.axis = 1.5, cex.names =1.5, cex.lab=1.5, cex.sub=1.5, cex.main= 2)
+     barplot(t(current_shares), main = substance, sub = catchment, beside = T, ylim = c(0,100), ylab = 'Fracht [%]', col = colours, axis.lty="solid", cex.sub=1.3, cex.axis = 1.5, cex.names =1.5, cex.lab=1.5, cex.sub=1.5, cex.main= 2)
      legend(20,100, rownames(t(current_shares)), cex = 1, fill = colours, title = "SST")
      
    }  
  }
  
  #### Plots für Andreas und Daniel 29.4.2021
+ simulated_loads<-read.csv('data_output/calculation_status_quo/Wuhle_simulated_loads.csv')
+ simulated_loads<- simulated_loads[,c('Diuron','Mecoprop','Zn')]
  
+ library(data.table)
+ berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
+ berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_roo', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Dach','runoff_Putzfassade','runoff_total'))
  
- # Plots Wuhle
- # Daten einlesen
- Wuhle_0<-read.csv('data_output/calculation_load_reduction/loads_Wuhle_measure_extend_0%.csv')
- Wuhle_10<- read.csv('data_output/calculation_load_reduction/loads_Wuhle_measure_extend_10%.csv')
- Wuhle_20 <- read.csv('data_output/calculation_load_reduction/loads_Wuhle_measure_extend_20%.csv')
- Wuhle_50 <- read.csv('data_output/calculation_load_reduction/loads_Wuhle_measure_extend_50%.csv')
- Flughafensee_0 <- read.csv('data_output/calculation_load_reduction/loads_Flughafensee_measure_extend_0%.csv')
- Flughafensee_10 <- read.csv('data_output/calculation_load_reduction/loads_Flughafensee_measure_extend_10%.csv')
- Flughafensee_20 <- read.csv('data_output/calculation_load_reduction/loads_Flughafensee_measure_extend_20%.csv')
- Flughafensee_50 <- read.csv('data_output/calculation_load_reduction/loads_Flughafensee_measure_extend_50%.csv')
+ BTF_catchment <- subset(berlin_runoff, AGEB1=='Wuhle')
+ total_runoff <- colSums(BTF_catchment['runoff_total'])
  
-Wuhle_Diuron <- cbind(Wuhle_0[1],Wuhle_10[1],Wuhle_20[1],Wuhle_50[1])
-Wuhle_Mecoprop <- cbind(Wuhle_0[2],Wuhle_10[2],Wuhle_20[2],Wuhle_50[2])
-Wuhle_Zn <- cbind(Wuhle_0[3],Wuhle_10[3],Wuhle_20[3],Wuhle_50[3])
+ concentrations <- simulated_loads*1000000/total_runoff
 
-
-boxplot(Wuhle_Diuron, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
-boxplot(Wuhle_Mecoprop, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
-boxplot(Wuhle_Zn, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
-
-
- # Box-plots erstellen
- boxplot(Wuhle_0, log = 'y',  ylab= 'load [kg/a]', outline=FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
- boxplot(Wuhle_Diuron, ylab = 'load [kg/a)', las=1, main = 'Diuron', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
- boxplot(Wuhle_Mecoprop, ylab = 'load [kg/a)', las=1, main = 'Mecoprop', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
- boxplot(Wuhle_Terbutryn, ylab = 'load [kg/a)', las=1, main = 'Terbutryn', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
- boxplot(Wuhle_Benzothiazol, ylab = 'load [kg/a)', las=1, main = 'Benzothiazol', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
- boxplot(Wuhle_Zn, ylab = 'load [kg/a)', main = 'Zn', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
- boxplot(Wuhle_Cu, ylab = 'load [kg/a)', main = 'Cu', names =  c('Dach', 'Strasse', 'Hof', 'Putzfassade', 'gesamt'), outline = FALSE, cex.axis= 1.1, cex.lab= 1.3, col = 'lightblue')
+  boxplot(concentrations, ylim= c(min(concentrations), max(concentrations)) , yaxp=c(1e-2, 1e+3, 1) , log = 'y',  ylab= '[μg/L]', outline=FALSE, las=0, cex.axis= 1.2, cex.lab= 1.2, col = 'lightblue')
  
- 
- 
- # Einzelwerte
- Wuhle_0_solo<-read.csv('data_output/Frachtreduktion/loads_Wuhle_measure_extend_0%.csv')
- Wuhle_10_solo<- read.csv('data_output/Frachtreduktion/loads_Wuhle_measure_extend_10%.csv')
- Wuhle_20_solo <- read.csv('data_output/Frachtreduktion/loads_Wuhle_measure_extend_20%.csv')
- Wuhle_50_solo <- read.csv('data_output/Frachtreduktion/loads_Wuhle_measure_extend_50%.csv')
- Flughafensee_0_solo <- read.csv('data_output/Frachtreduktion/loads_Flughafensee_measure_extend_0%.csv')
- Flughafensee_10_solo <- read.csv('data_output/Frachtreduktion/loads_Flughafensee_measure_extend_10%.csv')
- Flughafensee_20_solo <- read.csv('data_output/Frachtreduktion/loads_Flughafensee_measure_extend_20%.csv')
- Flughafensee_50_solo <- read.csv('data_output/Frachtreduktion/loads_Flughafensee_measure_extend_50%.csv')
- 
- Wuhle_Diuron_solo <- cbind(Wuhle_0_solo[1],Wuhle_10_solo[1],Wuhle_20_solo[1],Wuhle_50_solo[1])
- Wuhle_Mecoprop_solo <- cbind(Wuhle_0_solo[2],Wuhle_10_solo[2],Wuhle_20_solo[2],Wuhle_50_solo[2])
- Wuhle_Zn_solo <- cbind(Wuhle_0_solo[3],Wuhle_10_solo[3],Wuhle_20_solo[3],Wuhle_50_solo[3])
- 
- 
- WD <- Wuhle_Diuron_solo/Wuhle_Diuron_solo[1,1]
- WM <- Wuhle_Mecopropsolo/Wuhle_Mecoprop_solo[1,1]
- WZ <- Wuhle_Zn_solo/Wuhle_Zn_solo[1,1]
- as.matrix(WD)
- class(WD)
- 
- barplot(WD)
- barplo
