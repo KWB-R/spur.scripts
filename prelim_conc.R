@@ -3,7 +3,7 @@
 # grab data from both projects BaSaR and SpuR
 basar_bbr_facade <- getMonitoringTable(
   subfolder = 'data_prelim_sources',
-  dbName = 'BBRf_20200518_conc.txt',
+  dbName = 'bbr_facade_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
   project = 'basar',
@@ -15,7 +15,7 @@ basar_bbr_facade <- getMonitoringTable(
 
 basar_bbw_facade <- getMonitoringTable(
   subfolder = 'data_prelim_sources',
-  dbName = 'BBWf_20200518_conc.txt',
+  dbName = 'bbw_facade_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
   project = 'basar',
@@ -27,7 +27,7 @@ basar_bbw_facade <- getMonitoringTable(
 
 basar_bbr_roof <- getMonitoringTable(
   subfolder = 'data_prelim_sources',
-  dbName = 'BBRr_20200518_conc.txt',
+  dbName = 'bbr_roof_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
   project = 'basar',
@@ -39,7 +39,7 @@ basar_bbr_roof <- getMonitoringTable(
 
 basar_bbw_roof <- getMonitoringTable(
   subfolder = 'data_prelim_sources',
-  dbName = 'BBWr_20200518_conc.txt',
+  dbName = 'bbw_roof_20200518_conc.txt',
   dbTable = NA,
   format = 'txt',
   project = 'basar',
@@ -65,7 +65,7 @@ spur_pkw <- getMonitoringTable(
 basar_bbr_kanal <- getMonitoringTable(
   subfolder = 'data_prelim_sources',
   dbTable = NA,
-  dbName = 'BBRs_20200518_conc.txt',
+  dbName = 'bbr_sewer_20200518_conc.txt',
   format = 'txt',
   project = 'basar',
   detLimOperator = 0.5,
@@ -78,7 +78,7 @@ basar_bbr_kanal <- getMonitoringTable(
 basar_bbw_kanal <- getMonitoringTable(
   subfolder = 'data_prelim_sources',
   dbTable = NA,
-  dbName = 'BBWs_20200518_conc.txt',
+  dbName = 'bbw_sewer_20200518_conc.txt',
   format = 'txt',
   project = 'basar',
   detLimOperator = 0.5,
@@ -187,7 +187,7 @@ Benzothiazol <- makeSubstanceTable(
 
 
 # statistics
-summary(Terbutryn$concentration)
+summary(Zn$concentration)
 summary(Diuron$concentration)
 summary(Mecoprop$concentration)
 
@@ -667,8 +667,6 @@ makeSubstanceTable <- function(dbNames, substance){
   
   return(output)
 }
-
-
 
 
 plotSubstance <- function(substance){
