@@ -1,0 +1,6 @@
+Szenario 2:
+Flughafensee: Dachablauf aus Gewerbegebieten filtern
+	c(0, mr, 0, 0, 0, 0, 0, 0)
+Wuhle: : Dachablauf aus Gewerbegebieten filtern
+	c(0, mr, 0, 0, 0, 0, 0, 0)
+
