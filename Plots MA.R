@@ -168,8 +168,8 @@ data <- data.frame(name, value)
 data %>%
   ggplot( aes(x=name, y=value, fill=name)) +
   stat_boxplot(geom = 'errorbar', width= 0.5, alpha=1)+
-  geom_boxplot(outlier.shape = NA, fill= c("#894A94", "#5BA56D", "#F3AE0D"), alpha= 1 ) + ##6699CC #DDCC77
-  #geom_jitter(color="black", size=1.2, alpha=0.9) +
+  geom_boxplot( fill= c("#894A94", "#5BA56D", "#F3AE0D"), alpha= 1 ) + ##6699CC #DDCC77
+  coord_cartesian(ylim = c(0, 100))+
   theme_minimal() +
   ggtitle("") +
   xlab("")+
@@ -283,7 +283,7 @@ for(catchment in catchments){
       # Auswahl des OgRe_type
       BTF_OgRe_catchment <-subset(BTFs_catchemnt, OgRe_Type==OgRe_type)
       # Einlesen von Konzentrationstabellen
-      assign(paste0('c_',OgRe_type), read.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';')) 
+      assign(paste0('c_',OgRe_type), ead.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';')) 
       
       for(my_source in sources){  
         
@@ -470,3 +470,45 @@ for (catchment in catchments) {
     }
   }
 }
+
+
+# Vergleich der Konzentrationen in Wuhle und Panke
+#### Wuhle
+simulated_loads<-read.csv('data_output/calculation_status_quo/Wuhle_simulated_loads.csv')
+simulated_loads<- simulated_loads[,c('Diuron','Mecoprop','Zn')]
+
+library(data.table)
+berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
+berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_roo', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Dach','runoff_Putzfassade','runoff_total'))
+
+BTF_catchment <- subset(berlin_runoff, AGEB1=='Wuhle')
+total_runoff <- colSums(BTF_catchment['runoff_total'])
+
+concentrations <- simulated_loads*1000000/total_runoff
+
+boxplot(concentrations, ylim= c(min(concentrations), max(concentrations)) , yaxp=c(1e-2, 1e+3, 1) , log = 'y',  ylab= '[μg/L]', outline=FALSE, las=0, cex.axis= 1.2, cex.lab= 1.2, col = '#485899', main= 'Wuhle', names= c('Diuron', 'Mecoprop', 'Zink'), yaxt="n")
+at.y <- outer(1:9, 10^(-2:3))
+lab.y <- ifelse(log10(at.y) %% 1 == 0, at.y, NA)
+axis(2, at=at.y, labels=lab.y, las=1)
+
+
+#Panke
+#data directory
+data.dir <- "data/"
+
+#get Panke wet weather data
+x_Panke <- read.table(file = file.path(data.dir, "Panke_wet_weather.csv"), sep = ";", dec = ".", header = TRUE, as.is = TRUE)
+
+#substances of interest
+substances <- c('diuron', 'mecoprop', 'zinc') 
+
+#reduce Panke data to substances of interest
+index <- which(x_Panke$VariableName %in% substances)
+x_Panke <- x_Panke[index,]
+
+#simple boxplot
+boxplot(DataValue~VariableName, data = x_Panke, log = "y", las=0, col = '#485899', xlab='', ylab = '[µg/L]', cex.lab=1.2, cex.axis=1.2, names= c('Diuron', 'Mecoprop', 'Zink'), ylim= c(min(concentrations), max(concentrations)), main='Panke', yaxt="n" )
+at.y <- outer(1:9, 10^(-2:3))
+lab.y <- ifelse(log10(at.y) %% 1 == 0, at.y, NA)
+axis(2, at=at.y, labels=lab.y, las=1)
+
