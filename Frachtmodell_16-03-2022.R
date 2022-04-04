@@ -9,17 +9,17 @@ sources <-  c("Dach", "Strasse", "Hof", "Putzfassade")
 measures <- c('OSM', 'Filter')
 catchments <- c('Wuhle', 'Flughafensee')
 
-### 1. Abschnitt: Definition der Maßnahmen; Eingabe der Ausgangsparameter
+### 1. Abschnitt: Definition der Maßnahmen; Eingabe der Eingangsparameter
 
 # Eingabe des Maßnahmenumfang (MU)
 # Welcher Anteil der Abflüsse aus den verschiedenen SST soll behandelt werden
-MU<-0.2
+MU<-0
 
 # Eingabe eines Szenarionamens zum Abspeichern
-Szenario<-'Szenario_1'
+Szenario<-'TEST'
 
 
-# Namensliste für die Bezeichnung der Umfangsmatrizen
+# Namensliste für die Bezeichnung der Maßnahmenmatrize
 names_U<-list(measures, sources)
 
 # Maßnahmenumfang für unterschiedliche Abflüsse:
@@ -57,7 +57,8 @@ for (catchment in catchments){
 m1<- c(1, 0, 0)
 names(m1)<- substances
 #m2= Funkefilter
-m2<- c(0.97, 0.85, 0.93)
+m2<- c(96.74866893,85.004301,92.64175444)
+
 names(m2)<- substances
 
 # Berechnung des Reduktionspotenzials der Szenarien
@@ -66,10 +67,10 @@ for (catchment in catchments) {
   index_catchment <- which(catchments==catchment)
   for(OgRe_type in OgRe_types){
     
-  #Erstellen einer Ergebnis-Matrix für das Reduktionspotnzials in den Einzelnen SST
-  names_FA<- list(substances, sources)  
-  x<- matrix(nrow = 3, ncol = length(sources), dimnames = names_FA)
-  
+    #Erstellen einer Ergebnis-Matrix für das Reduktionspotnzials in den Einzelnen SST
+    names_FA<- list(substances, sources)  
+    x<- matrix(nrow = 3, ncol = length(sources), dimnames = names_FA)
+    
     for(substance in substances){
       index_substance<- which(substances==substance)
       for(my_source in sources){
@@ -84,10 +85,10 @@ for (catchment in catchments) {
         x[index_substance, index_source]<- 1-U[1, index_source]*m1[index_substance]-U[2,index_source]*m2[index_substance]+U[1, index_source]*m1[index_substance]*U[2,index_source]*m2[index_substance]
       }
     }
-  # Zuweisen des Verbeleibenden Anteils der Fracht nach Anwendung des Szenarios
-  # FA = Frachtanteil
-  assign(paste0('FA_',catchment,'_',OgRe_type),x)
-   }
+    # Zuweisen des Verbeleibenden Anteils der Fracht nach Anwendung des Szenarios
+    # FA = Frachtanteil
+    assign(paste0('FA_',catchment,'_',OgRe_type),x)
+  }
 }
 
 
@@ -98,7 +99,7 @@ for (catchment in catchments) {
 # Fester Startwert für den random algorithm
 set.seed(5)
 # Anzahl der Wiederholung für die MonteCarlo simulation
-nMC <- 1000
+nMC <- 100
 
 ##    2.2 Laden von Inputdaten und erstellen von Ausgangstabellen
 # ABIMO runoff und OgRe Daten (roof, yard, street (Fassaden runoff ist im Ablauf aus Hof und Straße enthalten))
@@ -130,30 +131,23 @@ colnames(substance_load)<- c('load_Dach','load_Strasse', 'load_Hof', 'load_Putzf
 #     Auswahl der BTF im Einzugsgebiet, Bestimmung der Quellflächen und Anpassung des Fassadenabflussen
 
 for (catchment in catchments) {
-# BTF auf das aktuelle Catchment reduzieren
-BTFs_current<- subset(berlin_runoff, AGEB1== catchment)
-#temporärer data frame dessen Ergebnisse später als Frachten des aktuellen Einzugsgebiet gespeichert werden
-MC_loads_current <- MC_loads
-# Berechnung der Gesamtflächen der verschiedenn Quellen im Einzugsgebiet
-areas <-c(sum(BTFs_current$AU_roof),sum(BTFs_current$AU_street),sum(BTFs_current$AU_yard),sum(BTFs_current$AU_putz), sum(sum(BTFs_current$FLGES),sum(BTFs_current$STR_FLGES)))
-names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
-
-
-# Aufgrund von nicht bekanntem Anschlussgrad von Fassaden an die Kanalisation wird jeder BTF
-# ein zufälliger Anschlussgrad zwischen 10 und 90% zugewiesen
-  for( n in 1:nrow(BTFs_current)){
-    BTFs_current[n, 'runoff_Putzfassade'] <- BTFs_current[n,'runoff_Putzfassade']*runif(n=1, min = 0.1, max=0.9)
-  }
-
-
+  # BTF auf das aktuelle Catchment reduzieren
+  BTFs_current<- subset(berlin_runoff, AGEB1== catchment)
+  #temporärer data frame dessen Ergebnisse später als Frachten des aktuellen Einzugsgebiet gespeichert werden
+  MC_loads_current <- MC_loads
+  # Berechnung der Gesamtflächen der verschiedenn Quellen im Einzugsgebiet
+  areas <-c(sum(BTFs_current$AU_roof),sum(BTFs_current$AU_street),sum(BTFs_current$AU_yard),sum(BTFs_current$AU_putz), sum(sum(BTFs_current$FLGES),sum(BTFs_current$STR_FLGES)))
+  names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
+  
+  
   ##   2.4 Start der Frachteberechnung für das aktuelle Einzugsgebiet ohne Maßnahmen
-
+  
   for (n in 1:nMC){
     ###calculate loads  
     for (OgRe_type in OgRe_types) {
-    
+      
       #Tabelle um berechneten Frachten zu speichern
-
+      
       #Erstellen einer Matrix für die Ergebnisse der Frachtberechnungen aufgeschlüsselt auf die Quellen 
       names_source_loads<- list(substances, sources)
       source_loads<- matrix(nrow = 3, ncol = length(sources), dimnames = names_source_loads)
@@ -161,14 +155,14 @@ names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
       #Erstellen einer Matrix für die Ergebnisse der Frachtberechnungen für jeden SST
       names_Ogre_type_loads <- list ('load', substances)
       OgRe_type_loads <-matrix(nrow = 1, ncol = length(substances), dimnames = names_Ogre_type_loads)
-    
-        for (substance in substances) {
       
-            #substanz auswählen
-      
-      
-        for (my_source in sources) {
+      #substanz auswählen
+      for (substance in substances) {
         
+        
+        
+        for (my_source in sources) {
+          
           ## Auswahl der richtigen Ankerkonzentration
           
           # Auswahl der Konzentrationstabelle des aktuellen OgRe_types
@@ -178,67 +172,75 @@ names(areas) <- c('roof', 'street', 'yard', 'putz', 'total catchment area')
           row_Konz <- which(OgRe_type_current$Source == my_source)
           # Speichern der aktuellen Ankerkonzentration
           c_anchor <- OgRe_type_current[row_Konz, col_Konz]   
-        
+          
           ## Bestimmung von Schleifenindexen
           index_substance <- which(substances==substance)
           index_OgRe_type <- which(OgRe_types==OgRe_type)
           index_source <- which(sources== my_source) 
-        
-            ## Festlegung von Parametern für die log-Normalverteilung von Konzentrationswerten und Umgehung von etwaigen 0 Werten
-          if(c_anchor == 0){
-            concentration <- 0
-          } else {
-            #Auswahl der relativen Standardabweichung des aktuellen OgRe_types
-            rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_type]])
-            # Berechnung der aktuellen absoluten Standardabweichung
-            sd_temp<- c_anchor*rel_sd_temp[index_source,1+index_substance]
+          ###################################################################
+          BTFs_current_OgRe <- subset(BTFs_current,OgRe_Type== OgRe_type)
+          current_BTFs<-rownames(BTFs_current_OgRe)
+                                 
+          current_loads_BTFs_source<- matrix(nrow = length(current_BTFs), ncol = 1)
+          col_runoff <- which(names(BTFs_current_OgRe) == paste0("runoff_", sources[index_source]))
+
           
-            ## Berechnung der log-Normalverteilten Konzentration  (Wie kommme ich auf die Berechnung von location und shape?)
-            # Bestimmung der benötigten Parameter für die logarithmische Normalverteilung
-            location<- log(c_anchor^2/sqrt(sd_temp^2+c_anchor^2))
-            shape<- sqrt(log(1+(sd_temp^2/c_anchor^2)))
+          for(BTF in current_BTFs){
+          
+          ## Festlegung von Parametern für die log-Normalverteilung von Konzentrationswerten und Umgehung von etwaigen 0 Werten
+            if(c_anchor == 0){
+              concentration <- 0
+            } else {
+              #Auswahl der relativen Standardabweichung des aktuellen OgRe_types
+              rel_sd_temp<- as.data.frame(sd_list[[index_OgRe_type]])
+              # Berechnung der aktuellen absoluten Standardabweichung
+              sd_temp<- c_anchor*rel_sd_temp[index_source,1+index_substance]
+              
+              ## Berechnung der log-Normalverteilten Konzentration  (Wie kommme ich auf die Berechnung von location und shape?)
+              # Bestimmung der benötigten Parameter für die logarithmische Normalverteilung
+              location<- log(c_anchor^2/sqrt(sd_temp^2+c_anchor^2))
+              shape<- sqrt(log(1+(sd_temp^2/c_anchor^2)))
+              
+              # Berechnung der logarithmisch normalverteilten Konzentration
+              concentration <- rlnorm(n=1, meanlog = location, sdlog = shape)
+            }  
             
-            # Berechnung der logarithmisch normalverteilten Konzentration
-            concentration <- rlnorm(n=1, meanlog = location, sdlog = shape)
+          index_BTF <- which(BTF== current_BTFs) 
+          BTF_current<-subset(BTFs_current_OgRe[BTF,])
+          current_loads_BTFs_source[index_BTF]<-BTF_current[,col_runoff]*concentration
           }
-        
-          # Auswahl aller BTF des aktuellen OgRe_types
-          row_runoff <- which(BTFs_current$OgRe_Type == OgRe_type)
-          # Auswahl der Spalte aus BTF_current mit den runoffs der aktuellen Quelle
-          col_runoff <- which(names(BTFs_current) == paste0("runoff_", sources[index_source]))
-        
-          # Berechnung der Frachten ohne Maßnahmen (zufällig durch log Normalverteilung generiert)
-          # Vergleichswert oder auch 0-Wert
-          source_loads[index_substance, index_source] <- concentration*sum(BTFs_current[row_runoff, col_runoff])
+
+          #Summe aller Frachten aus einem bestimmten Quellgebiet, für einen OgRe-Typen
+          source_loads[index_substance, index_source]<-sum(current_loads_BTFs_source)
         }
       }
       
       
-        ## 2.5 Start der Frachtberechnung mit Maßnahmen
+      ## 2.5 Start der Frachtberechnung mit Maßnahmen
       
-        #Auswahl des Frachtanteils nach Umsetzung des aktuellen Szeanrios im aktuellen SST
-        current_FA <- eval(parse(text = paste0('FA_',catchment,'_',OgRe_type)))
-        #Berechnung der reduzierten Fracht nach Quelle in einem SSt
-        reduced_source_loads<-source_loads*current_FA
-     
-        for (substance in substances) {
+      #Auswahl des Frachtanteils nach Umsetzung des aktuellen Szeanrios im aktuellen SST
+      current_FA <- eval(parse(text = paste0('FA_',catchment,'_',OgRe_type)))
+      #Berechnung der reduzierten Fracht nach Quelle in einem SSt
+      reduced_source_loads<-source_loads*current_FA
+      
+      for (substance in substances) {
         index_substance <-  which(substances==substance)
         # Berechnung der Gesamtfracht einer Substanz aus allen Quellen in einem SST
         OgRe_type_loads[,index_substance]<- sum(reduced_source_loads[index_substance,])
         # Speichern der Ergebnisse
         assign(paste0(OgRe_type,'_loads'), OgRe_type_loads)  
-        }
       }
-  
+    }
+    
     for (substance in substances) {
       index_substance <-  which(substances==substance)
       # Berechnung der Gesamtfracht einer Substanz aus allen SST und speichern des Ergebnis in der Zeile des aktuellen runs 
       MC_loads_current[[n, index_substance]] <- sum(ALT_loads[index_substance],EFH_loads[index_substance],GEW_loads[index_substance],NEU_loads[index_substance],AND_loads[index_substance])/1000 #from g/kg
-
+      
     }
   }
-#Speichern des Ergebnisses der reduzierten Frachten im Einzugsgebiet für alle Runs der MC
-assign(paste0('MC_loads_',catchment),MC_loads_current)
+  #Speichern des Ergebnisses der reduzierten Frachten im Einzugsgebiet für alle Runs der MC
+  assign(paste0('MC_loads_',catchment),MC_loads_current)
 }    
 
 for(catchment in catchments){
@@ -247,8 +249,8 @@ for(catchment in catchments){
   MC_loads<- eval(parse(text = paste0('MC_loads_',catchment)))
   
   # Schreiben eines Ergebnissfiles aller Runs der MC für das gewälte Szenario 
-  write.csv(MC_loads, paste0('data_output/calculation_load_reduction/', Szenario,'/' ,catchment,'/', Szenario ,'_',MU*100,'%.csv'),row.names = FALSE)
-
+  write.csv(MC_loads, paste0('data_output/Frachtberechnung/', catchment,'_', Szenario ,'.csv'),row.names = FALSE)
+  
 }
 
 ### 3. Abschnitt: Berechnung des Maßnahmenaufwands (wie viel Volumen muss gefiltert werden,
@@ -278,23 +280,22 @@ for (catchment in catchments) {
     
     # Berechnung der gesamten behandelten Putzfassadenfläche (die behandelte Fläche des jeweiligen SST wird durch die Schleife zu den vorher bestimmten Flächen addiert)
     Putzfassadenfläche_behandelt <- Putzfassadenfläche_behandelt+ U[1,4]*sum(BTFs_OgRe_type$AU_Putzfassade)
-
+    
     for (my_source in sources) {
       index_source <- which(sources== my_source) 
-     # Berechnung des gesamten behandelten Abflussvolumens (durch die Schleife werden die Volumina der einzelnen behandeten Quellen in den einzelnen SST aufsummiert)
+      # Berechnung des gesamten behandelten Abflussvolumens (durch die Schleife werden die Volumina der einzelnen behandeten Quellen in den einzelnen SST aufsummiert)
       Volumen_behandelt <- Volumen_behandelt+ U[2,index_source]*sum(BTFs_OgRe_type[paste0('runoff_',my_source)])
     }
   }
-
-# Speichern des Anteils der behandelten Fläche und des behandelten Volumen an der Gesamtfläche und des Gesamtvolumens  
-Aufwand_current<- cbind(Volumen_behandelt/Volumen_gesamt*100,Putzfassadenfläche_behandelt/Putzfassadenfläche_gesamt*100)
-# Umwandlung in einen data frame
-as.data.frame(Aufwand_current)
-# Spalten Namen des data frames
-colnames(Aufwand_current) <- c('Volumen [%]', 'Fassade [%]')
-# Schreiben eines files mit dem Aufwand des betrachteten Szenarios
-write.csv(Aufwand_current,paste0('data_output/calculation_load_reduction/', Szenario,'/' ,catchment,'/', Szenario ,'_',MU*100,'%_Aufwand.csv'),row.names = FALSE)
+  
+  # Speichern des Anteils der behandelten Fläche und des behandelten Volumen an der Gesamtfläche und des Gesamtvolumens  
+  Aufwand_current<- cbind(Volumen_behandelt/Volumen_gesamt*100,Putzfassadenfläche_behandelt/Putzfassadenfläche_gesamt*100)
+  # Umwandlung in einen data frame
+  as.data.frame(Aufwand_current)
+  # Spalten Namen des data frames
+  colnames(Aufwand_current) <- c('Volumen [%]', 'Fassade [%]')
+  # Schreiben eines files mit dem Aufwand des betrachteten Szenarios
+  write.csv(Aufwand_current,paste0('data_output/Frachtberechnung/', catchment,'_', Szenario ,'_Aufwand.csv'),row.names = FALSE)
 }
-
 
 
