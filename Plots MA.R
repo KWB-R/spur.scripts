@@ -4,7 +4,7 @@ library(viridis)
 library(data.table)
 library(datasets)
 library(ggplot2)
-
+library(gsubfn)
 #Funktionen--------------------------------------------------------------------------------------------------------
 #functions
 getMonitoringTable <- function(subfolder,
@@ -168,7 +168,7 @@ data <- data.frame(name, value)
 data %>%
   ggplot( aes(x=name, y=value, fill=name)) +
   stat_boxplot(geom = 'errorbar', width= 0.5, alpha=1)+
-  geom_boxplot( fill= c("#894A94", "#5BA56D", "#F3AE0D"), alpha= 1 ) + ##6699CC #DDCC77
+  geom_boxplot( fill= c("#894A94", "#5BA56D", "#F3AE0D"), alpha= 1,fatten = NULL ) + ##6699CC #DDCC77
   coord_cartesian(ylim = c(0, 100))+
   theme_minimal() +
   ggtitle("") +
@@ -176,8 +176,39 @@ data %>%
   ylab("Frachtreduktion [%]")+
   theme(legend.position="none",
         plot.title = element_text(size=14),
-        axis.title.y= element_text(hjust = 0.5, size = 12), 
+        axis.title.y= element_text(hjust = 0.5, size = 14), 
         axis.text = element_text(size = 14)) #funktioniert aus irgendeinem Grund nicht
+
+
+
+#1.5 status quo
+
+# Vergleich der Konzentrationen in Wuhle und Panke
+#### Wuhle
+catchments<- c('Flughafensee','Wuhle')
+
+for(catchment in catchments){
+berechnete_Frachten<-read.csv(paste0('data_output/Frachtmodell/Frachten/',catchment,'_Status_quo.csv'))
+#[kg]
+library(data.table)
+
+boxplot(berechnete_Frachten, 
+        ylim= c(min(berechnete_Frachten), 
+        max(berechnete_Frachten)), 
+        yaxp=c(1e-2, 1e+3, 1),
+        log = 'y',  ylab= '[μg/L]',
+        outline=FALSE, las=0, cex.axis= 1.2,
+        cex.lab= 1.2,
+        col = '#485899',
+        main= catchment,
+        names= c('Diuron', 'Mecoprop', 'Zink'),
+        yaxt="n")
+at.y <- outer(1:9, 10^(-2:3))
+lab.y <- ifelse(log10(at.y) %% 1 == 0, at.y, NA)
+axis(2, at=at.y, labels=lab.y, las=1)
+
+}
+
 
 
 
@@ -217,12 +248,12 @@ for(catchment in catchments){
   
   print(ggplot(composition, aes(x=Typ, y=Anteil))+
     geom_bar(fill= '#6c84e6', stat='identity', colour="black")+
-    scale_y_continuous(limits=c(0,47))+
+    scale_y_continuous(limits=c(0,100))+
     labs(y= 'Anteil [%]', x= '')+
-    ggtitle(paste0('Zusammensetzung ',catchment))+
+    ggtitle(paste0(catchment))+
     theme_minimal()+
     theme(plot.title = element_text(hjust = 0.5))+  
-    geom_text(aes(label=round(Anteil,0), vjust=-1),colour= 'black')+
+    #geom_text(aes(label=round(Anteil,0), vjust=-1),colour= 'black')+
     theme(axis.title.y= element_text(hjust = 0.5, size = 12), 
           axis.title.x= element_text(hjust = 0.5, size = 12),
           axis.text = element_text(size = 12)))
@@ -244,16 +275,49 @@ for(catchment in catchments){
       scale_y_continuous(limits=c(0,25))+
       scale_fill_manual(values = c('#7d96ff','#5b6fc2', '#485899','#364170', '#232a45'))+
       labs(y= 'Anteil [%]', x= '')+
-      ggtitle(paste0(catchment,': Abfluss nach Quelle'))+
+      ggtitle(paste0(catchment))+
+      geom_text(aes(label=round(values,1), vjust=-1))+
       theme_minimal()+
       theme(plot.title = element_text(hjust = 0.5))+
       #geom_text(aes(label=round(values,0), vjust=-1))+
       theme(axis.title.y= element_text(hjust = 0.5, size = 12), 
             axis.title.x= element_text(hjust = 0.5, size = 12),
             axis.text = element_text(size = 12),
-            legend.position = c(0.9,0.75),
+            legend.position = c(0.9,0.85),
             legend.title = element_blank()))
+    
+#3.5 Abflüsse nur nach Quelle
+
+runoff_Dach<-colSums(BTF_catchment[49])/catchment_runoff
+runoff_Hof<-colSums(BTF_catchment[48])/catchment_runoff
+runoff_Putzfassade<-colSums(BTF_catchment[50])/catchment_runoff
+runoff_Strasse<-colSums(BTF_catchment[47])/catchment_runoff
+
+runoff_only_sources<-data.frame(
+  values<-100*c(runoff_Dach,runoff_Hof,runoff_Putzfassade,runoff_Strasse),
+  sources<-c('Dach','Hof','Putz-\nfassade','Straße')
+)    
+
+print(ggplot(data=runoff_only_sources, aes(x=sources, y=values))+
+        geom_bar(fill= '#6c84e6', stat = 'identity', colour="black")+
+        scale_y_continuous(limits=c(0,100))+
+        labs(y= 'Anteil [%]', x= '')+
+        ggtitle(paste0(catchment))+
+        theme_minimal()+
+        theme(plot.title = element_text(hjust = 0.5))+
+        geom_text(aes(label=round(values,2), vjust=-1,))+
+        theme(axis.title.y= element_text(hjust = 0.5, size = 12), 
+              axis.title.x= element_text(hjust = 0.5, size = 12),
+              axis.text = element_text(size = 12),
+              legend.position = c(0.9,0.85),
+              legend.title = element_blank()))
+        
+    
 }
+
+
+
+
 
 
 #4. Frachten aufgeschlüsselt nach Quellen Status Quo
@@ -267,7 +331,7 @@ berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runo
 catchments <- c('Wuhle', 'Flughafensee')
 substances <- c('Diuron', 'Mecoprop', 'Zn')
 OgRe_types <- c("ALT", "NEU", "EFH", "GEW", "AND")
-sources <- c("Dach", "Strasse", "Hof", "Putzfassade")
+sources <- c('Dach', 'Strasse', 'Hof', 'Putzfassade')
 
 load_sources<- data.frame()
 
@@ -283,7 +347,7 @@ for(catchment in catchments){
       # Auswahl des OgRe_type
       BTF_OgRe_catchment <-subset(BTFs_catchemnt, OgRe_Type==OgRe_type)
       # Einlesen von Konzentrationstabellen
-      assign(paste0('c_',OgRe_type), ead.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';')) 
+      assign(paste0('c_',OgRe_type), read.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';')) 
       
       for(my_source in sources){  
         
@@ -311,19 +375,21 @@ for(catchment in catchments){
     
     print(load_sources)
     load_sources$Fracht<- load_sources$Fracht/sum(load_sources$Fracht)*100
-    
-    print(ggplot(data=load_sources, aes(x=Quelle, y=Fracht, group=SST, fill=SST))+
+
+    print(ggplot(data=load_sources, aes(x=Quelle , y=Fracht, group=SST, fill=SST))+
             geom_bar(position = 'dodge', stat = 'identity', colour="black")+
-            scale_y_continuous(limits= c(0, max(load_sources$Fracht)))+
+            scale_y_continuous(limits= c(0, 35))+
             scale_fill_manual(values = eval(parse(text =paste0('colors_',substance))))+
             labs(y= 'Anteil [%]', x= '')+
-            ggtitle(substance, subtitle = paste0('Frachtanteil nach Quelle\n',catchment))+
+            ggtitle(catchment )+ #,'subtitle = paste0(substance)Frachtanteil nach Quelle\n',
             theme_minimal()+
+            geom_text(aes(label=round(Fracht,1), vjust=-1))+
             theme(plot.title = element_text(hjust = 0.5))+
             theme(axis.title.y= element_text(hjust = 0.5, size = 12), 
                   axis.title.x= element_text(hjust = 0.5, size = 12),
                   axis.text = element_text(size = 12),
                   legend.title = element_blank(),
+                  legend.position = c(0.9,0.75),
                   plot.subtitle= element_text(hjust = 0.5)))
     
     print(load_sources)
@@ -423,30 +489,31 @@ print(ggplot(data= data, aes(x= source, y= value))+
 
 library('reshape2')
 
-catchments<- c('Wuhle', 'Flughafensee')
-Szenarien<- c('Szenario_1','Szenario_2', 'Szenario_3', 'Szenario_4')
-extends <- c(0, 10, 20, 50)
+catchments<- c('Flughafensee', 'Wuhle')
+Szenarien<- c('alternative_Fassadenfarbe','gefilterter_Dachabfluss', 'gefilterter_Quartiersabfluss', 'kombinierte_Szenarien')
 
 #Einlesen aller modellierten Frachten
 for (Szenario in Szenarien) {
   for (catchment in catchments) {
-    for (extend in extends) {
-    assign(paste0(catchment,'_' , Szenario,'_', extend), read.csv(paste0('data_output/calculation_load_reduction/', Szenario,'/' ,catchment,'/', Szenario,'_', extend,'%.csv')))
-    }
+    assign(paste0(catchment,'_' , Szenario), read.csv(paste0('data_output/Frachtmodell/Frachten/', catchment,'_', Szenario, '.csv'),head=TRUE,sep=";"))
+    assign(paste0(catchment,'_Status_quo'), read.csv(paste0('data_output/Frachtmodell/Frachten/', catchment,'_Status_quo.csv'),head=TRUE,sep=";"))
   }
 }
 
+
+#assign(paste0('my'), read.csv(paste0('data_output/Frachtmodell/Frachten/Wuhle_alternative_Fassadenfarben.csv'),head=TRUE,sep=";"))
+
 #Berechnung des Reduktionspotenzials
 #plotten der Potenzials
-potencials<- c(10,20,50)
 
 for (catchment in catchments) {
   for (Szenario in Szenarien) {
-    for (potencial in potencials) {
 
-      current_Potenzial<- eval(parse(text = paste0(catchment,'_', Szenario, '_', potencial)))
-      current_Ausgangslage <- eval(parse(text = paste0(catchment,'_', Szenario, '_0')))
-      current_Frachtreduktion<- 1-current_Potenzial/current_Ausgangslage
+      current_Szenario<- eval(parse(text = paste0(catchment,'_', Szenario)))
+      as.data.frame(current_Szenario)
+      current_Status_quo <- eval(parse(text = paste0(catchment,'_Status_quo')))
+      as.data.frame(current_Status_quo)
+      current_Frachtreduktion<- 1-current_Szenario/current_Status_quo
     
       assign(paste0('Frachtreduktion_', catchment,'_', Szenario), current_Frachtreduktion*100)
       assign(paste0('Frachtreduktion_', catchment,'_', Szenario), melt(eval(parse(text = paste0('Frachtreduktion_', catchment,'_', Szenario)))))
@@ -454,21 +521,61 @@ for (catchment in catchments) {
       #veraltet
       #assign(paste0('rp',potencial,'_', catchment), (1-eval(parse(text = paste0(catchment,'_', Szenario, '_', potencial)))/eval(parse(text = paste0(catchment,'_', Szenario,'_0'))))*100)
       #assign(paste0('rp',extend,'_', catchment), melt(eval(parse(text=paste0('rp',extend,'_', catchment)))))
-    
-      print(ggplot(data=eval(parse(text=paste0('Frachtreduktion_', catchment,'_', Szenario))), aes(x= variable, y=value))+
+      Frachtreduktionswerte_current <- eval(parse(text=paste0('Frachtreduktion_', catchment,'_', Szenario)))
+                                            
+      Frachtreduktionswerte_current <- data.frame(lapply(Frachtreduktionswerte_current, function(x) {gsub("Zn", "Zink", x)}))
+      Frachtreduktionswerte_current[2]<- as.numeric(Frachtreduktionswerte_current$value)
+      
+      substances<-c('Diuron', 'Mecoprop', 'Zink')
+      for( substance in substances){
+        
+        Frachtreduction_substance <- subset(Frachtreduktionswerte_current, variable==substance)
+        Frachtreduction_substance <- as.numeric(Frachtreduction_substance$value)
+        
+        print(max(Frachtreduction_substance))
+        print(min(Frachtreduction_substance))
+        print(mean(Frachtreduction_substance))
+        
+      }
+      
+      print(ggplot(data=Frachtreduktionswerte_current, aes(x= variable, y=value),ylim)+
               stat_boxplot(geom = 'errorbar', width= 0.5, alpha=1)+
+              #scale_y_continuous(limits= c(0, max(eval(parse(text=paste0('Frachtreduktion_', catchment,'_', Szenario)))$value)))+
+              scale_y_continuous(limits= c(0, 25))+
               geom_boxplot( fill= c("#894A94", "#5BA56D", "#F3AE0D"), alpha= 1)+
               theme_minimal()+
-              xlab("")+
+              xlab('')+
               ylab("Frachtreduktion [%]")+
-              ggtitle(paste0(Szenario), subtitle = paste0(catchment,' ',potencial,'%'))+
+              #ggtitle(paste0(Szenario), subtitle = paste0(catchment))+
+              ggtitle(paste0(catchment))+
               theme(plot.title = element_text(hjust = 0.5),
                     plot.subtitle = element_text(hjust = 0.5))+
               theme(plot.title = element_text(size=14),
                     axis.title.y= element_text(hjust = 0.5, size = 12), 
                     axis.text = element_text(size = 12)))
-    }
   }
+}
+
+Umfang_Werte <- c(9.03,3.36,4.82,4.44,6.40,1.00)
+Umfang_Art <- c('Putzfassade','Abfluss','Abfluss','Putzfassade','Abfluss','Abfluss')
+
+for(n in 1:6){
+  Umfang<-data.frame(Wert=Umfang_Werte[n],Art=Umfang_Art[n])
+
+  print(ggplot(data=Umfang, aes(x=Art, y=Wert))+
+          geom_bar(fill= 'darkred', stat = 'identity', colour="black", width = 0.6)+
+          scale_y_continuous(limits=c(0,25))+
+          labs(y= 'Anteil [%]', x= '')+
+          theme_minimal()+
+          ggtitle(paste0(''))+
+          
+          theme(plot.title = element_text(hjust = 0.5))+
+          theme(axis.title.y= element_text(hjust = 0.5, size = 12), 
+                axis.title.x= element_text(hjust = 0.5, size = 12),
+                axis.text = element_text(size = 12),
+                legend.position = c(0.9,0.85),
+                legend.title = element_blank()))
+
 }
 
 
@@ -481,8 +588,10 @@ library(data.table)
 berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
 berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_roo', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Dach','runoff_Putzfassade','runoff_total'))
 
-BTF_catchment <- subset(berlin_runoff, AGEB1=='Wuhle')
+BTF_catchment <- subset(berlin_runoff, AGEB1=='Flughafensee')
 total_runoff <- colSums(BTF_catchment['runoff_total'])
+total_area <- colSums(BTF_catchment['FLGES'])
+
 
 concentrations <- simulated_loads*1000000/total_runoff
 
