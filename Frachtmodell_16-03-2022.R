@@ -13,10 +13,10 @@ catchments <- c('Wuhle', 'Flughafensee')
 
 # Eingabe des Maßnahmenumfang (MU)
 # Welcher Anteil der Abflüsse aus den verschiedenen SST soll behandelt werden
-MU<-0
+MU<-0.2
 
 # Eingabe eines Szenarionamens zum Abspeichern
-Szenario<-'TEST'
+Szenario<-'alternative_Fassadenfarbe'
 
 
 # Namensliste für die Bezeichnung der Maßnahmenmatrize
@@ -33,32 +33,31 @@ U_Wuhle_AND<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = na
 
 # Maßnahmenumfang für unterschiedliche Abflüsse:
 # c(Dach_OSM, Dach_filter, Strasse_OSM, Strasse_Filter, Hof_OSM, Hof_fitler, putzfassade_OSM, Putzfassade_filter)
-U_Flughafensee_ALT<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
-U_Flughafensee_EFH<-matrix(c(0, 0, 0, 0, 0, 0, MU, 0), nrow = 2, ncol = 4, dimnames = names_U)
+U_Flughafensee_ALT<-matrix(c(0, 0, 0, 0, 0, 0, MU, 0), nrow = 2, ncol = 4, dimnames = names_U)
+U_Flughafensee_EFH<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 U_Flughafensee_GEW<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 U_Flughafensee_NEU<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 U_Flughafensee_AND<-matrix(c(0, 0, 0, 0, 0, 0, 0, 0), nrow = 2, ncol = 4, dimnames = names_U)
 
 # Der Übersicht halber könnte man alle Maßnahmen der SST in Listen zusammenfassen (nicht umbedingt nötig)
-xx<-list()
-for (catchment in catchments){
-  for (OgRe_type in OgRe_types) {
-    index_OgRe_type<- which(OgRe_types==OgRe_type)
-    xx[index_OgRe_type]<- list(eval(parse(text =paste0('U_',catchment,'_',OgRe_type))))
-  }
-  names(xx)<- OgRe_types
-  assign(paste0('Maßnahmenumfang_',catchment),xx)
-}
+#xx<-list()
+#for (catchment in catchments){
+# for (OgRe_type in OgRe_types) {
+#    index_OgRe_type<- which(OgRe_types==OgRe_type)
+#    xx[index_OgRe_type]<- list(eval(parse(text =paste0('U_',catchment,'_',OgRe_type))))
+#  }
+#  names(xx)<- OgRe_types
+#  assign(paste0('Maßnahmenumfang_',catchment),xx)
+#}
 
 ## 1.2 Reduktionspotenzial der Szenarien (verschiedenen Kombinationen der einzelnen Maßnahmen) im SST des jeweiligen Einzugsgebiets
 
 # Maßnahmen Effizienz 
-# m1= diuronfreie Farbe
+# m1= diuronfreie Farbe (als Dezimalzahl nicht in Prozent)
 m1<- c(1, 0, 0)
 names(m1)<- substances
-#m2= Funkefilter
-m2<- c(96.74866893,85.004301,92.64175444)
-
+#m2= Funkefilter (als Dezimalzahl nicht in Prozent)
+m2<- c(0.9674866893,0.85004301,0.9264175444)
 names(m2)<- substances
 
 # Berechnung des Reduktionspotenzials der Szenarien
@@ -67,7 +66,7 @@ for (catchment in catchments) {
   index_catchment <- which(catchments==catchment)
   for(OgRe_type in OgRe_types){
     
-    #Erstellen einer Ergebnis-Matrix für das Reduktionspotnzials in den Einzelnen SST
+    #Erstellen einer Ergebnis-Matrix für das Reduktionspotenzial in den einzelnen SST
     names_FA<- list(substances, sources)  
     x<- matrix(nrow = 3, ncol = length(sources), dimnames = names_FA)
     
@@ -249,7 +248,7 @@ for(catchment in catchments){
   MC_loads<- eval(parse(text = paste0('MC_loads_',catchment)))
   
   # Schreiben eines Ergebnissfiles aller Runs der MC für das gewälte Szenario 
-  write.csv(MC_loads, paste0('data_output/Frachtberechnung/', catchment,'_', Szenario ,'.csv'),row.names = FALSE)
+  write.csv(MC_loads, paste0('data_output/Frachtmodell/Frachten/', catchment,'_', Szenario ,'.csv'),row.names = FALSE)
   
 }
 
@@ -295,7 +294,7 @@ for (catchment in catchments) {
   # Spalten Namen des data frames
   colnames(Aufwand_current) <- c('Volumen [%]', 'Fassade [%]')
   # Schreiben eines files mit dem Aufwand des betrachteten Szenarios
-  write.csv(Aufwand_current,paste0('data_output/Frachtberechnung/', catchment,'_', Szenario ,'_Aufwand.csv'),row.names = FALSE)
+  write.csv(Aufwand_current,paste0('data_output/Frachtmodell/Aufwand/', catchment,'_', Szenario ,'_Aufwand.csv'),row.names = FALSE)
 }
 
 
