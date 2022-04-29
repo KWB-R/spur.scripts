@@ -1,7 +1,0 @@
-Szenario 3
-Flughafensee: Dach-, Hof und der halbe Putzfassadenablauf aus Altbaugebieten werden gefiltert.
-c(0, mr, 0, 0, 0, mr, 0, mr/2)
-Wuhle:
-Dach-, Hof und der halbe Putzfassadenablauf aus Altbaugebieten werden gefiltert.
-c(0, mr, 0, 0, 0, mr, 0, mr/2)
-
