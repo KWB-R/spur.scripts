@@ -1,6 +1,0 @@
-Szenario 1:
-Flughafensee: Putzfassaden in Einfamilienhausgebieten mit diuronfreier Farbe streichen
-	c(0, 0, 0, 0, 0, 0, mr, 0)
-Wuhle: Putzfassaden in Einfamilienhausgebieten mit diuronfreier Farbe streichen
-	c(0, 0, 0, 0, 0, 0, mr, 0)
-
