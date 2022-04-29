@@ -305,7 +305,7 @@ print(ggplot(data=runoff_only_sources, aes(x=sources, y=values))+
         ggtitle(paste0(catchment))+
         theme_minimal()+
         theme(plot.title = element_text(hjust = 0.5))+
-        geom_text(aes(label=round(values,2), vjust=-1,))+
+        #geom_text(aes(label=round(values,2), vjust=-1,))+
         theme(axis.title.y= element_text(hjust = 0.5, size = 12), 
               axis.title.x= element_text(hjust = 0.5, size = 12),
               axis.text = element_text(size = 12),
