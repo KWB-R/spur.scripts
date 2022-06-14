@@ -12,12 +12,19 @@ catchments <- c('Wuhle', 'Flughafensee')
 ### 1. Abschnitt: Definition der Maßnahmen; Eingabe der Eingangsparameter
 
 # Eingabe des Maßnahmenumfang (MU)
-# Welcher Anteil der Abflüsse aus den verschiedenen SST soll behandelt werden
+# Welcher Anteil der Abflüsse/Fassadenflächen aus den verschiedenen SST soll behandelt werden
 MU<-0.2
 
 # Eingabe eines Szenarionamens zum Abspeichern
 Szenario<-'alternative_Fassadenfarbe'
+#Szenario <- 'behandelter_Dachabfluss'
+#Szenario <- 'behandelter_Quartiersabfluss'
 
+# Erstellung der Verzeichnisse zum Abspeichern der Ergebnisse
+dir.create('data_output', showWarnings = FALSE)
+dir.create('data_output/Frachtmodell', showWarnings = FALSE)
+dir.create('data_output/Frachtmodell/Frachten', showWarnings = FALSE)
+dir.create('data_output/Frachtmodell/Aufwand', showWarnings = FALSE)
 
 # Namensliste für die Bezeichnung der Maßnahmenmatrize
 names_U<-list(measures, sources)
@@ -80,7 +87,7 @@ for (catchment in catchments) {
 }
 
 
-###  2. Abschnitt Frachtberechnung unter Anwedung gewählter Szenarien
+###  2. Abschnitt Frachtberechnung [kg/a] unter Anwedung gewählter Szenarien 
 
 ##   2.1 Festlegung von Parametern
 
@@ -131,7 +138,8 @@ for (catchment in catchments) {
   ##   2.4 Start der Frachteberechnung für das aktuelle Einzugsgebiet ohne Maßnahmen
   
   for (n in 1:nMC){
-    ###calculate loads  
+    ###calculate loads
+    #print(n)
     for (OgRe_type in OgRe_types) {
       
       #Tabelle um berechneten Frachten zu speichern
@@ -222,12 +230,12 @@ for (catchment in catchments) {
     
     for (substance in substances) {
       index_substance <-  which(substances==substance)
-      # Berechnung der Gesamtfracht einer Substanz aus allen SST und speichern des Ergebnis in der Zeile des aktuellen runs 
+      # Berechnung der Gesamtfracht einer Substanz aus allen SST und speichern des Ergebnis [kg/a] in der Zeile des aktuellen runs
       MC_loads_current[[n, index_substance]] <- sum(ALT_loads[index_substance],EFH_loads[index_substance],GEW_loads[index_substance],NEU_loads[index_substance],AND_loads[index_substance])/1000 #from g/kg
       
     }
   }
-  #Speichern des Ergebnisses der reduzierten Frachten im Einzugsgebiet für alle Runs der MC
+  #Speichern des Ergebnisses der reduzierten Frachten im Einzugsgebiet für alle Runs der MC [kg/a]
   assign(paste0('MC_loads_',catchment),MC_loads_current)
 }    
 
@@ -236,7 +244,7 @@ for(catchment in catchments){
   # Auswahl der Ergebnisse des aktuellen Einzugsgebiets
   MC_loads<- eval(parse(text = paste0('MC_loads_',catchment)))
   
-  # Schreiben eines Ergebnissfiles aller Runs der MC für das gewälte Szenario 
+  # Schreiben eines Ergebnisfiles aller Runs der MC für das gewählte Szenario 
   write.csv(MC_loads, paste0('data_output/Frachtmodell/Frachten/', catchment,'_', Szenario ,'.csv'),row.names = FALSE)
   
 }
