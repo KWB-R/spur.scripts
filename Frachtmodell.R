@@ -1,6 +1,17 @@
-library(data.table)
-library(plyr)
+# Installieren der notwendigen R-Packages
+pkgs_cran <- c("data.table", "fs")
 
+
+get_missing_rpackages <-function(pkgs) {
+  pkgs[!(pkgs %in% installed.packages()[ , "Package"])] 
+}
+
+
+pkgs_cran_missing <- get_missing_rpackages(pkgs_cran)
+if(length(pkgs_cran_missing) > 0) {
+  install.packages(pkgs = pkgs_cran_missing, 
+                 repos = "https://cloud.r-project.org")
+}
 
 # Allgemeine Parameter
 substances<- c('Diuron', 'Mecoprop', 'Zn')
@@ -21,10 +32,8 @@ Szenario<-'alternative_Fassadenfarbe'
 #Szenario <- 'behandelter_Quartiersabfluss'
 
 # Erstellung der Verzeichnisse zum Abspeichern der Ergebnisse
-dir.create('data_output', showWarnings = FALSE)
-dir.create('data_output/Frachtmodell', showWarnings = FALSE)
-dir.create('data_output/Frachtmodell/Frachten', showWarnings = FALSE)
-dir.create('data_output/Frachtmodell/Aufwand', showWarnings = FALSE)
+output_dirs <- sprintf('data_output/Frachtmodell/%s', c('Frachten', 'Aufwand'))
+fs::dir_create(path = output_dirs, recurse = TRUE)
 
 # Namensliste für die Bezeichnung der Maßnahmenmatrize
 names_U<-list(measures, sources)
@@ -98,8 +107,8 @@ nMC <- 100
 
 ##    2.2 Laden von Inputdaten und erstellen von Ausgangstabellen
 # ABIMO runoff und OgRe Daten (roof, yard, street (Fassaden runoff ist im Ablauf aus Hof und Straße enthalten))
-berlin_runoff <- foreign::read.dbf('data/berlin_runoff.dbf')
-berlin_runoff <- setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_roo', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Dach','runoff_Putzfassade','runoff_total'))
+berlin_runoff <- foreign::read.dbf('data_input/berlin_runoff.dbf')
+berlin_runoff <- data.table::setnames(berlin_runoff, old=c('runoff_str', 'runoff_yar', 'runoff_roo', 'runoff_put','runoff_tot'), new= c('runoff_Strasse','runoff_Hof','runoff_Dach','runoff_Putzfassade','runoff_total'))
 
 # Einlesen der Parameter für die Berechnung der anchor_concentration
 
@@ -109,9 +118,9 @@ sd_list <- list()
 for( OgRe_type in OgRe_types){
   index_OgRe_type <- which(OgRe_types==OgRe_type)
   # Einlesen der zurückgerechneten Konzentrationen aus OgRe
-  assign(paste0('c_',OgRe_type), read.csv(paste0('data/Konz_',OgRe_type,'.csv'), sep = ';'))
+  assign(paste0('c_',OgRe_type), read.csv(paste0('data_input/Konz_',OgRe_type,'.csv'), sep = ';'))
   # Einlesen der relativen Standardabweichung
-  sd_list[[index_OgRe_type]] <- assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data/rel_sd_', OgRe_type,'.csv'), sep = ';'))
+  sd_list[[index_OgRe_type]] <- assign(paste0('rel_sd_',OgRe_type), read.csv(paste0('data_input/rel_sd_', OgRe_type,'.csv'), sep = ';'))
 }
 
 #Erstellen eines data frame für die Endergebnisse (Frachten der Substanzen für jede Wiederholung der MCS)
