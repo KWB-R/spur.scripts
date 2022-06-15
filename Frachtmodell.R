@@ -87,14 +87,14 @@ for (catchment in catchments) {
 }
 
 
-###  2. Abschnitt Frachtberechnung unter Anwedung gewählter Szenarien
+###  2. Abschnitt Frachtberechnung [kg/a] unter Anwedung gewählter Szenarien 
 
 ##   2.1 Festlegung von Parametern
 
 # Fester Startwert für den random algorithm
 set.seed(5)
 # Anzahl der Wiederholung für die MonteCarlo simulation
-nMC <- 5 #100
+nMC <- 100
 
 ##    2.2 Laden von Inputdaten und erstellen von Ausgangstabellen
 # ABIMO runoff und OgRe Daten (roof, yard, street (Fassaden runoff ist im Ablauf aus Hof und Straße enthalten))
@@ -139,7 +139,7 @@ for (catchment in catchments) {
   
   for (n in 1:nMC){
     ###calculate loads
-    print(n)
+    #print(n)
     for (OgRe_type in OgRe_types) {
       
       #Tabelle um berechneten Frachten zu speichern
@@ -176,14 +176,14 @@ for (catchment in catchments) {
           ###################################################################
           BTFs_current_OgRe <- subset(BTFs_current,OgRe_Type== OgRe_type)
           current_BTFs<-rownames(BTFs_current_OgRe)
-                                 
+          
           current_loads_BTFs_source<- matrix(nrow = length(current_BTFs), ncol = 1)
           col_runoff <- which(names(BTFs_current_OgRe) == paste0("runoff_", sources[index_source]))
-
+          
           
           for(BTF in current_BTFs){
-          
-          ## Festlegung von Parametern für die log-Normalverteilung von Konzentrationswerten und Umgehung von etwaigen 0 Werten
+            
+            ## Festlegung von Parametern für die log-Normalverteilung von Konzentrationswerten und Umgehung von etwaigen 0 Werten
             if(c_anchor == 0){
               concentration <- 0
             } else {
@@ -201,11 +201,11 @@ for (catchment in catchments) {
               concentration <- rlnorm(n=1, meanlog = location, sdlog = shape)
             }  
             
-          index_BTF <- which(BTF== current_BTFs) 
-          BTF_current<-subset(BTFs_current_OgRe[BTF,])
-          current_loads_BTFs_source[index_BTF]<-BTF_current[,col_runoff]*concentration
+            index_BTF <- which(BTF== current_BTFs) 
+            BTF_current<-subset(BTFs_current_OgRe[BTF,])
+            current_loads_BTFs_source[index_BTF]<-BTF_current[,col_runoff]*concentration
           }
-
+          
           #Summe aller Frachten aus einem bestimmten Quellgebiet, für einen OgRe-Typen
           source_loads[index_substance, index_source]<-sum(current_loads_BTFs_source)
         }
@@ -230,12 +230,12 @@ for (catchment in catchments) {
     
     for (substance in substances) {
       index_substance <-  which(substances==substance)
-      # Berechnung der Gesamtfracht einer Substanz aus allen SST und speichern des Ergebnis in der Zeile des aktuellen runs 
+      # Berechnung der Gesamtfracht einer Substanz aus allen SST und speichern des Ergebnis [kg/a] in der Zeile des aktuellen runs
       MC_loads_current[[n, index_substance]] <- sum(ALT_loads[index_substance],EFH_loads[index_substance],GEW_loads[index_substance],NEU_loads[index_substance],AND_loads[index_substance])/1000 #from g/kg
       
     }
   }
-  #Speichern des Ergebnisses der reduzierten Frachten im Einzugsgebiet für alle Runs der MC
+  #Speichern des Ergebnisses der reduzierten Frachten im Einzugsgebiet für alle Runs der MC [kg/a]
   assign(paste0('MC_loads_',catchment),MC_loads_current)
 }    
 
@@ -293,5 +293,3 @@ for (catchment in catchments) {
   # Schreiben eines files mit dem Aufwand des betrachteten Szenarios
   write.csv(Aufwand_current,paste0('data_output/Frachtmodell/Aufwand/', catchment,'_', Szenario ,'_Aufwand.csv'),row.names = FALSE)
 }
-
-
