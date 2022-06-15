@@ -87,14 +87,14 @@ for (catchment in catchments) {
 }
 
 
-###  2. Abschnitt Frachtberechnung [kg/a] unter Anwedung gewählter Szenarien 
+###  2. Abschnitt Frachtberechnung unter Anwedung gewählter Szenarien
 
 ##   2.1 Festlegung von Parametern
 
 # Fester Startwert für den random algorithm
 set.seed(5)
 # Anzahl der Wiederholung für die MonteCarlo simulation
-nMC <- 100
+nMC <- 5 #100
 
 ##    2.2 Laden von Inputdaten und erstellen von Ausgangstabellen
 # ABIMO runoff und OgRe Daten (roof, yard, street (Fassaden runoff ist im Ablauf aus Hof und Straße enthalten))
@@ -139,7 +139,7 @@ for (catchment in catchments) {
   
   for (n in 1:nMC){
     ###calculate loads
-    #print(n)
+    print(n)
     for (OgRe_type in OgRe_types) {
       
       #Tabelle um berechneten Frachten zu speichern
@@ -230,12 +230,12 @@ for (catchment in catchments) {
     
     for (substance in substances) {
       index_substance <-  which(substances==substance)
-      # Berechnung der Gesamtfracht einer Substanz aus allen SST und speichern des Ergebnis [kg/a] in der Zeile des aktuellen runs
+      # Berechnung der Gesamtfracht einer Substanz aus allen SST und speichern des Ergebnis in der Zeile des aktuellen runs 
       MC_loads_current[[n, index_substance]] <- sum(ALT_loads[index_substance],EFH_loads[index_substance],GEW_loads[index_substance],NEU_loads[index_substance],AND_loads[index_substance])/1000 #from g/kg
       
     }
   }
-  #Speichern des Ergebnisses der reduzierten Frachten im Einzugsgebiet für alle Runs der MC [kg/a]
+  #Speichern des Ergebnisses der reduzierten Frachten im Einzugsgebiet für alle Runs der MC
   assign(paste0('MC_loads_',catchment),MC_loads_current)
 }    
 
